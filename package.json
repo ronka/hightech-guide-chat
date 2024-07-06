@@ -11,6 +11,8 @@
 		"prepare:data": "tsx -r dotenv/config pinecone-prepare-docs.ts"
 	},
 	"dependencies": {
+		"@arcjet/next": "^1.0.0-alpha.18",
+		"@arcjet/node": "^1.0.0-alpha.18",
 		"@langchain/community": "^0.2.10",
 		"@langchain/pinecone": "^0.0.7",
 		"@pinecone-database/pinecone": "^2.2.2",
