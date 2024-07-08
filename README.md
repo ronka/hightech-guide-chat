@@ -25,7 +25,7 @@ Built with:
 - Create a free account and get an OPEN_AI key from [platform.openai.com](https://platform.openai.com/)
 - Create a free account and get access to PineconeDB  from [pinecone.io](https://www.pinecone.io/)
 - Create a free account and get access to Arcjet from [arcjet.com](https://arcjet.com/)
-- And populate your `.env` file with the required information. For more info about where to get all these env variables look at .env.example in the root folder.
+- And populate your `.env` file with the required information. For more info about where to get all these env variables look at [.env.example](https://github.com/NickolasBenakis/secure-pdf-chat/blob/main/.env.example) in the root folder.
 
 ## 🧞 Commands
 
