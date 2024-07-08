@@ -65,14 +65,6 @@ class Pinecone {
 	async deleteIndex(indexName: string) {
 		return await this.client.deleteIndex(indexName);
 	}
-
-	// async insertObjects(indexName: string, objects: any[]) {
-	//   return await this.client.insertObjects(indexName, objects);
-	// }
-
-	// async search(indexName: string, query: any) {
-	//   return await this.client.search(indexName, query);
-	// }
 }
 
 export const getPineconeClient = async () => {

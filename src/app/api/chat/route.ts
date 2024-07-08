@@ -11,8 +11,8 @@ const aj = arcjet({
 		tokenBucket({
 			mode: process.env.NODE_ENV === "production" ? "LIVE" : "DRY_RUN", // will block requests. Use "DRY_RUN" to log only
 			characteristics: ["sessionId"], // track requests by a custom session ID
-			refillRate: 0,
-			interval: 0,
+			refillRate: 1, // 1 token per interval
+			interval: 7200, // 2 hours
 			capacity: 5, // bucket maximum capacity of 5 tokens
 		}),
 		shield({

@@ -1,11 +1,13 @@
 "use client";
 import { Chat } from "@/components/chat";
 import DropZone from "@/components/ui/dropZone";
+import useUploadPdf from "@/hooks/useUploadPdf";
 import { nanoid } from "ai";
 import { useState } from "react";
 
 export default function Home() {
 	const [sessionId, setSessionId] = useState<string>(`session-id-${nanoid()}`);
+	const { onUpload } = useUploadPdf(sessionId);
 	const [files, setFiles] = useState<File[]>([]);
 
 	const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +15,7 @@ export default function Home() {
 		if (files === null) return;
 		const filesArray = Array.from(files);
 		setFiles(filesArray);
+		await onUpload(filesArray);
 	};
 
 	return (
