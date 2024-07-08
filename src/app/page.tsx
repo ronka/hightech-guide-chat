@@ -1,18 +1,29 @@
-import { DarkModeToggle } from "@/components/dark-mode-toggle";
+"use client";
 import { Chat } from "@/components/chat";
+import DropZone from "@/components/ui/dropZone";
+import { nanoid } from "ai";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <main className="relative container flex min-h-screen flex-col">
-      <div className=" p-4 flex h-14 items-center justify-between supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-        <span className="font-bold">pdf-chat-ai</span>
-        <DarkModeToggle />
-      </div>
-      <div className="flex flex-1 py-4">
-        <div className="w-full">
-          <Chat />
-        </div>
-      </div>
-    </main>
-  );
+	const [sessionId, setSessionId] = useState<string>(`session-id-${nanoid()}`);
+	const [files, setFiles] = useState<File[]>([]);
+
+	const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const files = e.target.files;
+		if (files === null) return;
+		const filesArray = Array.from(files);
+		setFiles(filesArray);
+	};
+
+	return (
+		<main className="relative container flex min-h-screen flex-col">
+			<h1 className="text-3xl font-bold text-center py-4">Secure Chat App</h1>
+			<DropZone onFileChange={onFileChange} files={files} />
+			<div className="flex flex-1 py-4">
+				<div className="w-full">
+					<Chat sessionId={sessionId} />
+				</div>
+			</div>
+		</main>
+	);
 }

@@ -1,4 +1,3 @@
-import { ChatGPTMessage } from "@/types";
 import { Message } from "ai";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -60,7 +59,7 @@ interface Data {
 export const getSources = (data: Data[], role: string, index: number) => {
 	if (role === "assistant" && index >= 2 && (index - 2) % 2 === 0) {
 		const sourcesIndex = (index - 2) / 2;
-		if (data[sourcesIndex] && data[sourcesIndex].sources) {
+		if (data[sourcesIndex]?.sources) {
 			return data[sourcesIndex].sources;
 		}
 	}

@@ -7,7 +7,7 @@ import type { Pinecone } from "@pinecone-database/pinecone";
 export async function embedAndStoreDocs(
 	client: Pinecone,
 	// @ts-ignore docs type error
-	docs: Document<Record<string, any>>[],
+	docs: Document<Record<string, unknown>>[],
 ) {
 	/*create and store the embeddings in the vectorStore*/
 	try {

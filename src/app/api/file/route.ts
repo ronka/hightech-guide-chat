@@ -1,7 +1,8 @@
 import { env } from "@/lib/config";
-import { callChain } from "@/lib/langchain";
+import { getChunkedDocsFromUploadedPDFs } from "@/lib/pdf-loader";
+import { getPineconeClient } from "@/lib/pinecone-client";
+import { embedAndStoreDocs } from "@/lib/vector-store";
 import arcjet, { shield, tokenBucket } from "@arcjet/next";
-import { Message } from "ai";
 import { NextRequest, NextResponse } from "next/server";
 
 const aj = arcjet({
@@ -21,17 +22,19 @@ const aj = arcjet({
 	],
 });
 
-const formatMessage = (message: Message) => {
-	return `${message.role === "user" ? "Human" : "Assistant"}: ${
-		message.content
-	}`;
-};
-
 export async function POST(req: NextRequest) {
-	const body = await req.json();
-
-	const sessionId = body.sessionId;
-	const decision = await aj.protect(req, { sessionId, requested: 1 }); // Deduct 5 tokens from the bucket
+	const formData = await req.formData();
+	const searchParams = new URL(req.url).searchParams;
+	const sessionId = searchParams.get("sessionId") || "";
+	if (!searchParams.has("sessionId")) {
+		return NextResponse.json(
+			{ error: "Bad Request", reason: "No sessionId provided" },
+			{
+				status: 400,
+			},
+		);
+	}
+	const decision = await aj.protect(req, { sessionId, requested: 1 }); // Deduct 1 token from the bucket
 	console.log("Arcjet decision", decision);
 
 	if (decision.isDenied() && decision.reason.isShield()) {
@@ -51,32 +54,17 @@ export async function POST(req: NextRequest) {
 		);
 	}
 
-	const messages: Message[] = body.messages ?? [];
-	console.log("Messages ", messages);
-	const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-	const question = messages[messages.length - 1].content;
-
-	console.log("Chat history ", formattedPreviousMessages.join("\n"));
-
-	if (!question) {
-		return NextResponse.json(
-			{
-				error: "Bad Request",
-				reason: "No question provided",
-			},
-			{
-				status: 400,
-			},
-		);
+	const files = [];
+	for (const [_name, file] of formData) {
+		files.push(file as File);
 	}
 
 	try {
-		const streamingTextResponse = callChain({
-			question,
-			chatHistory: formattedPreviousMessages.join("\n"),
-		});
+		await saveOnPinecone(files);
 
-		return streamingTextResponse;
+		return NextResponse.json({
+			status: 200,
+		});
 	} catch (error) {
 		console.error("Internal server error ", error);
 		return NextResponse.json(
@@ -89,3 +77,22 @@ export async function POST(req: NextRequest) {
 		);
 	}
 }
+
+const saveOnPinecone = async (files: File[]) => {
+	try {
+		const pineconeClient = await getPineconeClient();
+
+		console.log("Preparing chunks from PDF files");
+
+		const docs = await getChunkedDocsFromUploadedPDFs(files);
+
+		console.log(`Loading ${docs.length} chunks into pinecone...`);
+
+		await embedAndStoreDocs(pineconeClient, docs);
+		console.log(
+			`Data embedded and stored in pine-cone index ${env.PINECONE_INDEX_NAME}`,
+		);
+	} catch (error) {
+		console.error("Init client script failed ", error);
+	}
+};
