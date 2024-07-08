@@ -1,4 +1,4 @@
-# Secure Pdf AI ✨🤖💻🗃️
+# Secure Pdf Chat with AI ✨🤖💻🗃️
 
 An AI-powered PDF chat built with Next.js 13, Vercel's AI SDK, Arcjet, Langchain, and PineconeDB
 
