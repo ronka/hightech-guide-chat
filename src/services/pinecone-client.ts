@@ -12,7 +12,7 @@ class Pinecone {
     this.client = new PineconeClient({
       apiKey: env.PINECONE_API_KEY || "",
     });
-    this.indexName = env.PINECONE_INDEX_NAME || uniqueId("pc-uuid-");
+    this.indexName = env.PINECONE_INDEX_NAME;
   }
 
   async init() {
@@ -50,6 +50,7 @@ class Pinecone {
           },
         },
       });
+
       logger.info(
         `Waiting for ${env.INDEX_INIT_TIMEOUT} seconds for index : ${indexName} initializing to complete...`,
       );

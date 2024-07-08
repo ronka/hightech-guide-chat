@@ -90,9 +90,7 @@ const saveOnPinecone = async (files: File[]) => {
     logger.info(`Loading ${docs.length} chunks into pinecone...`);
 
     await embedAndStoreDocs(pineconeClient, docs);
-    logger.info(
-      `Data embedded and stored in pine-cone index ${env.PINECONE_INDEX_NAME}`,
-    );
+    logger.info("Data embedded and stored in pine-cone successfully.");
   } catch (error) {
     console.error("Init client script failed ", error);
   }
