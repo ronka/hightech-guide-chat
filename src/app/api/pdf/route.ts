@@ -1,4 +1,5 @@
 import { env } from "@/lib/config";
+import logger from "@/lib/logger";
 import { getChunkedDocsFromUploadedPDFs } from "@/lib/pdf-loader";
 import { getPineconeClient } from "@/lib/pinecone-client";
 import { embedAndStoreDocs } from "@/lib/vector-store";
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
 		);
 	}
 	const decision = await aj.protect(req, { sessionId, requested: 1 }); // Deduct 1 token from the bucket
-	console.log("Arcjet decision", decision);
+	logger.info("Arcjet decision", decision);
 
 	if (decision.isDenied() && decision.reason.isShield()) {
 		return NextResponse.json(
@@ -82,14 +83,14 @@ const saveOnPinecone = async (files: File[]) => {
 	try {
 		const pineconeClient = await getPineconeClient();
 
-		console.log("Preparing chunks from PDF files");
+		logger.info("Preparing chunks from PDF files");
 
 		const docs = await getChunkedDocsFromUploadedPDFs(files);
 
-		console.log(`Loading ${docs.length} chunks into pinecone...`);
+		logger.info(`Loading ${docs.length} chunks into pinecone...`);
 
 		await embedAndStoreDocs(pineconeClient, docs);
-		console.log(
+		logger.info(
 			`Data embedded and stored in pine-cone index ${env.PINECONE_INDEX_NAME}`,
 		);
 	} catch (error) {

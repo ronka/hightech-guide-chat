@@ -3,6 +3,7 @@ import { env } from "./config";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
 import type { Pinecone } from "@pinecone-database/pinecone";
+import logger from "./logger";
 
 export async function embedAndStoreDocs(
 	client: Pinecone,
@@ -20,7 +21,7 @@ export async function embedAndStoreDocs(
 			textKey: "text",
 		});
 	} catch (error) {
-		console.log("error ", error);
+		logger.error("error ", error);
 		throw new Error("Failed to load your docs !");
 	}
 }
@@ -38,7 +39,7 @@ export async function getVectorStore(client: Pinecone) {
 
 		return vectorStore;
 	} catch (error) {
-		console.log("error ", error);
+		logger.error("error ", error);
 		throw new Error("Something went wrong while getting vector store !");
 	}
 }

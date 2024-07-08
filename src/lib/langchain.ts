@@ -8,6 +8,7 @@ import { nonStreamingModel, streamingModel } from "./llm";
 import { getPineconeClient } from "./pinecone-client";
 import { QA_TEMPLATE, STANDALONE_QUESTION_TEMPLATE } from "./prompt-templates";
 import { getVectorStore } from "./vector-store";
+import logger from "./logger";
 
 type callChainArgs = {
 	question: string;
@@ -54,7 +55,7 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
 				const pageContents = firstTwoDocuments.map(
 					({ pageContent }: { pageContent: string }) => pageContent,
 				);
-				console.log("already appended ", data);
+				logger.info("already appended ", data);
 				data.append({
 					sources: pageContents,
 				});

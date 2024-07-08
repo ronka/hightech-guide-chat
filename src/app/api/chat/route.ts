@@ -1,5 +1,6 @@
 import { env } from "@/lib/config";
 import { callChain } from "@/lib/langchain";
+import logger from "@/lib/logger";
 import arcjet, { shield, tokenBucket } from "@arcjet/next";
 import { Message } from "ai";
 import { NextRequest, NextResponse } from "next/server";
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
 
 	const sessionId = body.sessionId;
 	const decision = await aj.protect(req, { sessionId, requested: 1 }); // Deduct 5 tokens from the bucket
-	console.log("Arcjet decision", decision);
+	logger.info("Arcjet decision", decision);
 
 	if (decision.isDenied() && decision.reason.isShield()) {
 		return NextResponse.json(
@@ -52,11 +53,11 @@ export async function POST(req: NextRequest) {
 	}
 
 	const messages: Message[] = body.messages ?? [];
-	console.log("Messages ", messages);
+	logger.info("Messages ", messages);
 	const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
 	const question = messages[messages.length - 1].content;
 
-	console.log("Chat history ", formattedPreviousMessages.join("\n"));
+	logger.info("Chat history ", formattedPreviousMessages.join("\n"));
 
 	if (!question) {
 		return NextResponse.json(
