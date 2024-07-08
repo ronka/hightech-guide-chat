@@ -1,12 +1,13 @@
-# PDF-CHAT AI ✨🤖💻🗃️
+# Secure Pdf AI ✨🤖💻🗃️
 
 An AI-powered PDF chat built with Next.js 13, Vercel's AI SDK, Langchain, and PineconeDB
 
 
-
-
 ## Architecture
-This is a well-known RAG System More info here https://www.rungalileo.io/blog/mastering-rag-how-to-architect-an-enterprise-rag-system#encoder.
+This is a well-known RAG System More info 👇
+
+- 📖 https://www.rungalileo.io/blog/mastering-rag-how-to-architect-an-enterprise-rag-system#encoder.
+- 📸 https://excalidraw.com/#json=cDuu8koVW7Z8Zdyv2Kf2N,sdueXXuYVUbIsdBy3KMs5w
 
 ![image](https://github.com/NickolasBenakis/secure-pdf-chat/assets/32495928/2254523f-7690-46cd-b6b7-20b7afef2122)
 
