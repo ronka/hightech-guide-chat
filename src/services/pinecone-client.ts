@@ -1,4 +1,6 @@
 import { Pinecone as PineconeClient } from "@pinecone-database/pinecone";
+import { uniqueId } from "lodash";
+import { env } from "./config";
 import logger from "./logger";
 import { delay } from "./utils";
 
@@ -8,9 +10,9 @@ class Pinecone {
 
   constructor() {
     this.client = new PineconeClient({
-      apiKey: process.env.PINECONE_API_KEY || "",
+      apiKey: env.PINECONE_API_KEY || "",
     });
-    this.indexName = process.env.PINECONE_INDEX_NAME || "";
+    this.indexName = env.PINECONE_INDEX_NAME || uniqueId("pc-uuid-");
   }
 
   async init() {
@@ -49,9 +51,9 @@ class Pinecone {
         },
       });
       logger.info(
-        `Waiting for ${process.env.INDEX_INIT_TIMEOUT} seconds for index : ${indexName} initializing to complete...`,
+        `Waiting for ${env.INDEX_INIT_TIMEOUT} seconds for index : ${indexName} initializing to complete...`,
       );
-      await delay(Number(process.env.INDEX_INIT_TIMEOUT));
+      await delay(Number(env.INDEX_INIT_TIMEOUT));
       logger.info(
         `Index : ${indexName} initialized successfully. indexCreated: ${indexCreated}`,
       );

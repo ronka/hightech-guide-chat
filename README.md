@@ -2,7 +2,6 @@
 
 An AI-powered PDF chat built with Next.js 13, Vercel's AI SDK, Arcjet, Langchain, and PineconeDB
 
-
 ## Architecture
 This is a well-known RAG System More info 👇
 
@@ -17,16 +16,16 @@ This is a well-known RAG System More info 👇
 Built with:
 - ✅ Next.js 13
 - ✅ Vercel's AI SDK
+- ✅ Arcjet
 - ✅ Shadcn-ui
 - ✅ Langchain TypeScript integration
 - ✅ PineconeDB as the vectore-db store
 
-## 🗃️ Pre-requisites
+# 🚀 Getting Started
 - Create a free account and get an OPEN_AI key from [platform.openai.com](https://platform.openai.com/)
 - Create a free account and get access to PineconeDB  from [pinecone.io](https://www.pinecone.io/)
 - Create a free account and get access to Arcjet from [arcjet.com](https://arcjet.com/)
-- And populate your `.env` file with the required information.
-
+- And populate your `.env` file with the required information. For more info about where to get all these env variables look at .env.example in the root folder.
 
 ## 🧞 Commands
 
