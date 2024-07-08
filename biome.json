@@ -1,0 +1,68 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "formatter": {
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "indentStyle": "space"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "ignore": ["node_modules", "public", "helpers", "*.js"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "off",
+        "noBannedTypes": "warn",
+        "useOptionalChain": "warn",
+        "noUselessFragments": "warn",
+        "noStaticOnlyClass": "warn",
+        "noThisInStatic": "warn",
+        "noUselessSwitchCase": "warn",
+        "noUselessConstructor": "warn",
+        "useFlatMap": "warn",
+        "useArrowFunction": "warn"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn",
+        "noDelete": "warn"
+      },
+      "suspicious": {
+        "noImplicitAnyLet": "warn",
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "warn",
+        "noShadowRestrictedNames": "warn",
+        "noAsyncPromiseExecutor": "warn",
+        "noAssignInExpressions": "warn",
+        "noEmptyInterface": "warn",
+        "noConfusingVoidType": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "noArguments": "warn",
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "warn",
+        "useEnumInitializers": "warn",
+        "noUnusedTemplateLiteral": "warn",
+        "useSelfClosingElements": "warn"
+      },
+      "a11y": {
+        "useValidAnchor": "warn",
+        "useAnchorContent": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useKeyWithClickEvents": "warn",
+        "noBlankTarget": "warn",
+        "useIframeTitle": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
+      }
+    }
+  }
+}
