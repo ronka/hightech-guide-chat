@@ -30,7 +30,7 @@ export default function Home() {
       />
       <div className="flex flex-1 py-4">
         <div className="w-full">
-          <Chat sessionId={sessionId} />
+          <Chat sessionId={sessionId} isUploading={isUploading} />
         </div>
       </div>
     </main>

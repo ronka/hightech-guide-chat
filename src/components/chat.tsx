@@ -10,9 +10,10 @@ import { Spinner } from "./ui/spinner";
 
 export interface ChatProps {
   sessionId: string;
+  isUploading?: boolean;
 }
 
-export function Chat({ sessionId }: ChatProps) {
+export function Chat({ sessionId, isUploading }: ChatProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
     useChat({
@@ -21,7 +22,10 @@ export function Chat({ sessionId }: ChatProps) {
     });
 
   return (
-    <div className="rounded-2xl border h-[75vh] flex flex-col justify-between">
+    <div
+      className="rounded-2xl border h-[75vh] flex flex-col justify-between"
+      style={isUploading ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+    >
       <div className="p-6 overflow-auto" ref={containerRef}>
         {messages.map(({ id, role, content }: Message, index) => (
           <ChatLine
@@ -39,10 +43,15 @@ export function Chat({ sessionId }: ChatProps) {
           value={input}
           placeholder={"Type to chat with AI..."}
           onChange={handleInputChange}
+          style={isUploading ? { pointerEvents: "none" } : {}}
           className="mr-2"
         />
 
-        <Button type="submit" className="w-24">
+        <Button
+          type="submit"
+          className="w-24"
+          style={isUploading ? { pointerEvents: "none" } : {}}
+        >
           {isLoading ? <Spinner /> : "Ask"}
         </Button>
       </form>
