@@ -8,17 +8,21 @@ export async function getChunkedDocsFromUploadedPDFs(
   fileList: File[],
 ): Promise<Document<Record<string, unknown>>[]> {
   try {
-    const loaderList = fileList.map((file) => new WebPDFLoader(file));
-    const docs = flattenDeep(
-      await Promise.all(loaderList.map((loader) => loader.load())),
-    );
+    const docList = [];
+    for (const file of fileList) {
+      const pdfLoader = new WebPDFLoader(file);
+      const docs = await pdfLoader.load();
+      docList.push(docs);
+    }
+
+    const flatDocs = flattenDeep(docList);
 
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
       chunkOverlap: 200,
     });
 
-    const chunkedDocs = await textSplitter.splitDocuments(docs);
+    const chunkedDocs = await textSplitter.splitDocuments(flatDocs);
 
     return chunkedDocs;
   } catch (error) {
