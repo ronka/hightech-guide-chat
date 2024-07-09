@@ -22,8 +22,10 @@ export async function getChunkedDocsFromUploadedPDFs(
       chunkOverlap: 200,
     });
 
+    console.log("flatdocs", flatDocs);
     const chunkedDocs = await textSplitter.splitDocuments(flatDocs);
 
+    console.log("chunckedDocs", chunkedDocs);
     return chunkedDocs;
   } catch (error) {
     logger.error(`Error loading PDF: ${fileList} ${error}`);

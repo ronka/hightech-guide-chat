@@ -15,6 +15,7 @@ export async function embedAndStoreDocs(
     const embeddings = new OpenAIEmbeddings();
     const index = client.Index(env.PINECONE_INDEX_NAME);
 
+    console.log("embedding docs", docs);
     //embed the PDF documents
     await PineconeStore.fromDocuments(docs, embeddings, {
       pineconeIndex: index,
