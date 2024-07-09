@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [sessionId, setSessionId] = useState<string>(`session-id-${nanoid()}`);
-  const { onUpload } = useUploadPdf(sessionId);
+  const { onUpload, isUploading } = useUploadPdf(sessionId);
   const [files, setFiles] = useState<File[]>([]);
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,11 @@ export default function Home() {
       <h1 className="text-3xl font-bold text-center py-4">
         Secure AI PDF Chat
       </h1>
-      <DropZone onFileChange={onFileChange} files={files} />
+      <DropZone
+        onFileChange={onFileChange}
+        files={files}
+        isUploading={isUploading}
+      />
       <div className="flex flex-1 py-4">
         <div className="w-full">
           <Chat sessionId={sessionId} />

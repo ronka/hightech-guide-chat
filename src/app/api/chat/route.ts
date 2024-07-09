@@ -35,15 +35,15 @@ export async function POST(req: NextRequest) {
   const decision = await aj.protect(req, { sessionId, requested: 1 }); // Deduct 5 tokens from the bucket
   logger.info("Arcjet decision", decision);
 
-  if (decision.isDenied() && decision.reason.isShield()) {
-    return NextResponse.json(
-      {
-        error: "Forbidden",
-        reason: decision.reason,
-      },
-      { status: 403 },
-    );
-  }
+  // if (decision.isDenied() && decision.reason.isShield()) {
+  //   return NextResponse.json(
+  //     {
+  //       error: "Forbidden",
+  //       reason: decision.reason,
+  //     },
+  //     { status: 403 },
+  //   );
+  // }
 
   if (decision.isDenied()) {
     return NextResponse.json(

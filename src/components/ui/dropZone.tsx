@@ -2,13 +2,18 @@ import { cn } from "@/services/utils";
 import React, { type ChangeEvent } from "react";
 
 export interface DropZoneProps {
-  onFileChange: (file: ChangeEvent<HTMLInputElement>) => void;
   files: File[];
+  isUploading: boolean;
+  onFileChange: (file: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const DropZone: React.FC<DropZoneProps> = ({ onFileChange, files }) => {
+const DropZone: React.FC<DropZoneProps> = ({
+  files,
+  isUploading,
+  onFileChange,
+}) => {
   const ref = React.useRef<HTMLInputElement>(null);
-  const hasUploadedFiles = files.length > 0;
+  const hasFilesInMemory = files.length > 0;
 
   return (
     <React.Fragment>
@@ -16,12 +21,12 @@ const DropZone: React.FC<DropZoneProps> = ({ onFileChange, files }) => {
         <div className="overflow-y-auto flex items-center justify-start w-full flex-col relative max-h-[75vh]">
           <label
             htmlFor="dropzone-file"
-            aria-disabled={hasUploadedFiles}
+            aria-disabled={hasFilesInMemory}
             className={cn(
               "flex flex-col items-center justify-start w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600",
             )}
           >
-            {!hasUploadedFiles && (
+            {!hasFilesInMemory && !isUploading && (
               <div className="flex flex-col items-center justify-start pt-5 pb-6">
                 <svg
                   className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
@@ -47,7 +52,35 @@ const DropZone: React.FC<DropZoneProps> = ({ onFileChange, files }) => {
                 </p>
               </div>
             )}
-            {hasUploadedFiles && (
+            {hasFilesInMemory && isUploading && (
+              <div className="flex flex-col items-center justify-start pt-5 pb-6">
+                <svg
+                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400 animate-spin"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V2.5"
+                  />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Uploading...</span>
+                </p>
+              </div>
+            )}
+            {hasFilesInMemory && !isUploading && (
               <div className="flex flex-col items-center justify-start pt-5 pb-6">
                 <svg
                   className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
