@@ -2,18 +2,21 @@ import { env } from "./config";
 
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
-import type { Pinecone } from "@pinecone-database/pinecone";
 import logger from "./logger";
+import { getPineconeClient } from "./pinecone-client";
 
 export async function embedAndStoreDocs(
-  client: Pinecone,
   // @ts-ignore docs type error
   docs: Document<Record<string, unknown>>[],
 ) {
   /*create and store the embeddings in the vectorStore*/
   try {
+    const pineconeClient = await getPineconeClient();
     const embeddings = new OpenAIEmbeddings();
-    const index = client.Index(env.PINECONE_INDEX_NAME);
+
+    console.log("before index", env.PINECONE_INDEX_NAME);
+    const index = pineconeClient.index(env.PINECONE_INDEX_NAME);
+    console.log("after index", index);
 
     console.log(`before saving: embedding docs in ${index}`, docs);
     //embed the PDF documents
@@ -27,10 +30,11 @@ export async function embedAndStoreDocs(
 }
 
 // Returns vector-store handle to be used a retrievers on langchains
-export async function getVectorStore(client: Pinecone) {
+export async function getVectorStore() {
   try {
+    const pineconeClient = await getPineconeClient();
     const embeddings = new OpenAIEmbeddings();
-    const index = client.Index(env.PINECONE_INDEX_NAME);
+    const index = pineconeClient.index(env.PINECONE_INDEX_NAME);
 
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex: index,

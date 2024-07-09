@@ -6,7 +6,6 @@ import {
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { nonStreamingModel, streamingModel } from "./llm";
 import logger from "./logger";
-import { getPineconeClient } from "./pinecone-client";
 import { QA_TEMPLATE, STANDALONE_QUESTION_TEMPLATE } from "./prompt-templates";
 import { getVectorStore } from "./vector-store";
 
@@ -19,8 +18,7 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
   try {
     // Open AI recommendation
     const sanitizedQuestion = question.trim().replaceAll("\n", " ");
-    const pineconeClient = await getPineconeClient();
-    const vectorStore = await getVectorStore(pineconeClient);
+    const vectorStore = await getVectorStore();
     const { stream, handlers } = LangChainStream({
       experimental_streamData: true,
     });

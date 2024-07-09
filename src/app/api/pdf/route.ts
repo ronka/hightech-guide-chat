@@ -81,15 +81,12 @@ export async function POST(req: NextRequest) {
 
 const saveOnPinecone = async (files: File[]) => {
   try {
-    const pineconeClient = await getPineconeClient();
-
     logger.info("Preparing chunks from PDF files");
-
     const docs = await getChunkedDocsFromUploadedPDFs(files);
 
     logger.info(`Loading ${docs.length} chunks into pinecone...`);
 
-    await embedAndStoreDocs(pineconeClient, docs);
+    await embedAndStoreDocs(docs);
     logger.info("Data embedded and stored in pine-cone successfully.");
   } catch (error) {
     console.error("saveOnPinecone failed ", error);
