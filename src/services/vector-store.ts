@@ -24,7 +24,7 @@ export async function embedAndStoreDocs(
       pineconeIndex: index,
     });
   } catch (error) {
-    logger.error("error ", error);
+    logger.error(error);
     throw new Error("Failed to load your docs !");
   }
 }
