@@ -27,21 +27,20 @@ export function scrollToBottom(containerRef: React.RefObject<HTMLElement>) {
 // github.com/hwchase17/langchainjs/blob/357d6fccfc78f1332b54d2302d92e12f0861c12c/examples/src/guides/expression_language/cookbook_conversational_retrieval.ts#L61
 export const formatChatHistory = (chatHistory: [string, string][]) => {
   const formattedDialogueTurns = chatHistory.map(
-    (dialogueTurn) =>
-      `Human: ${dialogueTurn[0]}\nAssistant: ${dialogueTurn[1]}`,
+    (dialogueTurn) => `Human: ${dialogueTurn[0]}\nAssistant: ${dialogueTurn[1]}`
   );
 
   return formattedDialogueTurns.join("\n");
 };
 
-export function formatPageNumber(input:string): string {
+export function formatPageNumber(input: string): string {
   // Regex to match and capture the format "<number> I" or "I <number>"
   const match = input.match(/(\d+)\s*I|I\s*(\d+)/);
 
   if (match) {
     const pageNumber = match[1] || match[2]; // Capture the page number
     // Remove everything before and including the pattern "<number> I" or "I <number>"
-    const restOfMessage = input.replace(/^.*I\s*\d+\s*/, '').trim();
+    const restOfMessage = input.replace(/^.*I\s*\d+\s*/, "").trim();
     return `[עמוד ${pageNumber}]: ${restOfMessage}`;
   }
 
@@ -61,7 +60,7 @@ export const initialMessages: Message[] = [
     role: "assistant",
     id: "0",
     content:
-      "היי! אני העוזר להייטקיסט המתחיל שלך, תשאל אותי מה שתרצה לגבי הספר",
+      "היי! אני בוט AI לספר להייטקיסט המתחיל, תשאל אותי מה שתרצה לגבי הספר",
   },
 ];
 
