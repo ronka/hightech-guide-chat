@@ -41,18 +41,19 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
       <form onSubmit={handleSubmit} className="p-4 flex clear-both">
         <Input
           value={input}
-          placeholder={"Type to chat with AI..."}
+          placeholder={"מה תרצו לשאול את הספר..."}
           onChange={handleInputChange}
           style={isUploading ? { pointerEvents: "none" } : {}}
-          className="mr-2"
+          className="ml-2"
         />
 
         <Button
           type="submit"
           className="w-24"
+		  disabled={isLoading}
           style={isUploading ? { pointerEvents: "none" } : {}}
         >
-          {isLoading ? <Spinner /> : "Ask"}
+          {isLoading ? <Spinner /> : "שלח"}
         </Button>
       </form>
     </div>

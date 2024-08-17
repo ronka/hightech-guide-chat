@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="relative container flex min-h-screen flex-col">
       <h1 className="text-3xl font-bold text-center py-4">
-        Secure AI PDF Chat
+        המדריך להייטקיסט המתחיל AI
       </h1>
       <div className="flex flex-1 py-4">
         <div className="w-full">
