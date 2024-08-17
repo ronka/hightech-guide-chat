@@ -34,7 +34,7 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
         questionGeneratorChainOptions: {
           llm: nonStreamingModel,
         },
-      },
+      }
     );
 
     // Question using chat-history
@@ -45,14 +45,26 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
           question: sanitizedQuestion,
           chat_history: chatHistory,
         },
-        [handlers],
+        [handlers]
       )
       .then(async (res) => {
         const sourceDocuments = res?.sourceDocuments;
         const firstTwoDocuments = sourceDocuments.slice(0, 2);
         const pageContents = firstTwoDocuments.map(
-          ({ pageContent }: { pageContent: string }) => pageContent,
+          ({ pageContent }: { pageContent: string }) => pageContent
         );
+        // const pageContents = firstTwoDocuments.map(
+        //     ({
+        //         pageContent,
+        //         metadata,
+        //     }: {
+        //         pageContent: string;
+        //         metadata: { "loc.pageNumber": string };
+        //     }) => ({
+        //         pageContent,
+        //         pageNumber: metadata["loc.pageNumber"],
+        //     })
+        // );
         logger.info("already appended ", data);
         data.append({
           sources: pageContents,
