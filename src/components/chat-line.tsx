@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formattedText } from "@/services/utils";
+import { formatPageNumber, formattedText } from "@/services/utils";
 import type { Message } from "ai/react";
 import ReactMarkdown from "react-markdown";
 import Balancer from "react-wrap-balancer";
@@ -62,10 +62,10 @@ export function ChatLine({
               <Accordion type="single" collapsible className="w-full">
                 {sources.map((source, index) => (
                   <AccordionItem value={`source-${index}`} key={index + source}>
-                    <AccordionTrigger>{`Source ${index + 1}`}</AccordionTrigger>
+                    <AccordionTrigger>{`מקור ${index + 1}`}</AccordionTrigger>
                     <AccordionContent>
                       <ReactMarkdown linkTarget="_blank">
-                        {formattedText(source)}
+                        {formatPageNumber(formattedText(source))}
                       </ReactMarkdown>
                     </AccordionContent>
                   </AccordionItem>

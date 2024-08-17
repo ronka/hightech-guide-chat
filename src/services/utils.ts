@@ -34,6 +34,20 @@ export const formatChatHistory = (chatHistory: [string, string][]) => {
   return formattedDialogueTurns.join("\n");
 };
 
+export function formatPageNumber(input:string): string {
+  // Regex to match and capture the format "<number> I" or "I <number>"
+  const match = input.match(/(\d+)\s*I|I\s*(\d+)/);
+
+  if (match) {
+    const pageNumber = match[1] || match[2]; // Capture the page number
+    // Remove everything before and including the pattern "<number> I" or "I <number>"
+    const restOfMessage = input.replace(/^.*I\s*\d+\s*/, '').trim();
+    return `[עמוד ${pageNumber}]: ${restOfMessage}`;
+  }
+
+  return input;
+}
+
 export function formattedText(inputText: string) {
   return inputText
     .replace(/\n+/g, " ") // Replace multiple consecutive new lines with a single space
