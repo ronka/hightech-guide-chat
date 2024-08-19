@@ -14,13 +14,39 @@ import {
 } from "@/components/ui/card";
 import { formatPageNumber, formattedText } from "@/services/utils";
 import type { Message } from "ai/react";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Balancer from "react-wrap-balancer";
+import { Button } from "./ui/button";
+
+function wrapMarkdownLink(input: string): React.ReactNode {
+  const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/;
+
+  if (markdownLinkRegex.test(input)) {
+    return (
+      <ReactMarkdown
+        components={{
+          a: ({ href, ...props }) => (
+            <Link
+              className="text-blue-500 hover:underline"
+              href={href ?? ""}
+              {...props}
+            />
+          ),
+        }}
+      >
+        {input}
+      </ReactMarkdown>
+    );
+  }
+
+  return input;
+}
 
 const convertNewLines = (text: string) =>
   text.split("\n").map((line, i) => (
     <span key={`${i}-${line}`}>
-      {line}
+      {wrapMarkdownLink(line)}
       <br />
     </span>
   ));
