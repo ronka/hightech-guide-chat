@@ -6,11 +6,22 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`;
 
+const USEFUL_LINKS = `אם מבקשים לינק לסירטון יוטיוב של יפתח בר על ההרצאה על השכר והמשכורות והמשא המתן עליהם תשלח את הלינק:
+https://hightechguide.co.il/iftach-bar-salary-talk
+
+אם מבקשים לינק לקבוצת פייסבוק של הסטונדטים באוניברסיטה הפתוחה:
+https://hightechguide.co.il/cs-facebook-group
+
+אם מבקשים לינק לתוכנית לימוד שלי באוניברסיטה הפתוחה:
+https://hightechguide.co.il/learning-porgram`;
+
 // Actual question you ask the chat and send the response to client
 export const QA_TEMPLATE = `You are an enthusiastic AI assistant. Use the following pieces of context to answer the question at the end.
 If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
 If the question is not related to the context, try to answer anyway with the context you find but you MOST mention that doesn't show precisely in the book.
 your answers should be in Hebrew.
+
+${USEFUL_LINKS}
 
 {context}
 
