@@ -5,6 +5,9 @@ import arcjet, { shield, tokenBucket } from "@arcjet/next";
 import type { Message } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 
+// This is required to enable streaming
+export const dynamic = "force-dynamic";
+
 const aj = arcjet({
   key: env.ARCJET_KEY, // Get your site key from https://app.arcjet.com
   rules: [
@@ -41,14 +44,14 @@ export async function POST(req: NextRequest) {
         error: "Forbidden",
         reason: decision.reason,
       },
-      { status: 403 },
+      { status: 403 }
     );
   }
 
   if (decision.isDenied()) {
     return NextResponse.json(
       { error: "Too Many Requests", reason: decision.reason },
-      { status: 429 },
+      { status: 429 }
     );
   }
 
@@ -67,7 +70,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 400,
-      },
+      }
     );
   }
 
@@ -86,7 +89,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
