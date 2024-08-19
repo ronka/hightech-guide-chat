@@ -5,9 +5,6 @@ import arcjet, { shield, tokenBucket } from "@arcjet/next";
 import type { Message } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 
-// This is required to enable streaming
-export const dynamic = "force-dynamic";
-
 const aj = arcjet({
   key: env.ARCJET_KEY, // Get your site key from https://app.arcjet.com
   rules: [
