@@ -1,13 +1,13 @@
-import {
-  LangChainStream,
-  StreamingTextResponse,
-  experimental_StreamData,
-} from "ai-stream-experimental";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { nonStreamingModel, streamingModel } from "./llm";
 import logger from "./logger";
 import { QA_TEMPLATE, STANDALONE_QUESTION_TEMPLATE } from "./prompt-templates";
 import { getVectorStore } from "./vector-store";
+import {
+  experimental_StreamData,
+  LangChainStream,
+  StreamingTextResponse,
+} from "ai";
 
 type callChainArgs = {
   question: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { getSources, initialMessages } from "@/services/utils";
-import { type Message, useChat } from "ai-stream-experimental/react";
+import { type Message, useChat } from "ai/react";
 import { useEffect, useRef } from "react";
 import { ChatLine } from "./chat-line";
 import { Button } from "./ui/button";
@@ -13,13 +13,19 @@ export interface ChatProps {
   isUploading?: boolean;
 }
 
+interface Data {
+  sources: string[];
+}
+
 export function Chat({ sessionId, isUploading }: ChatProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       initialMessages: initialMessages as Message[],
       body: { sessionId },
     });
+
+  const data: Data[] = [];
 
   return (
     <div
