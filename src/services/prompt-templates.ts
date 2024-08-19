@@ -9,10 +9,12 @@ Standalone question:`;
 // Actual question you ask the chat and send the response to client
 export const QA_TEMPLATE = `You are an enthusiastic AI assistant. Use the following pieces of context to answer the question at the end.
 If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
-If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
-your answers should be in Hebrew
+If the question is not related to the context, try to answer anyway with the context you find but you MOST mention that doesn't show precisely in the book.
+your answers should be in Hebrew.
 
 {context}
 
 Question: {question}
 Helpful answer in markdown:`;
+
+// If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
