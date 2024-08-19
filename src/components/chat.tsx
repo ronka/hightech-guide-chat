@@ -21,9 +21,6 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
       body: { sessionId },
     });
 
-  console.log("data", data);
-  console.log("messages", messages);
-
   return (
     <div
       className="rounded-2xl border h-[75vh] flex flex-col justify-between"
