@@ -43,7 +43,7 @@ export function formatPageNumber(input: string): string {
     const pageNumber = match[1] || match[2]; // Capture the page number
     // Remove everything before and including the pattern "<number> I" or "I <number>"
     const restOfMessage = input.replace(/^.*I\s*\d+\s*/, "").trim();
-    return `[עמוד ${pageNumber}]: ${restOfMessage}`;
+    return `${restOfMessage}`;
   }
 
   return input;
@@ -66,12 +66,18 @@ export const initialMessages: Message[] = [
   },
 ];
 
+export interface Source {
+  pageContent: string;
+  pageNumber: number;
+}
 interface Data {
-  sources: string[];
+  sources: Source[];
 }
 
 const dataSchema: z.ZodSchema<Data> = z.object({
-  sources: z.array(z.string()),
+  sources: z.array(
+    z.object({ pageContent: z.string(), pageNumber: z.number() })
+  ),
 });
 
 // Maps the sources with the right ai-message
@@ -79,7 +85,7 @@ export const getSources = (
   data: JSONValue[],
   role: string,
   index: number
-): string[] => {
+): Source[] => {
   if (role !== "assistant" || index < 2 || (index - 2) % 2 !== 0) {
     return [];
   }

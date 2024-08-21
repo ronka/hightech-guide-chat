@@ -50,24 +50,21 @@ export async function callChain({ question, chatHistory }: callChainArgs) {
       .then(async (res) => {
         const sourceDocuments = res?.sourceDocuments;
         const firstTwoDocuments = sourceDocuments.slice(0, 2);
-        const pageContents = firstTwoDocuments.map(
-          ({ pageContent }: { pageContent: string }) => pageContent
+        const sources = firstTwoDocuments.map(
+          ({
+            pageContent,
+            metadata,
+          }: {
+            pageContent: string;
+            metadata: { "loc.pageNumber": string };
+          }) => ({
+            pageContent,
+            pageNumber: metadata["loc.pageNumber"],
+          })
         );
-        // const pageContents = firstTwoDocuments.map(
-        //     ({
-        //         pageContent,
-        //         metadata,
-        //     }: {
-        //         pageContent: string;
-        //         metadata: { "loc.pageNumber": string };
-        //     }) => ({
-        //         pageContent,
-        //         pageNumber: metadata["loc.pageNumber"],
-        //     })
-        // );
         logger.info("already appended ", data);
         data.append({
-          sources: pageContents,
+          sources,
         });
         data.close();
       });

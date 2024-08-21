@@ -12,12 +12,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatPageNumber, formattedText } from "@/services/utils";
+import { formatPageNumber, formattedText, Source } from "@/services/utils";
 import type { Message } from "ai/react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Balancer from "react-wrap-balancer";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 
 function wrapMarkdownLink(input: string): React.ReactNode {
   const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/;
@@ -52,7 +53,7 @@ const convertNewLines = (text: string) =>
   ));
 
 interface ChatLineProps extends Partial<Message> {
-  sources: string[];
+  sources: Source[];
 }
 
 export function ChatLine({
@@ -63,6 +64,7 @@ export function ChatLine({
   if (!content) {
     return null;
   }
+
   const formattedMessage = convertNewLines(content);
 
   return (
@@ -87,15 +89,20 @@ export function ChatLine({
             {sources?.length ? (
               <Accordion type="single" collapsible className="w-full">
                 {sources.map((source, index) => (
-                  <AccordionItem value={`source-${index}`} key={index + source}>
-                    <AccordionTrigger>{`מקור מהספר ${
-                      index + 1
-                    }`}</AccordionTrigger>
+                  <AccordionItem value={`source-${index}`} key={index}>
+                    <AccordionTrigger>
+                      <div className="flex gap-4">
+                        <Badge variant={"secondary"}>
+                          עמוד {source.pageNumber}
+                        </Badge>
+                        <Badge variant={"outline"}>מקור {index + 1}</Badge>
+                      </div>
+                    </AccordionTrigger>
                     <AccordionContent>
                       {" "}
                       <blockquote className="bg-muted p-4 rounded-md border-l-4 border-primary">
                         <ReactMarkdown linkTarget="_blank">
-                          {formatPageNumber(formattedText(source))}
+                          {formatPageNumber(formattedText(source.pageContent))}
                         </ReactMarkdown>
                       </blockquote>
                     </AccordionContent>
