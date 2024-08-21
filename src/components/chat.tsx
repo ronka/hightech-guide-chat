@@ -15,14 +15,13 @@ export interface ChatProps {
 }
 
 export function Chat({ sessionId, isUploading }: ChatProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
     useChat({
       initialMessages: initialMessages as Message[],
       body: { sessionId },
     });
 
-  useScrollToBottom({ containerRef, messages });
+  const { containerRef } = useScrollToBottom({ messages });
 
   return (
     <div
