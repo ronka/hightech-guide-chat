@@ -92,9 +92,12 @@ export function ChatLine({
                       index + 1
                     }`}</AccordionTrigger>
                     <AccordionContent>
-                      <ReactMarkdown linkTarget="_blank">
-                        {formatPageNumber(formattedText(source))}
-                      </ReactMarkdown>
+                      {" "}
+                      <blockquote className="bg-muted p-4 rounded-md border-l-4 border-primary">
+                        <ReactMarkdown linkTarget="_blank">
+                          {formatPageNumber(formattedText(source))}
+                        </ReactMarkdown>
+                      </blockquote>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
