@@ -1,6 +1,8 @@
 import type { Message } from "ai";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { JSONValue } from "ai";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -68,13 +70,25 @@ interface Data {
   sources: string[];
 }
 
+const dataSchema: z.ZodSchema<Data> = z.object({
+  sources: z.array(z.string()),
+});
+
 // Maps the sources with the right ai-message
-export const getSources = (data: Data[], role: string, index: number) => {
-  if (role === "assistant" && index >= 2 && (index - 2) % 2 === 0) {
-    const sourcesIndex = (index - 2) / 2;
-    if (data[sourcesIndex]?.sources) {
-      return data[sourcesIndex].sources;
-    }
+export const getSources = (
+  data: JSONValue[],
+  role: string,
+  index: number
+): string[] => {
+  if (role !== "assistant" || index < 2 || (index - 2) % 2 !== 0) {
+    return [];
   }
-  return [];
+
+  const sourcesIndex = (index - 2) / 2;
+  const parsedData = dataSchema.safeParse(data[sourcesIndex]);
+
+  // Check if parsing was successful and sources exist
+  return parsedData.success && parsedData.data.sources
+    ? parsedData.data.sources
+    : [];
 };

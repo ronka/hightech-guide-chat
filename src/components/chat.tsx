@@ -13,19 +13,13 @@ export interface ChatProps {
   isUploading?: boolean;
 }
 
-interface Data {
-  sources: string[];
-}
-
 export function Chat({ sessionId, isUploading }: ChatProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
     useChat({
       initialMessages: initialMessages as Message[],
       body: { sessionId },
     });
-
-  const data: Data[] = [];
 
   return (
     <div
