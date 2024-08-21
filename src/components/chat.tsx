@@ -7,6 +7,7 @@ import { ChatLine } from "./chat-line";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./ui/spinner";
+import { useScrollToBottom } from "@/hooks/useScrollToBottom";
 
 export interface ChatProps {
   sessionId: string;
@@ -20,6 +21,8 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
       initialMessages: initialMessages as Message[],
       body: { sessionId },
     });
+
+  useScrollToBottom({ containerRef, messages });
 
   return (
     <div
