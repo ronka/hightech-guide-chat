@@ -88,7 +88,9 @@ export function ChatLine({
               <Accordion type="single" collapsible className="w-full">
                 {sources.map((source, index) => (
                   <AccordionItem value={`source-${index}`} key={index + source}>
-                    <AccordionTrigger>{`מקור ${index + 1}`}</AccordionTrigger>
+                    <AccordionTrigger>{`מקור מהספר ${
+                      index + 1
+                    }`}</AccordionTrigger>
                     <AccordionContent>
                       <ReactMarkdown linkTarget="_blank">
                         {formatPageNumber(formattedText(source))}
