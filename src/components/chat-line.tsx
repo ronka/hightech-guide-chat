@@ -27,13 +27,15 @@ function wrapMarkdownLink(input: string): React.ReactNode {
     return (
       <ReactMarkdown
         components={{
-          a: ({ href, ...props }) => (
+          a: ({ href, children, ...props }) => (
             <Link
               className="text-blue-500 hover:underline"
               href={href ?? ""}
               target="_blank"
               {...props}
-            />
+            >
+              {children} ↖
+            </Link>
           ),
         }}
       >
