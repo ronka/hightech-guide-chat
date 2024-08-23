@@ -25,7 +25,7 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
 
   return (
     <div
-      className="rounded-2xl border h-[75vh] flex flex-col justify-between"
+      className="rounded-2xl border m:h-[75vh] h-[65vh] flex flex-col justify-between"
       style={isUploading ? { opacity: 0.5, cursor: "not-allowed" } : {}}
     >
       <div className="md:p-6 p-2 overflow-auto" ref={containerRef}>
