@@ -31,6 +31,7 @@ function wrapMarkdownLink(input: string): React.ReactNode {
             <Link
               className="text-blue-500 hover:underline"
               href={href ?? ""}
+              target="_blank"
               {...props}
             />
           ),
