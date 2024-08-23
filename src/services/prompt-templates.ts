@@ -9,13 +9,13 @@ Follow Up Input: {question}
 Standalone question:`;
 
 const USEFUL_LINKS = `אם מבקשים לינק לסירטון יוטיוב של יפתח בר על ההרצאה על השכר והמשכורות והמשא המתן עליהם תשלח את הלינק:
-https://hightechguide.co.il/iftach-bar-salary-talk
+${CHAT_LINKS.FROM_THE_BOOK.IFTAH_BAR_SALARY_TALK}
 
 אם מבקשים לינק לקבוצת פייסבוק של הסטונדטים באוניברסיטה הפתוחה:
-https://hightechguide.co.il/cs-facebook-group
+${CHAT_LINKS.FROM_THE_BOOK.CS_FACEBOOK_GROUP}
 
 אם מבקשים לינק לתוכנית לימוד שלי באוניברסיטה הפתוחה:
-https://hightechguide.co.il/learning-porgram
+${CHAT_LINKS.FROM_THE_BOOK.LEARNING_PROGRAM}
 
 לינק לקניית עותק פיזי ודיגיטלי דרך סטימצקי:
 ${CHAT_LINKS.PURCHASE.STEIMATZKY}
