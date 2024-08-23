@@ -17,7 +17,7 @@ export default function Home() {
             <div className="md:col-span-3 md:px-4 py-2">
               <Chat sessionId={sessionId} isUploading={false} />
             </div>
-            <div className="md:col-span-1 p-4">
+            <div className="md:col-span-1 md:px-4 py-2">
               <BookPromo />
             </div>
           </div>

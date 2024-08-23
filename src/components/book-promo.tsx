@@ -13,7 +13,7 @@ export function BookPromo() {
       <div className="relative overflow-hidden rounded-t-lg">
         {/* TODO: replace with a fitting image */}
         <img
-          src="https://ronka.dev/wp-content/uploads/2024/04/tiny.jpeg"
+          src="/promo-pic.png"
           alt="Book Cover"
           className="aspect-[3/4] bg-gray-300 w-full object-cover"
         />
