@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BOOK_PROMO } from "@/constants/links";
+import { track } from "@vercel/analytics";
 
 export function BookPromo() {
   return (
@@ -28,10 +29,26 @@ export function BookPromo() {
           </p>
         </div>
         <Button className="w-full bg-green-500" asChild>
-          <Link href={BOOK_PROMO.STEIMATZKY}>📚 קנה עכשיו מסטימצקי</Link>
+          <span
+            onClick={() => {
+              track("Book Promo Click", {
+                source: "STEIMATZKY",
+              });
+            }}
+          >
+            <Link href={BOOK_PROMO.STEIMATZKY}>📚 קנה עכשיו מסטימצקי</Link>
+          </span>
         </Button>
         <Button className="w-full bg-sky-500" asChild>
-          <Link href={BOOK_PROMO.EVRIT}>📱 קנה עכשיו מע-ברית</Link>
+          <span
+            onClick={() => {
+              track("Book Promo Click", {
+                source: "EVRIT",
+              });
+            }}
+          >
+            <Link href={BOOK_PROMO.EVRIT}>📱 קנה עכשיו מע-ברית</Link>
+          </span>
         </Button>
       </CardContent>
     </Card>

@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./ui/spinner";
 import { useScrollToBottom } from "@/hooks/useScrollToBottom";
+import { track } from "@vercel/analytics";
 
 export interface ChatProps {
   sessionId: string;
@@ -22,6 +23,20 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
     });
 
   const { containerRef } = useScrollToBottom({ messages });
+
+  const handleSubmitWithAnalytics = (
+    event?: {
+      preventDefault?: () => void;
+    },
+    chatRequestOptions?: any
+  ) => {
+    track("Message", {
+      input: input,
+      messages: messages.map((message) => message.content).toString(),
+    });
+
+    handleSubmit(event, chatRequestOptions);
+  };
 
   return (
     <div
@@ -40,7 +55,10 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-4 flex clear-both">
+      <form
+        onSubmit={handleSubmitWithAnalytics}
+        className="p-4 flex clear-both"
+      >
         <Input
           value={input}
           placeholder={"מה תרצו לשאול את הספר..."}

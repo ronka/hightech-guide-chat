@@ -102,7 +102,6 @@ export function ChatLine({
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      {" "}
                       <blockquote className="bg-muted p-4 rounded-md border-l-4 border-primary">
                         <ReactMarkdown linkTarget="_blank">
                           {formatPageNumber(formattedText(source.pageContent))}
