@@ -8,6 +8,26 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`;
 
+const MORE_CONTEXT = `דוגמאות לפרוייקטים שעשיתי שעזרו לי למצוא עבודה:
+- בוט לטלגרם למציאת קבוצות לימוד באונירסיטה הפתוחה
+- GPTs לתוכניות אימון טיפוס
+- כשיצא הAPI של ChatGPT ניסיתי לבנות בפעם הראשונה אפליקציה למובייל עם React Native וככה למדתי לפתח אפליקציות למובייל וגם לעבוד עם הAPI שלהם
+
+טיפים למצוא עבודה ראשונה:
+- לאמץ גישת ה-Build in public
+- אנשים משתפים על מה הם עובדים, איך הם פותרים את הבעיות שהם נתקלים בהם אפשר. כלי מאוד טוב לשיווק וליצירת נטוורקינג
+- - ערוצים לפרסם בהם:
+- - - טוויטר
+- - - לינקדין
+- - - - #כולא_לייק
+- - - קבוצות בפייסבוק
+- - אנשים שאני עוקב אחרים בתחום
+- - - https://twitter.com/levelsio
+- - - https://twitter.com/dannypostmaa 
+- - - https://www.youtube.com/@marc-lou 
+
+`;
+
 const USEFUL_LINKS = `אם מבקשים לינק לסירטון יוטיוב של יפתח בר על ההרצאה על השכר והמשכורות והמשא המתן עליהם תשלח את הלינק:
 ${CHAT_LINKS.FROM_THE_BOOK.IFTAH_BAR_SALARY_TALK}
 
@@ -79,10 +99,15 @@ useful links from the book and about the book:
 ${USEFUL_LINKS}
 </links>
 
-usful links unlrelated to the book:
+useful links unlrelated to the book:
 <links>
 ${EXTRA_LINKS}
 </links>
+
+some more context outside of the book that should be used only if you didnt find an answer:
+<info>
+${MORE_CONTEXT}
+</info>
 
 {context}
 
