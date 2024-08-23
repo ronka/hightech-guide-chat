@@ -1,6 +1,7 @@
 "use client";
 import { BookPromo } from "@/components/book-promo";
 import { Chat } from "@/components/chat";
+import { Header } from "@/components/header";
 import { nanoid } from "ai";
 import { useState } from "react";
 
@@ -9,9 +10,7 @@ export default function Home() {
 
   return (
     <main className="relative container flex min-h-screen flex-col">
-      <h1 className="text-3xl font-bold text-center py-4">
-        המדריך להייטקיסט המתחיל AI
-      </h1>
+      <Header />
       <div className="flex flex-1 py-4">
         <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
