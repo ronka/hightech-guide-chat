@@ -6,12 +6,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BOOK_PROMO } from "@/constants/links";
 
 export function BookPromo() {
   return (
     <Card className="w-full rounded-lg shadow-lg">
       <div className="relative overflow-hidden rounded-t-lg">
-        {/* TODO: replace with a fitting image */}
         <img
           src="/promo-pic.png"
           alt="Book Cover"
@@ -28,16 +28,10 @@ export function BookPromo() {
           </p>
         </div>
         <Button className="w-full bg-green-500" asChild>
-          {/* TODO: replace with bitly */}
-          <Link href="https://www.steimatzky.co.il/011360920">
-            📚 קנה עכשיו מסטימצקי
-          </Link>
+          <Link href={BOOK_PROMO.STEIMATZKY}>📚 קנה עכשיו מסטימצקי</Link>
         </Button>
         <Button className="w-full bg-sky-500" asChild>
-          {/* TODO: replace with bitly */}
-          <Link href="https://www.e-vrit.co.il/Product/33185/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7%D7%99%D7%A1%D7%98_%D7%94%D7%9E%D7%AA%D7%97%D7%99%D7%9C">
-            📱 קנה עכשיו מע-ברית
-          </Link>
+          <Link href={BOOK_PROMO.EVRIT}>📱 קנה עכשיו מע-ברית</Link>
         </Button>
       </CardContent>
     </Card>
