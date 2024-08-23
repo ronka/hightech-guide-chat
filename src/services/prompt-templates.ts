@@ -17,11 +17,13 @@ ${CHAT_LINKS.FROM_THE_BOOK.CS_FACEBOOK_GROUP}
 אם מבקשים לינק לתוכנית לימוד שלי באוניברסיטה הפתוחה:
 ${CHAT_LINKS.FROM_THE_BOOK.LEARNING_PROGRAM}
 
-לינק לקניית עותק פיזי ודיגיטלי דרך סטימצקי:
-${CHAT_LINKS.PURCHASE.STEIMATZKY}
+לינק לקניית עותק פיזי ודיגיטלי דרך ״סטימצקי״:
+  link: "${CHAT_LINKS.PURCHASE.STEIMATZKY}",
+this link should always be in markdown with a label to hide the true link
 
-לינק לקניית עותק דיגיטלי דרך סטימצקי:
-${CHAT_LINKS.PURCHASE.EVRIT}
+לינק לקניית עותק דיגיטלי דרך אתר ״עברית״:
+  link: "${CHAT_LINKS.PURCHASE.EVRIT}",
+this link should always be in markdown with a label to hide the true link
 `;
 
 const EXTRA_LINKS = `
