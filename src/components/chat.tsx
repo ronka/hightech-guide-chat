@@ -28,7 +28,7 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
       className="rounded-2xl border h-[75vh] flex flex-col justify-between"
       style={isUploading ? { opacity: 0.5, cursor: "not-allowed" } : {}}
     >
-      <div className="p-6 overflow-auto" ref={containerRef}>
+      <div className="md:p-6 p-2 overflow-auto" ref={containerRef}>
         {messages.map(({ id, role, content }: Message, index) => (
           <ChatLine
             key={id}
