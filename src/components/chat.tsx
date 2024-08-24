@@ -32,7 +32,10 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
   ) => {
     track("Message", {
       input: input,
-      messages: messages.map((message) => message.content).toString(),
+      messages: messages
+        .slice(1)
+        .map((message) => message.content)
+        .toString(),
     });
 
     handleSubmit(event, chatRequestOptions);
