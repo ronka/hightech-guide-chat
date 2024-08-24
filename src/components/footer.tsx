@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Linkedin, X } from "lucide-react";
+import { Linkedin, Twitter } from "lucide-react";
 import { track } from "@vercel/analytics";
 
 const Footer = () => {
@@ -47,7 +47,7 @@ const Footer = () => {
               className="hover:opacity-50"
               prefetch={false}
             >
-              <X />
+              <Twitter />
             </Link>
           </span>
         </nav>
