@@ -35,25 +35,13 @@ export const formatChatHistory = (chatHistory: [string, string][]) => {
   return formattedDialogueTurns.join("\n");
 };
 
-export function formatPageNumber(input: string): string {
-  // Regex to match and capture the format "<number> I" or "I <number>"
-  const match = input.match(/(\d+)\s*I|I\s*(\d+)/);
-
-  if (match) {
-    const pageNumber = match[1] || match[2]; // Capture the page number
-    // Remove everything before and including the pattern "<number> I" or "I <number>"
-    const restOfMessage = input.replace(/^.*I\s*\d+\s*/, "").trim();
-    return `${restOfMessage}`;
-  }
-
-  return input;
-}
-
 export function formattedText(inputText: string) {
-  return inputText
+  const text = inputText
     .replace(/\n+/g, " ") // Replace multiple consecutive new lines with a single space
     .replace(/(\w) - (\w)/g, "$1$2") // Join hyphenated words together
     .replace(/\s+/g, " "); // Replace multiple consecutive spaces with a single space
+
+  return `...${text}...`;
 }
 
 // Default UI Message
@@ -97,4 +85,30 @@ export const getSources = (
   return parsedData.success && parsedData.data.sources
     ? parsedData.data.sources
     : [];
+};
+
+export const pageNumberToChapter = (pageNumber: number) => {
+  if (pageNumber < 11) {
+    return null;
+  } else if (pageNumber < 24) {
+    return "פרק 1: איך סיימתי תואר במדעי המחשב תוך כדי עבודהבמשרה מלאה בשלוש וחצי שנים";
+  } else if (pageNumber < 41) {
+    return "פרק 2: דברים שהייתי רוצה לדעת לפני שהתחלתי לעבוד בהייטק";
+  } else if (pageNumber < 67) {
+    return "פרק 3: קורות חיים, ראיונות עבודה ומה שביניהם";
+  } else if (pageNumber < 98) {
+    return "פרק 4: דברים שהייתי רוצה לדעת לפני שהתחלתי לתכנת";
+  } else if (pageNumber < 111) {
+    return "פרק 5: מבית תוכנה עד לגוגל, ההבדלים בין חברותבסדרי גודל שונים";
+  } else if (pageNumber < 121) {
+    return "פרק 6: ניהול משימות";
+  } else if (pageNumber < 150) {
+    return "פרק 7: הכנה לראיונות הטכניים";
+  } else if (pageNumber < 161) {
+    return "פרק 8: הכנה לראיונות אישיים";
+  } else if (pageNumber < 163) {
+    return "פרק 9: סיכום מסע";
+  }
+
+  return null;
 };
