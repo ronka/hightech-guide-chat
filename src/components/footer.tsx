@@ -10,7 +10,7 @@ const Footer = () => {
         <nav className="flex items-center gap-4">
           <span
             onClick={() => {
-              track("Contant", { source: "i want book" });
+              track("Footer Click", { source: "i want book" });
             }}
           >
             <Link
@@ -24,7 +24,7 @@ const Footer = () => {
           </span>
           <span
             onClick={() => {
-              track("Contant", { source: "Linkedin" });
+              track("Footer Click", { source: "Linkedin" });
             }}
           >
             <Link
@@ -38,7 +38,7 @@ const Footer = () => {
           </span>
           <span
             onClick={() => {
-              track("Contant", { source: "X" });
+              track("Footer Click", { source: "X" });
             }}
           >
             <Link
