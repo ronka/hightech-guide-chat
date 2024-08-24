@@ -49,11 +49,11 @@ this link should always be in markdown with a label to hide the true link
 const EXTRA_LINKS = `
 
 # מיטאפים
-https://www.meetup.com/react-il/
-https://www.meetup.com/javascript-israel/
-https://www.meetup.com/at-wix/
-https://www.meetup.com/nextjs-il/
-https://www.meetup.com/css-masters-israel/ 
+https://www.meetup.com/react-il
+https://www.meetup.com/javascript-israel
+https://www.meetup.com/at-wix
+https://www.meetup.com/nextjs-il
+https://www.meetup.com/css-masters-israel
 
 # סירטונים ביוטיוב של כנסים
 https://www.youtube.com/@ReactNext/videos 
@@ -99,19 +99,17 @@ useful links from the book and about the book:
 ${USEFUL_LINKS}
 </links>
 
-useful links unlrelated to the book:
-<links>
-${EXTRA_LINKS}
-</links>
-
-some more context outside of the book that should be used only if you didnt find an answer:
-<info>
-${MORE_CONTEXT}
-</info>
-
 {context}
 
 Question: {question}
 Helpful answer in markdown:`;
 
 // If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+
+// Use the following context ONLY if the question asked to elaborate on something that you as an AI assitant said messages:
+// <links>
+// ${EXTRA_LINKS}
+// </links>
+// <info>
+// ${MORE_CONTEXT}
+// </info>
