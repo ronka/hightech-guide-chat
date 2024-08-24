@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./ui/spinner";
 import { useScrollToBottom } from "@/hooks/useScrollToBottom";
-import { track } from "@vercel/analytics";
+import { track } from "@/services/analytics";
 
 export interface ChatProps {
   sessionId: string;

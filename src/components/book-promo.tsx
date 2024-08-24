@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BOOK_PROMO } from "@/constants/links";
-import { track } from "@vercel/analytics";
+import { track } from "@/services/analytics";
 
 export function BookPromo() {
   return (

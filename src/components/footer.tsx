@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Linkedin, Twitter } from "lucide-react";
-import { track } from "@vercel/analytics";
+import { track } from "@/services/analytics";
 
 const Footer = () => {
   return (
