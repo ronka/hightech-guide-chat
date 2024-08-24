@@ -64,7 +64,7 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
       >
         <Input
           value={input}
-          placeholder={"מה תרצו לשאול את הספר..."}
+          placeholder={"הקלד שאלה פה ..."}
           onChange={handleInputChange}
           style={isUploading ? { pointerEvents: "none" } : {}}
           className="ml-2"
