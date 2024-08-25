@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import "./globals.css";
 import { PHProvider } from "@/providers/posthog";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "המדריך להייטקיסט המתחיל - צ׳אט בוט",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <PHProvider>{children}</PHProvider>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
