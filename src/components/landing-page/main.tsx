@@ -90,7 +90,7 @@ const Main = () => {
         </div>{" "}
       </Section>
       <Section dark>
-        <div className="flex grid-cols-2 items-center justify-center space-y-4 text-center gap-10">
+        <div className="flex md:grid-cols-2 md:flex-row flex-col items-center justify-center space-y-4 text-center gap-10">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter text-muted-foreground sm:text-5xl">
               נעיר להכיר
