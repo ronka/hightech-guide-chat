@@ -1,8 +1,8 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
-import "./globals.css";
 import { PHProvider } from "@/providers/posthog";
 import { Analytics } from "@vercel/analytics/react";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "המדריך להייטקיסט המתחיל - צ׳אט בוט",
