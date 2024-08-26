@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Linkedin, Twitter } from "lucide-react";
 import { track } from "@/services/analytics";

@@ -1,4 +1,4 @@
-import { Footer } from "@/components/landing-page/footer";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/landing-page/header";
 import { Main } from "@/components/landing-page/main";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +9,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
   return (
-    <div
-      className="flex flex-col min-h-screen light"
-      style={{
-        colorScheme: "light !important",
-      }}
-    >
+    <div className="flex flex-col min-h-screen light">
       <Header />
       <Main />
       <Footer />

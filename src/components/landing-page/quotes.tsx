@@ -1,10 +1,37 @@
 import { Quote } from "lucide-react";
 
+const QuoteIcon = ({ children }: { children: any }) => {
+  const colors = [
+    "#55efc4",
+    "#74b9ff",
+    "#a29bfe",
+    "#fd79a8",
+    "#ffeaa7",
+    "#fab1a0",
+    "#e17055",
+  ];
+
+  const getRandomColor = () => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const bgColor = getRandomColor();
+
+  return (
+    <div
+      className="rounded-full w-8 h-8 flex items-center justify-center text-2xl"
+      style={{ backgroundColor: bgColor }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Quotes = () => {
   return (
     <div className="container px-4 md:px-6">
       <h2 className="text-3xl font-bold tracking-tighter text-center mb-8 sm:text-5xl">
-        מה קוראים אמרו?
+        אנשים שקראו אומרים
       </h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col items-center space-y-2 border rounded-lg p-4">
@@ -15,9 +42,13 @@ const Quotes = () => {
             מחייל קרבי למפתח בגוגל, נותן תקווה והשראה לכל מי שחולם על קריירה
             בטכנולוגיה. זה לא סתם ספר, זה מפת דרכים להצלחה בהייטק!
           </p>
-          <p className="text-sm text-gray-500">
-            - מתן, סטודנט באוניברסיטה הפתוחה
-          </p>
+          <div className="flex items-center gap-4">
+            <QuoteIcon>🤠</QuoteIcon>
+
+            <p className="text-sm text-gray-500">
+              - מתן, סטודנט באוניברסיטה הפתוחה
+            </p>
+          </div>
         </div>
         <div className="flex flex-col items-center space-y-2 border rounded-lg p-4">
           <Quote className="h-8 w-8 text-gray-400" />
@@ -29,9 +60,13 @@ const Quotes = () => {
             שכבר נמצאים בעבודה, לכן בהחלט אחזור לספר הזה בעבודה הבאה שלי. מומלץ
             בחום!
           </p>
-          <p className="text-sm text-gray-500">
-            - עומר, בוגר טכניון, מחפש משרה שניה
-          </p>
+          <div className="flex items-center gap-4">
+            <QuoteIcon>👨‍💻</QuoteIcon>
+
+            <p className="text-sm text-gray-500">
+              - עומר, בוגר טכניון, מחפש משרה שניה
+            </p>
+          </div>
         </div>
         <div className="flex flex-col items-center space-y-2 border rounded-lg p-4">
           <Quote className="h-8 w-8 text-gray-400" />
@@ -41,7 +76,10 @@ const Quotes = () => {
             ומנוסים כאחד. אהבתי במיוחד את הגישה הישירה שלו לאתגרים ולהזדמנויות
             בתעשייה
           </p>
-          <p className="text-sm text-gray-500">- ולדיסלב, מתכנת באינטל</p>
+          <div className="flex items-center gap-4">
+            <QuoteIcon>🙃</QuoteIcon>
+            <p className="text-sm text-gray-500">- ולדיסלב, מתכנת באינטל</p>
+          </div>
         </div>
       </div>
     </div>
