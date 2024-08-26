@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 const SteimatzkyButton = () => {
   return (
-    <Button className="w-full bg-green-500" asChild>
+    <Button className="w-full bg-green-500" size={"lg"} asChild>
       <span
         onClick={() => {
           track("Book Landing Page Click", {
@@ -23,7 +23,7 @@ const SteimatzkyButton = () => {
 
 const EvritButton = () => {
   return (
-    <Button className="w-full bg-sky-500" asChild>
+    <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <span
         onClick={() => {
           track("Book Landing Page Click", {
@@ -37,4 +37,12 @@ const EvritButton = () => {
   );
 };
 
-export { SteimatzkyButton, EvritButton };
+const ChatBotButton = () => {
+  return (
+    <Button className="w-full" size={"lg"} asChild>
+      <Link href={"/chat"}>בואו לדבר עם הספר 🤖</Link>
+    </Button>
+  );
+};
+
+export { SteimatzkyButton, EvritButton, ChatBotButton };
