@@ -8,15 +8,16 @@ import { Button } from "../ui/button";
 const SteimatzkyButton = () => {
   return (
     <Button className="w-full bg-green-500" size={"lg"} asChild>
-      <span
+      <Link
         onClick={() => {
           track("Book Landing Page Click", {
             source: "STEIMATZKY",
           });
         }}
+        href={BOOK_PROMO.STEIMATZKY}
       >
-        <Link href={BOOK_PROMO.STEIMATZKY}>אני רוצה כזה! דרך סטימצקי 📚</Link>
-      </span>
+        אני רוצה כזה! דרך סטימצקי 📚
+      </Link>
     </Button>
   );
 };
@@ -24,15 +25,16 @@ const SteimatzkyButton = () => {
 const EvritButton = () => {
   return (
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
-      <span
+      <Link
         onClick={() => {
           track("Book Landing Page Click", {
             source: "EVRIT",
           });
         }}
+        href={BOOK_PROMO.EVRIT}
       >
-        <Link href={BOOK_PROMO.EVRIT}>אני רוצה כזה! דרך ע-ברית 📱</Link>
-      </span>
+        אני רוצה כזה! דרך ע-ברית 📱
+      </Link>
     </Button>
   );
 };
