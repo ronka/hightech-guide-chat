@@ -15,14 +15,14 @@ const Main = () => {
     <main className="flex-1">
       <section className="w-full py-12 relative">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] ">
+          <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 ">
             <div className="absolute inset-0 -z-10">
               <Image
                 src="/book-assets/background.png"
                 alt="Background"
                 layout="fill"
                 objectFit="cover"
-                className="opacity-10 dark:opacity-10"
+                className="opacity-10 dark:opacity-10 not-sr-only"
               />
             </div>
             <img
@@ -30,7 +30,7 @@ const Main = () => {
               className="mx-auto aspect-[2/3] overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
               src="/book-assets/book.png"
             />
-            <div className="flex flex-col justify-center space-y-4">
+            <div className="flex flex-col justify-center space-y-4 max-w-xl">
               <div className="space-y-2 ">
                 <div className="flex items-center gap-4 space-x-2 mb-2">
                   <Badge className="text-sm py-1">
