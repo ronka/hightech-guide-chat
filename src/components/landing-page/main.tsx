@@ -66,31 +66,33 @@ const Main = () => {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2 w-full md:w-1/2 mx-auto">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl mb-8">
-              על הספר
+              על הספר 📗
             </h2>
             <div className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 text-right">
               <p>
-                המדריך להייטקיסט המתחיל מתאר את מסעו האישי של המחבר רון קנטור,
-                אני 😄, בעולם ההייטק, מהימים הראשונים בחברת תוכנה קטנה ועד
-                לטיפוס בסולם תאגידי ועבודה בגוגל.
+                "המדריך להייטקיסט המתחיל התחיל את דרכו כסדרת פוסטים בבלוג שלי.
+                לאחר שקיבלתי שאלות רבות מקוראים על נושאים שונים שהעליתי בבלוג,
+                עלה הרעיון להפוך את התוכן לספר מקיף. כדי להפוך את החלום למציאות,
+                יזמתי קמפיין מימון המונים ב-<b>Headstart</b> שהסתיים בהצלחה עם
+                מעל ל-160 תומכים!
+              </p>
+
+              <p>
+                הספר מתאר את המסע האישי שלי, בעולם ההייטק, החל מהימים הראשונים
+                בחברת תוכנה קטנה ועד לטיפוס בסולם התאגידי ועבודה בגוגל. הוא משמש
+                מדריך שימושי עבור אנשים המעוניינים לעבוד בהייטק או העושים את
+                צעדיהם הראשונים בעולם זה, ומכיל תובנות וחוויות משמעותיות בשילוב
+                מומחיות רבה והומור.
               </p>
               <p>
-                הספר משמש מדריך שימושי עבור אנשים המעוניינים לעבוד בהייטק או
-                העושים את צעדיהם הראשונים בעולם זה, והוא מכיל תובנות וחוויות
-                משמעותיות בשילוב מומחיות רבה והומור.
-              </p>
-              <p>
-                הספר מעודד למידה עצמית ומציע טיפים ושיטות שעשויים לסייע לקוראים
-                לפתח את כישוריהם, הכוונה בקריירה, עצות לריאיון ואפילו מידע על
-                עולם האופציות והמניות בסטארטאפים.
-              </p>
-              <p>
-                כל מה שרציתם לדעת ולא העזתם לשאול על עולם ההייטק המורכב תוכלו
-                למצוא בספר שבידיכם.
+                המדריך מעודד למידה עצמית ומציע טיפים ושיטות שעשויים לסייע
+                לקוראים לפתח את כישוריהם, הכוונה בקריירה, עצות לריאיון ואפילו
+                מידע על עולם האופציות והמניות בסטארטאפים. כל מה שרציתם לדעת ולא
+                העזתם לשאול על עולם ההייטק המורכב תוכלו למצוא בספר שבידיכם."
               </p>
             </div>
           </div>
-        </div>{" "}
+        </div>
       </Section>
       <Section dark>
         <div className="flex md:grid-cols-2 md:flex-row flex-col items-center justify-center space-y-4 text-center gap-10">
