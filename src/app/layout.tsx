@@ -3,10 +3,18 @@ import type { Metadata } from "next";
 import { PHProvider } from "@/providers/posthog";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+import { Assistant } from "next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const googleFont = Assistant({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "המדריך להייטקיסט המתחיל - צ׳אט בוט",
-  description: "כל מה שרציתם לדעת ולא העזתם לשאול על עולם ההייטק המורכב",
+  title: "המדריך להייטקיסט המתחיל",
+  description:
+    "כל מה שרציתם לדעת ולא העזתם לשאול על עולם ההייטק המורכב, הספר שכל ג׳וניור צריך להכיר",
 };
 
 type RootLayoutProps = {
@@ -15,7 +23,12 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" dir="rtl" suppressHydrationWarning>
+    <html
+      lang="en"
+      dir="rtl"
+      suppressHydrationWarning
+      className={googleFont.className}
+    >
       <head>
         <link
           rel="apple-touch-icon"
