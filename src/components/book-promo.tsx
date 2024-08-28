@@ -29,26 +29,28 @@ export function BookPromo() {
           </p>
         </div>
         <Button className="w-full bg-green-500" asChild>
-          <span
+          <Link
             onClick={() => {
               track("Book Promo Click", {
                 source: "STEIMATZKY",
               });
             }}
+            href={BOOK_PROMO.STEIMATZKY}
           >
-            <Link href={BOOK_PROMO.STEIMATZKY}>📚 קנה עכשיו מסטימצקי</Link>
-          </span>
+            📚 קנה עכשיו מסטימצקי
+          </Link>
         </Button>
         <Button className="w-full bg-sky-500" asChild>
-          <span
+          <Link
             onClick={() => {
               track("Book Promo Click", {
                 source: "EVRIT",
               });
             }}
+            href={BOOK_PROMO.EVRIT}
           >
-            <Link href={BOOK_PROMO.EVRIT}>📱 קנה עכשיו מע-ברית</Link>
-          </span>
+            📱 קנה עכשיו מע-ברית
+          </Link>
         </Button>
       </CardContent>
     </Card>
