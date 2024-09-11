@@ -1,14 +1,9 @@
 import Image from "next/image";
-import { Quote, ShoppingCart } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
 import { Quotes } from "./quotes";
 import { Section } from "./section";
-import Link from "next/link";
-import { track } from "@/services/analytics";
-import { BOOK_PROMO } from "@/constants/links";
 import { ChatBotButton, EvritButton, SteimatzkyButton } from "./buttons";
+import TableOfContents from "./table-of-content";
 
 const Main = () => {
   return (
@@ -62,6 +57,7 @@ const Main = () => {
           </div>
         </div>
       </section>
+
       <Section>
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2 w-full md:w-1/2 mx-auto">
@@ -94,14 +90,19 @@ const Main = () => {
           </div>
         </div>
       </Section>
+
       <Section dark>
+        <TableOfContents />
+      </Section>
+
+      <Section>
         <div className="flex md:grid-cols-2 md:flex-row flex-col items-center justify-center space-y-4 text-center gap-10">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter text-muted-foreground sm:text-5xl">
               נעיר להכיר
             </h2>
             <h2 className=" text-3xl font-bold tracking-tighter sm:text-5xl">
-              רון קנטור
+              רון קנטור 👨‍🚀
             </h2>
             <div className="pt-10 max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 text-right">
               <p>
@@ -131,7 +132,7 @@ const Main = () => {
         </div>
       </Section>
 
-      <Section>
+      <Section dark>
         <Quotes />
       </Section>
     </main>
