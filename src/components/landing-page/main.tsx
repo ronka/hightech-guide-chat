@@ -8,7 +8,7 @@ import TableOfContents from "./table-of-content";
 const Main = () => {
   return (
     <main className="flex-1">
-      <section className="w-full py-12 relative">
+      <section className="w-full py-12 relative overflow-hidden">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 ">
             <div className="absolute inset-0 -z-10">
