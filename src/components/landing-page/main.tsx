@@ -4,6 +4,7 @@ import { Quotes } from "./quotes";
 import { Section } from "./section";
 import { ChatBotButton, EvritButton, SteimatzkyButton } from "./buttons";
 import TableOfContents from "./table-of-content";
+import { ContactForm } from "./contact-form";
 
 const Main = () => {
   return (
@@ -134,6 +135,10 @@ const Main = () => {
 
       <Section dark>
         <Quotes />
+      </Section>
+
+      <Section>
+        <ContactForm />
       </Section>
     </main>
   );
