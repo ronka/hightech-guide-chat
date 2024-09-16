@@ -27,7 +27,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center justify-between">
+    <header className="sticky top-0 z-50 px-4 lg:px-6 h-14 flex items-center justify-between bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Link className="flex gap-4 items-center" href="/">
         <div className="rounded-full w-8 h-8 bg-[#55efc4] flex items-center justify-center text-2xl">
           🤖
