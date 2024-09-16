@@ -58,7 +58,6 @@ const Main = () => {
           </div>
         </div>
       </section>
-
       <Section>
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2 w-full md:w-1/2 mx-auto">
@@ -91,11 +90,9 @@ const Main = () => {
           </div>
         </div>
       </Section>
-
       <Section dark>
         <TableOfContents />
       </Section>
-
       <Section>
         <div className="flex md:grid-cols-2 md:flex-row flex-col items-center justify-center space-y-4 text-center gap-10">
           <div className="space-y-2">
@@ -132,12 +129,11 @@ const Main = () => {
           </div>
         </div>
       </Section>
-
       <Section dark>
         <Quotes />
       </Section>
 
-      <Section>
+      <Section id="contact">
         <ContactForm />
       </Section>
     </main>
