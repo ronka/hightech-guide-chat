@@ -26,6 +26,8 @@ const Header = () => {
     { href: "https://www.ronka.dev", label: "לבלוג", target: "_blank" },
   ];
 
+  console.log(isChatPage);
+
   return (
     <header className="sticky top-0 z-50 px-4 lg:px-6 h-14 flex items-center justify-between bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Link className="flex gap-4 items-center" href="/">
@@ -34,7 +36,7 @@ const Header = () => {
           <span className="sr-only">המדריך להייטיקיסט המתחיל</span>
         </div>
 
-        <div className={cn("flex gap-2", !isChatPage && "hidden sm:flex")}>
+        <div className={cn("gap-2", !isChatPage ? "hidden" : "flex")}>
           <span className="text-sm font-medium hover:underline underline-offset-4">
             הייטקיסטGPT
           </span>
