@@ -34,22 +34,11 @@ const Quotes = () => {
         אנשים שקראו אומרים
       </h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="flex flex-col items-center space-y-2 border rounded-lg p-4">
-          <Quote className="h-8 w-8 text-gray-400" />
-          <p className="text-lg font-medium">
-            הספר של רון הוא פשוט מדהים! הוא מצליח לקחת את המסע המורכב והמאתגר של
-            כניסה לעולם ההייטק ולהפוך אותו למסע מרתק ונגיש. הסיפור האישי שלו,
-            מחייל קרבי למפתח בגוגל, נותן תקווה והשראה לכל מי שחולם על קריירה
-            בטכנולוגיה. זה לא סתם ספר, זה מפת דרכים להצלחה בהייטק!
-          </p>
-          <div className="flex items-center gap-4">
-            <QuoteIcon>🤠</QuoteIcon>
-
-            <p className="text-sm text-gray-500">
-              - מתן, סטודנט באוניברסיטה הפתוחה
-            </p>
-          </div>
-        </div>
+        <iframe
+          src="https://www.linkedin.com/embed/feed/update/urn:li:share:7240776756800962560"
+          className="w-full aspect-[2/3] "
+          title="Embedded post"
+        />
         <div className="flex flex-col items-center space-y-2 border rounded-lg p-4">
           <Quote className="h-8 w-8 text-gray-400" />
           <p className="text-lg font-medium">
