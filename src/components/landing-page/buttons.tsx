@@ -58,7 +58,7 @@ const ConsultingButton = () => {
         }}
         href={"https://ronka.dev/consulting-session-form"}
       >
-        רוצים ייעוץ אישי בהייטק? השאירו פרטים ונחזור אליכם! 💡
+        רוצים ייעוץ אישי בהייטק? השאירו פרטים ואחזור אליכם! 💡
       </Link>
     </Button>
   );
