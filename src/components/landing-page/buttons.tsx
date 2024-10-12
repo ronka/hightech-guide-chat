@@ -47,4 +47,21 @@ const ChatBotButton = () => {
   );
 };
 
-export { SteimatzkyButton, EvritButton, ChatBotButton };
+const ConsultingButton = () => {
+  return (
+    <Button className="w-full" size={"lg"} variant={"outline"} asChild>
+      <Link
+        onClick={() => {
+          track("Consulting Form Click", {
+            source: "landing-page",
+          });
+        }}
+        href={"https://ronka.dev/consulting-session-form"}
+      >
+        רוצים ייעוץ אישי בהייטק? השאירו פרטים ונחזור אליכם! 💡
+      </Link>
+    </Button>
+  );
+};
+
+export { SteimatzkyButton, EvritButton, ChatBotButton, ConsultingButton };

@@ -2,7 +2,12 @@ import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { Quotes } from "./quotes";
 import { Section } from "./section";
-import { ChatBotButton, EvritButton, SteimatzkyButton } from "./buttons";
+import {
+  ChatBotButton,
+  ConsultingButton,
+  EvritButton,
+  SteimatzkyButton,
+} from "./buttons";
 import TableOfContents from "./table-of-content";
 import { ContactForm } from "./contact-form";
 
@@ -53,6 +58,9 @@ const Main = () => {
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <ChatBotButton />
+              </div>
+              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <ConsultingButton />
               </div>
             </div>
           </div>
