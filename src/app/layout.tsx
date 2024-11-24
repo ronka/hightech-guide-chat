@@ -4,6 +4,7 @@ import { PHProvider } from "@/providers/posthog";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Assistant } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // If loading a variable font, you don't need to specify the font weight
 const googleFont = Assistant({
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <PHProvider>{children}</PHProvider>
           <Analytics />
+          <GoogleAnalytics gaId="G-C1Q1JYQ35E" />
         </ThemeProvider>
       </body>
     </html>
