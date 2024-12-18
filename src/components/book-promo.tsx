@@ -31,7 +31,7 @@ export function BookPromo() {
         <Button className="w-full bg-green-500" asChild>
           <Link
             onClick={() => {
-              track("Book Promo Click", {
+              track("view_content", {
                 source: "STEIMATZKY",
               });
             }}
@@ -43,7 +43,7 @@ export function BookPromo() {
         <Button className="w-full bg-sky-500" asChild>
           <Link
             onClick={() => {
-              track("Book Promo Click", {
+              track("view_content", {
                 source: "EVRIT",
               });
             }}

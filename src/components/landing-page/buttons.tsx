@@ -10,7 +10,7 @@ const SteimatzkyButton = () => {
     <Button className="w-full bg-green-500" size={"lg"} asChild>
       <Link
         onClick={() => {
-          track("Book Landing Page Click", {
+          track("view_content", {
             source: "STEIMATZKY",
           });
         }}
@@ -27,7 +27,7 @@ const EvritButton = () => {
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <Link
         onClick={() => {
-          track("Book Landing Page Click", {
+          track("view_content", {
             source: "EVRIT",
           });
         }}
@@ -52,7 +52,7 @@ const ConsultingButton = () => {
     <Button className="w-full" size={"lg"} variant={"outline"} asChild>
       <Link
         onClick={() => {
-          track("Consulting Form Click", {
+          track("view_content", {
             source: "landing-page",
           });
         }}

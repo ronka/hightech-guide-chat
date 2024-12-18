@@ -30,7 +30,7 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
     },
     chatRequestOptions?: any
   ) => {
-    track("Message", {
+    track("view_content", {
       input: input,
       messages: messages
         .slice(1)

@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Assistant } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { FacebookPixel } from "@/components/facebook-pixel";
 
 // If loading a variable font, you don't need to specify the font weight
 const googleFont = Assistant({
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
+        <FacebookPixel />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
