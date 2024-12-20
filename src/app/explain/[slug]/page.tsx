@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,7 +48,9 @@ export default async function WordPage({
 }) {
   const { frontmatter, content } = await getWordData(params.slug);
 
-  if (!frontmatter || !content) notFound();
+  if (!frontmatter || !content) {
+    redirect(`/explain?search=${encodeURIComponent(params.slug)}`);
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
