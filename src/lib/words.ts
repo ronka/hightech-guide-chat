@@ -8,7 +8,7 @@ export const words = [
     title: "API",
     acronym: "Application Programming Interface",
     definition:
-      "A set of rules and protocols that allows different software applications to communicate with each other.",
+      "ממשק תכנות יישומים – סט כללים והגדרות המאפשר לתוכנות לתקשר ביניהן.",
     category: "Software Development",
   },
   {
