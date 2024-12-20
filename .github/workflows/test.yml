@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install -D jest jest-environment-jsdom
+          npm install -D jest jest-environment-jsdom @testing-library/jest-dom
 
       - name: Run tests
         run: npm run test
