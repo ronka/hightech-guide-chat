@@ -15,6 +15,7 @@ import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BookPromo } from "@/components/book-promo";
+import { WordActions } from "@/components/word-actions";
 
 export async function generateMetadata({
   params,
@@ -24,8 +25,8 @@ export async function generateMetadata({
   const { frontmatter } = await getWordData(params.slug);
   if (!frontmatter) return { title: "Word Not Found" };
   return {
-    title: `${frontmatter.title} - Tech Dictionary`,
-    description: `Learn about ${frontmatter.title} (${frontmatter.acronym}) in our tech dictionary.`,
+    title: `${frontmatter.title} - המדריך להייטיקיסט המתחיל - מילון מושגים`,
+    description: `למד עוד על ${frontmatter.title} (${frontmatter.acronym}) במילון הטכנולוגי של המדריך להייטיקיסט המתחיל`,
   };
 }
 
@@ -78,28 +79,21 @@ export default async function WordPage({
             <CardContent className="space-y-4">
               <MDXRemote source={content} />
               {/* <div>
-            <h3 className="font-semibold mb-2">מושגים קשורים 🔗:</h3>
-            <div className="flex flex-wrap gap-2">
-              {frontmatter.relatedTerms.map((term: string) => (
-                <Link href={`/explain/${encodeURIComponent(term)}`} key={term}>
-                  <Badge
-                    variant="outline"
-                    className="hover:bg-primary hover:text-primary-foreground cursor-pointer"
-                  >
-                    {term}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </div> */}
-              <div className="flex items-center gap-2 pt-4">
-                <Button variant="outline" size="sm">
-                  👍 עזר לי
-                </Button>
-                <Button variant="outline" size="sm">
-                  🔗 שיתוף
-                </Button>
-              </div>
+					<h3 className="font-semibold mb-2">מושגים קשורים 🔗:</h3>
+					<div className="flex flex-wrap gap-2">
+					{frontmatter.relatedTerms.map((term: string) => (
+						<Link href={`/explain/${encodeURIComponent(term)}`} key={term}>
+						<Badge
+							variant="outline"
+							className="hover:bg-primary hover:text-primary-foreground cursor-pointer"
+						>
+							{term}
+						</Badge>
+						</Link>
+					))}
+					</div>
+				</div> */}
+              <WordActions slug={params.slug} title={frontmatter.title} />
             </CardContent>
           </Card>
         </div>

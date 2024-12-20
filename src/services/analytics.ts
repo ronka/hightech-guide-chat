@@ -10,7 +10,8 @@ export type EventName =
   | "start_trial"
   | "subscribe"
   | "lead"
-  | "view_content";
+  | "view_content"
+  | "like_word";
 // Add other event names as needed
 
 // Map PostHog events to Facebook standard events
@@ -24,6 +25,7 @@ const fbEventMap: Record<EventName, string> = {
   subscribe: "Subscribe",
   lead: "Lead",
   view_content: "ViewContent",
+  like_word: "ViewContent",
   // Add other mappings as needed
 };
 
