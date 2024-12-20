@@ -10,7 +10,8 @@
     "lint": "npx @biomejs/biome lint --apply ./src",
     "format": "npx @biomejs/biome check --write ./src",
     "check": "npx @biomejs/biome check --fix ./src",
-    "generate-words": "npx tsx src/scripts/generate-words.ts"
+    "generate-words": "npx tsx src/scripts/generate-words.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.49",
