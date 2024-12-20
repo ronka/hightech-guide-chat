@@ -72,6 +72,8 @@ function WordsPageContent() {
     () =>
       words.filter(
         (word) =>
+          word.acronym.toLowerCase().includes(search.toLowerCase()) ||
+          word.slug.toLowerCase().includes(search.toLowerCase()) ||
           word.title.toLowerCase().includes(search.toLowerCase()) ||
           word.definition.toLowerCase().includes(search.toLowerCase())
       ),
