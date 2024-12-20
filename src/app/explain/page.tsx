@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useTransition } from "react";
+import { useState, useMemo, useCallback, useTransition, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -58,7 +58,7 @@ function getSimilarWords(
     .map(({ word }) => word);
 }
 
-export default function WordsPage() {
+function WordsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || "";
@@ -229,5 +229,20 @@ export default function WordsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function WordsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-bold mb-6">מילון מושגים</h1>
+          <div className="text-sm text-muted-foreground">טוען...</div>
+        </div>
+      }
+    >
+      <WordsPageContent />
+    </Suspense>
   );
 }
