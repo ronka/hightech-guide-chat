@@ -11,7 +11,6 @@ export default function Home() {
 
   return (
     <>
-      <Header />
       <main className="relative container flex min-h-screen flex-col">
         <div className="flex flex-1 md:py-4 py-2">
           <div className="w-full">
@@ -26,7 +25,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

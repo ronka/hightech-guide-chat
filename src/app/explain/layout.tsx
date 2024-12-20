@@ -7,11 +7,5 @@ export default function ExplainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex flex-col min-h-screen light">
-      <Header />
-      {children}
-      <Footer />
-    </div>
-  );
+  return <div className="flex flex-col min-h-screen light">{children}</div>;
 }
