@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useMemo, useCallback, useTransition } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Card,
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/pagination";
 import { Word } from "@/scripts/generate-words";
 import { words } from "@/lib/words";
+import { useDebouncedCallback } from "use-debounce";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -58,23 +59,21 @@ function getSimilarWords(
 }
 
 export default function WordsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const initialSearch = searchParams.get("search") || "";
-  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const search = searchParams.get("search") || "";
   const [currentPage, setCurrentPage] = useState(1);
+  const [isPending, startTransition] = useTransition();
+  const [localSearch, setLocalSearch] = useState(search);
 
-  useEffect(() => {
-    const search = searchParams.get("search");
-    if (search) {
-      setSearchTerm(search);
-      setCurrentPage(1);
-    }
-  }, [searchParams]);
-
-  const filteredWords = words.filter(
-    (word) =>
-      word.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      word.definition.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredWords = useMemo(
+    () =>
+      words.filter(
+        (word) =>
+          word.title.toLowerCase().includes(search.toLowerCase()) ||
+          word.definition.toLowerCase().includes(search.toLowerCase())
+      ),
+    [search]
   );
 
   const totalPages = Math.ceil(filteredWords.length / ITEMS_PER_PAGE);
@@ -84,9 +83,29 @@ export default function WordsPage() {
   );
 
   const similarWords = useMemo(
-    () =>
-      filteredWords.length === 0 ? getSimilarWords(searchTerm, words) : [],
-    [searchTerm, filteredWords.length]
+    () => (filteredWords.length === 0 ? getSimilarWords(search, words) : []),
+    [search, filteredWords.length]
+  );
+
+  const debouncedUpdateUrl = useDebouncedCallback((value: string) => {
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set("search", value);
+      } else {
+        params.delete("search");
+      }
+      router.replace(`/explain?${params.toString()}`);
+    });
+  }, 300);
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      setLocalSearch(value);
+      setCurrentPage(1);
+      debouncedUpdateUrl(value);
+    },
+    [debouncedUpdateUrl]
   );
 
   return (
@@ -96,14 +115,15 @@ export default function WordsPage() {
         <Input
           type="search"
           placeholder="חפש מילה במילון ..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setCurrentPage(1);
-          }}
+          value={localSearch}
+          onChange={(e) => handleSearch(e.target.value)}
           className="max-w-md"
         />
       </div>
+
+      {isPending && (
+        <div className="text-sm text-muted-foreground mb-4">מחפש...</div>
+      )}
 
       {filteredWords.length > 0 ? (
         <>
@@ -176,7 +196,7 @@ export default function WordsPage() {
                 לא נמצאו תוצאות
               </p>
               <p className="text-sm text-muted-foreground">
-                לא נמצאו מושגים התואמים לחיפוש &quot;{searchTerm}&quot;
+                לא נמצאו מושגים התואמים לחיפוש &quot;{search}&quot;
               </p>
             </div>
           </Card>
