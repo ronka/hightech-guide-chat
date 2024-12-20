@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "npx @biomejs/biome lint --apply ./src",
     "format": "npx @biomejs/biome check --write ./src",
-    "check": "npx @biomejs/biome check --fix ./src"
+    "check": "npx @biomejs/biome check --fix ./src",
+    "generate-words": "npx tsx scripts/generate-words.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.49",
@@ -63,6 +64,6 @@
     "@biomejs/biome": "1.8.3",
     "@types/lodash": "4.17.6",
     "@types/pdf-parse": "1.1.1",
-    "tsx": "3.12.7"
+    "tsx": "^3.12.7"
   }
 }
