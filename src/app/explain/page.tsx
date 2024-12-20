@@ -56,7 +56,7 @@ export default function WordsPage() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
         {paginatedWords.map((word) => (
-          <Link href={`/word/${word.slug}`} key={word.slug}>
+          <Link href={`/explain/${word.slug}`} key={word.slug}>
             <Card className="h-full hover:bg-accent transition-colors">
               <CardHeader>
                 <div className="flex justify-between items-start">
