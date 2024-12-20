@@ -22,6 +22,7 @@ const Header = () => {
   const navItems = [
     { href: "/", label: "לספר" },
     { href: "/chat", label: "לצ׳אט" },
+    { href: "/explain", label: "מילון מושגים" },
     { href: "/#contact", label: "צור קשר" },
     { href: "https://www.ronka.dev", label: "לבלוג", target: "_blank" },
   ];
