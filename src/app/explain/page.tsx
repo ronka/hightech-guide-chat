@@ -23,6 +23,8 @@ import {
 import { Word } from "@/scripts/generate-words";
 import { words } from "@/lib/words";
 import { useDebouncedCallback } from "use-debounce";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -110,15 +112,32 @@ function WordsPageContent() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">מילון מושגים</h1>
-      <div className="mb-6">
-        <Input
-          type="search"
-          placeholder="חפש מילה במילון ..."
-          value={localSearch}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="max-w-md"
-        />
+      <h1
+        className="text-3xl font-bold mb-6 hover:cursor-pointer hover:text-primary/80 transition-colors"
+        onClick={() => handleSearch("")}
+      >
+        מילון מושגים
+      </h1>
+      <div className="mb-6 flex gap-2 items-center">
+        <div className="relative flex-1 max-w-md">
+          <Input
+            type="search"
+            placeholder="חפש מילה במילון ..."
+            value={localSearch}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </div>
+        {localSearch && (
+          <Button
+            variant="outline"
+            size="default"
+            onClick={() => handleSearch("")}
+            className="flex items-center gap-2"
+          >
+            <X className="h-4 w-4" />
+            נקה חיפוש
+          </Button>
+        )}
       </div>
 
       {isPending && (
