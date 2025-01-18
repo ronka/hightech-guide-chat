@@ -72,24 +72,6 @@ export async function POST(req: NextRequest) {
         model: openai("gpt-4o"),
         messages,
         system: QA_TEMPLATE,
-        //         system: `You are a helpful assistant. Check your knowledge base before answering any questions.
-        // Only respond to questions using information from tool calls.
-        // if no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
-        onFinish(event) {
-          console.log("$#@$#@$%@#$#@");
-          console.log("$#@$#@$%@#$#@");
-          console.log("event", event);
-          console.log("$#@$#@$%@#$#@");
-          console.log("$#@$#@$%@#$#@");
-          // message annotation:
-          dataStream.writeMessageAnnotation({
-            id: generateId(), // e.g. id from saved DB record
-            other: "information",
-          });
-
-          // call annotation:
-          dataStream.writeData("call completed");
-        },
         tools: {
           getInformation: tool({
             description: `get information from your knowledge base to answer questions.`,
