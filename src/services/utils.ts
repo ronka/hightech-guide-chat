@@ -96,7 +96,7 @@ export const getSources = (toolInvocations: ToolInvocation[]): Source[] => {
 
 export const pageNumberToChapter = (pageNumber: number) => {
   if (pageNumber < 11) {
-    return null;
+    return "הקדמה";
   } else if (pageNumber < 24) {
     return "פרק 1: איך סיימתי תואר במדעי המחשב תוך כדי עבודהבמשרה מלאה בשלוש וחצי שנים";
   } else if (pageNumber < 41) {
