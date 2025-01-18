@@ -1,7 +1,13 @@
 import { env } from "@/services/config";
-import { findRelevantContent } from "@/services/embedding";
+import {
+  findRelevantContent,
+  getExtraLinks,
+  getFirstJob,
+  getLinksFromTheBook,
+  getTheBook as getTheBookPurchaseLinks,
+} from "@/services/embedding";
 import logger from "@/services/logger";
-import { QA_TEMPLATE } from "@/services/prompt-templates";
+import { SYSTEM_PROMPT } from "@/services/prompt-templates";
 import { openai } from "@ai-sdk/openai";
 import arcjet, { shield, tokenBucket } from "@arcjet/next";
 import {
@@ -71,10 +77,30 @@ export async function POST(req: NextRequest) {
       const result = streamText({
         model: openai("gpt-4o"),
         messages,
-        system: QA_TEMPLATE,
+        system: SYSTEM_PROMPT,
         tools: {
+          getFirstJob: tool({
+            description: `get first job from the book`,
+            parameters: z.object({}),
+            execute: async () => getFirstJob(),
+          }),
+          getLinksFromTheBook: tool({
+            description: `get links from the book if asked what is linked in the book`,
+            parameters: z.object({}),
+            execute: async () => getLinksFromTheBook(),
+          }),
+          getExtraLinks: tool({
+            description: `get resources links`,
+            parameters: z.object({}),
+            execute: async () => getExtraLinks(),
+          }),
+          getTheBook: tool({
+            description: `asked how to buy the book`,
+            parameters: z.object({}),
+            execute: async () => getTheBookPurchaseLinks(),
+          }),
           getInformation: tool({
-            description: `get information from your knowledge base to answer questions.`,
+            description: `get information about the book to answer questions.`,
             parameters: z.object({
               question: z.string().describe("the users question"),
             }),

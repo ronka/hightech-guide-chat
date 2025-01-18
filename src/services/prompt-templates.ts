@@ -1,53 +1,6 @@
 import { CHAT_LINKS } from "@/constants/links";
 
-// Creates a standalone question from the chat-history and the current question
-export const STANDALONE_QUESTION_TEMPLATE = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
-
-Chat History:
-{chat_history}
-Follow Up Input: {question}
-Standalone question:`;
-
-const MORE_CONTEXT = `דוגמאות לפרוייקטים שעשיתי שעזרו לי למצוא עבודה:
-- בוט לטלגרם למציאת קבוצות לימוד באונירסיטה הפתוחה
-- GPTs לתוכניות אימון טיפוס
-- כשיצא הAPI של ChatGPT ניסיתי לבנות בפעם הראשונה אפליקציה למובייל עם React Native וככה למדתי לפתח אפליקציות למובייל וגם לעבוד עם הAPI שלהם
-
-טיפים למצוא עבודה ראשונה:
-- לאמץ גישת ה-Build in public
-- אנשים משתפים על מה הם עובדים, איך הם פותרים את הבעיות שהם נתקלים בהם אפשר. כלי מאוד טוב לשיווק וליצירת נטוורקינג
-- - ערוצים לפרסם בהם:
-- - - טוויטר
-- - - לינקדין
-- - - - #כולא_לייק
-- - - קבוצות בפייסבוק
-- - אנשים שאני עוקב אחרים בתחום
-- - - https://twitter.com/levelsio
-- - - https://twitter.com/dannypostmaa 
-- - - https://www.youtube.com/@marc-lou 
-
-`;
-
-const USEFUL_LINKS = `אם מבקשים לינק לסירטון יוטיוב של יפתח בר על ההרצאה על השכר והמשכורות והמשא המתן עליהם תשלח את הלינק:
-${CHAT_LINKS.FROM_THE_BOOK.IFTAH_BAR_SALARY_TALK}
-
-אם מבקשים לינק לקבוצת פייסבוק של הסטונדטים באוניברסיטה הפתוחה:
-${CHAT_LINKS.FROM_THE_BOOK.CS_FACEBOOK_GROUP}
-
-אם מבקשים לינק לתוכנית לימוד שלי באוניברסיטה הפתוחה:
-${CHAT_LINKS.FROM_THE_BOOK.LEARNING_PROGRAM}
-
-לינק לקניית עותק פיזי ודיגיטלי דרך ״סטימצקי״:
-  link: "${CHAT_LINKS.PURCHASE.STEIMATZKY}",
-this link should always be in markdown with a label to hide the true link
-
-לינק לקניית עותק דיגיטלי דרך אתר ״עברית״:
-  link: "${CHAT_LINKS.PURCHASE.EVRIT}",
-this link should always be in markdown with a label to hide the true link
-`;
-
-const EXTRA_LINKS = `
-
+export const EXTRA_LINKS = `
 # מיטאפים
 https://www.meetup.com/react-il
 https://www.meetup.com/javascript-israel
@@ -88,34 +41,90 @@ https://neetcode.io - אחלה אתר(גם יש לו אחלה ערוץ יוטי�
 
 `;
 
+export const FIND_FIRST_JOB = `## טיפים למציאת עבודה ראשונה בהייטק:
+
+דוגמאות לפרוייקטים שעשינו שעזרו לנו למצוא עבודה:
+- בוט לטלגרם למציאת קבוצות לימוד באונירסיטה הפתוחה
+- GPTs לתוכניות אימון טיפוס
+- כשיצא הAPI של ChatGPT ניסינו לבנות בפעם הראשונה אפליקציה למובייל עם React Native וככה למדנו לפתח אפליקציות למובייל וגם לעבוד עם הAPI שלהם
+
+טיפים למצוא עבודה ראשונה:
+- לאמץ גישת ה-Build in public
+- אנשים משתפים על מה **הם** עובדים, איך **הם** פותרים את הבעיות שהם נתקלים בהם אפשר. כלי מאוד טוב לשיווק וליצירת נטוורקינג
+- - ערוצים לפרסם בהם:
+- - - טוויטר
+- - - לינקדין
+- - - - #כולא_לייק
+- - - קבוצות בפייסבוק
+- - אנשים שאנחנו עוקבים אחריהם בתחום
+- - - https://twitter.com/levelsio
+- - - https://twitter.com/dannypostmaa 
+- - - https://www.youtube.com/@marc-lou 
+
+### **בניית פורטפוליו:**
+
+* **פרויקטים אישיים:** תמשיכו לפתח פרויקטים אישיים הקשורים לתחום שמעניין אתכם. זה יכול להיות כל דבר, החל מאפליקציה קטנה ועד לבלוג טכני. הפרויקטים האלה לא רק יראו למעסיקים את הכישורים שלכם, אלא גם יעזרו לכם ללמוד ולצמוח כמתכנתים.
+* **GitHub:** השתמשו ב-GitHub כדי לאחסן את הקוד שלכם ולשתף אותו עם אחרים. זהו כלי מצוין להציג את העבודה שלכם ולהתחבר עם מתכנתים אחרים.
+* **בלוג טכני:** התחילו בלוג טכני כדי לשתף את הידע שלכם עם אחרים. זה יעזור לכם להעמיק את ההבנה שלכם בנושאים שונים, לבנות מוניטין בתחום, ולמשוך את תשומת הלב של מעסיקים פוטנציאליים.
+
+### **נטוורקינג:**
+
+* **אירועים מקצועיים:** השתתפו באירועים מקצועיים כמו meetups, hackathons, והרצאות. אלה הזדמנויות מצוינות להכיר אנשים חדשים בתחום, ללמוד על חברות שונות, ולמצוא מנטורים.
+* **לינקדין:** השתמשו בלינקדין באופן פעיל. חברו לחברות, עקבו אחר חברות שמעניינות אתכם, והשתתפו בקבוצות רלוונטיות.
+* **השתתפות בפרויקטים קוד פתוח:** תרומה לפרויקטים קוד פתוח היא דרך מצוינת ללמוד, לשתף פעולה עם אחרים, ולהציג את הכישורים שלכם.
+
+### **חיפוש פעיל אחר משרות:**
+
+* **אתרי דרושים:** חפשו משרות פתוחות באתרי דרושים כמו ג'ובסDB, AllJobs, ו-LinkedIn.
+* **חברות סטארטאפ:** חברות סטארטאפ הן בדרך כלל פתוחות יותר לקלוט עובדים ללא ניסיון רב. חפשו משרות פתוחות באתרים כמו Start-Up Nation Central.
+* **פניות ישירות:** אל תפחדו לפנות ישירות לחברות שמעניינות אתכם, גם אם אין משרות פתוחות כרגע. שלחו להם מייל קצר המציג אתכם ואת הכישורים שלכם.
+
+### **טיפים נוספים:**
+
+* **התמקדו בכישורים רכים:** מעסיקים מחפשים לא רק כישורים טכניים, אלא גם כישורים רכים כמו יכולת עבודה בצוות, פתרון בעיות, ויצירתיות.
+* **הכינו קורות חיים מותאמים:** התאימו את קורות החיים שלכם לכל משרה שאתם מגישים אליה. הדגישו את הכישורים והניסיון הרלוונטיים ביותר למשרה.
+* **התכוננו לראיונות:** התרגלו לענות על שאלות נפוצות בראיונות עבודה. תרגלו עם חבר או עם מנטור.
+* **אל תתייאשו:** חיפוש עבודה יכול להיות תהליך ארוך ומאתגר. אל תתנו לסירובים לשבור אתכם. המשיכו ללמוד ולשפר את עצמכם.
+
+**זכרו, הבנייה בקהילה והשתפות הפעילה שלכם בתהליך הלמידה והפיתוח שלכם הן המפתח להצלחה.**
+
+**בהצלחה במציאת העבודה הראשונה שלכם בהייטק!**
+
+**הנה כמה תוספות שיכולות לעזור:**
+
+* **המלצות:** בקשו ממנטורים, מרצים או מבחנים קודמים להמליץ עליכם. המלצות יכולות לפתוח דלתות רבות.
+* **קורסים מקוונים:** השקיעו בלימוד קורסים מקוונים כדי להרחיב את הידע שלכם ולהשיג תעודות. פלטפורמות כמו Coursera, Udemy ו-edX מציעות מגוון רחב של קורסים.
+* **השתתפות בפורומים מקצועיים:** הצטרפו לפורומים מקצועיים כמו Stack Overflow כדי לשאול שאלות ולעזור לאחרים. זה יעזור לכם להתחבר עם מתכנתים אחרים וללמוד מהם.
+
+לינקים שימושיים שיכולים לעזור לכם למצוא עבודה, חייב להשתמש בלינקים האלה:
+${EXTRA_LINKS}
+
+**בהצלחה!**`;
+
+export const LINKS_FOR_THE_BOOK = `אם מבקשים לינק לסירטון יוטיוב של יפתח בר על ההרצאה על השכר והמשכורות והמשא המתן עליהם תשלח את הלינק:
+${CHAT_LINKS.FROM_THE_BOOK.IFTAH_BAR_SALARY_TALK}
+
+אם מבקשים לינק לקבוצת פייסבוק של הסטונדטים באוניברסיטה הפתוחה:
+${CHAT_LINKS.FROM_THE_BOOK.CS_FACEBOOK_GROUP}
+
+אם מבקשים לינק לתוכנית לימוד שלי באוניברסיטה הפתוחה:
+${CHAT_LINKS.FROM_THE_BOOK.LEARNING_PROGRAM}`;
+
+export const PURCHASE_LINKS = `
+לינק לקניית עותק פיזי ודיגיטלי דרך ״סטימצקי״:
+${CHAT_LINKS.PURCHASE.STEIMATZKY}
+
+לינק לקניית עותק דיגיטלי דרך אתר ״עברית״:
+${CHAT_LINKS.PURCHASE.EVRIT}
+`;
+
 // Actual question you ask the chat and send the response to client
-export const QA_TEMPLATE = `You are an enthusiastic AI assistant. Check your knowledge base before answering any questions.
+export const SYSTEM_PROMPT = `You are an enthusiastic AI assistant. Check your knowledge base before answering any questions.
 Only respond to questions using information from tool calls.
 if no relevant information is found in the tool calls, respond, "סליחה, אני לא יודע."
 your answers MUST be in Hebrew.
-
-if you are being asked איך לנסח עבור קורות חיים answer using what was mentioned in the book:
-- קו״ח לכל משרה
-- דברו במספרים
-- הקפידו על מבנה
-- תדגישו מילות מפתח עבור מערכות AST
-
-useful links from the book and about the book:
-<links>
-${USEFUL_LINKS}
-</links>
 
 {context}
 
 Question: {question}
 Helpful answer in markdown:`;
-
-// If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
-
-// Use the following context ONLY if the question asked to elaborate on something that you as an AI assitant said messages:
-// <links>
-// ${EXTRA_LINKS}
-// </links>
-// <info>
-// ${MORE_CONTEXT}
-// </info>

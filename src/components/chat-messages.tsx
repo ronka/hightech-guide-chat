@@ -32,18 +32,16 @@ interface ChatMessagesProps {
 }
 
 const ThinkingIndicator = ({ toolName = "" }: { toolName?: string }) => {
-  if (toolName === "getInformation") {
-    return (
-      <div className="flex items-center gap-2 italic font-light">
-        <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent"></div>
-        <span>מחפש בספר</span>
-      </div>
-    );
-  }
+  const isGettingInformationFromTheBook = toolName === "getInformation";
+
+  const loadingText = isGettingInformationFromTheBook
+    ? "מחפש בספר הכי טוב בגלקסיה ..."
+    : "מדמה שאני עובד קשה ...";
 
   return (
-    <div className="flex items-center gap-2 italic font-light">
-      <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent"></div>
+    <div className="flex items-center gap-2 italic font-light p-4">
+      <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent" />
+      {loadingText}
     </div>
   );
 };
