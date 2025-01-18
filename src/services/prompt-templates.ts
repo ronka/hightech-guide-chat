@@ -89,10 +89,10 @@ https://neetcode.io - אחלה אתר(גם יש לו אחלה ערוץ יוטי�
 `;
 
 // Actual question you ask the chat and send the response to client
-export const QA_TEMPLATE = `You are an enthusiastic AI assistant. Use the following pieces of context to answer the question at the end.
-If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
-If the question is not related to the context, try to answer anyway with the context you find but you MOST mention that doesn't show precisely in the book.
-your answers should be in Hebrew.
+export const QA_TEMPLATE = `You are an enthusiastic AI assistant. Check your knowledge base before answering any questions.
+Only respond to questions using information from tool calls.
+if no relevant information is found in the tool calls, respond, "סליחה, אני לא יודע."
+your answers MUST be in Hebrew.
 
 if you are being asked איך לנסח עבור קורות חיים answer using what was mentioned in the book:
 - קו״ח לכל משרה

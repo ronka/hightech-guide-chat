@@ -1,9 +1,18 @@
 import { env } from "@/services/config";
-import { callChain } from "@/services/langchain";
+import { findRelevantContent } from "@/services/embedding";
 import logger from "@/services/logger";
+import { QA_TEMPLATE } from "@/services/prompt-templates";
+import { openai } from "@ai-sdk/openai";
 import arcjet, { shield, tokenBucket } from "@arcjet/next";
-import type { Message } from "ai";
+import {
+  streamText,
+  createDataStreamResponse,
+  generateId,
+  tool,
+  type Message,
+} from "ai";
 import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const aj = arcjet({
   key: env.ARCJET_KEY, // Get your site key from https://app.arcjet.com
@@ -53,40 +62,51 @@ export async function POST(req: NextRequest) {
   }
 
   const messages: Message[] = body.messages ?? [];
-  logger.info("Messages ", messages);
-  const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-  const question = messages[messages.length - 1].content;
 
-  logger.info("Chat history ", formattedPreviousMessages.join("\n"));
+  // immediately start streaming (solves RAG issues with status, etc.)
+  return createDataStreamResponse({
+    execute: (dataStream) => {
+      dataStream.writeData("initialized call");
 
-  if (!question) {
-    return NextResponse.json(
-      {
-        error: "Bad Request",
-        reason: "No question provided",
-      },
-      {
-        status: 400,
-      }
-    );
-  }
+      const result = streamText({
+        model: openai("gpt-4o"),
+        messages,
+        system: QA_TEMPLATE,
+        //         system: `You are a helpful assistant. Check your knowledge base before answering any questions.
+        // Only respond to questions using information from tool calls.
+        // if no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
+        onFinish(event) {
+          console.log("$#@$#@$%@#$#@");
+          console.log("$#@$#@$%@#$#@");
+          console.log("event", event);
+          console.log("$#@$#@$%@#$#@");
+          console.log("$#@$#@$%@#$#@");
+          // message annotation:
+          dataStream.writeMessageAnnotation({
+            id: generateId(), // e.g. id from saved DB record
+            other: "information",
+          });
 
-  try {
-    const streamingTextResponse = callChain({
-      question,
-      chatHistory: formattedPreviousMessages.join("\n"),
-    });
+          // call annotation:
+          dataStream.writeData("call completed");
+        },
+        tools: {
+          getInformation: tool({
+            description: `get information from your knowledge base to answer questions.`,
+            parameters: z.object({
+              question: z.string().describe("the users question"),
+            }),
+            execute: async ({ question }) => findRelevantContent(question),
+          }),
+        },
+      });
 
-    return streamingTextResponse;
-  } catch (error) {
-    console.error("Internal server error ", error);
-    return NextResponse.json(
-      {
-        error: "Error: Something went wrong. Try again!",
-      },
-      {
-        status: 500,
-      }
-    );
-  }
+      result.mergeIntoDataStream(dataStream);
+    },
+    onError: (error) => {
+      // Error messages are masked by default for security reasons.
+      // If you want to expose the error message to the client, you can do so here:
+      return error instanceof Error ? error.message : String(error);
+    },
+  });
 }

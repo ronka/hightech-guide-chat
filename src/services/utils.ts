@@ -1,4 +1,4 @@
-import type { Message } from "ai";
+import type { Message, ToolInvocation } from "ai";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { JSONValue } from "ai";
@@ -68,22 +68,30 @@ const dataSchema: z.ZodSchema<Data> = z.object({
 });
 
 // Maps the sources with the right ai-message
-export const getSources = (
-  data: JSONValue[],
-  role: string,
-  index: number
-): Source[] => {
-  if (role !== "assistant" || index < 2 || (index - 2) % 2 !== 0) {
-    return [];
-  }
+export const getSources = (toolInvocations: ToolInvocation[]): Source[] => {
+  console.log("getSources");
+  const sources: Source[] = [];
 
-  const sourcesIndex = (index - 2) / 2;
-  const parsedData = dataSchema.safeParse(data[sourcesIndex]);
+  toolInvocations.forEach((toolInvocation) => {
+    if (toolInvocation.toolName !== "getInformation") {
+      return;
+    }
 
-  // Check if parsing was successful and sources exist
-  return parsedData.success && parsedData.data.sources
-    ? parsedData.data.sources
-    : [];
+    if (toolInvocation.state !== "result") {
+      return;
+    }
+
+    const { result } = toolInvocation;
+
+    result.map((source: { pageContent: string; pageNumber: number }) => {
+      sources.push({
+        pageContent: source.pageContent,
+        pageNumber: source.pageNumber,
+      });
+    });
+  });
+
+  return sources;
 };
 
 export const pageNumberToChapter = (pageNumber: number) => {

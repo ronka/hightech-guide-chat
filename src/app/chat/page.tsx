@@ -3,11 +3,13 @@ import { BookPromo } from "@/components/book-promo";
 import { Chat } from "@/components/chat";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { nanoid } from "ai";
+import { generateId } from "ai";
 import { useState } from "react";
 
 export default function Home() {
-  const [sessionId, setSessionId] = useState<string>(`session-id-${nanoid()}`);
+  const [sessionId, setSessionId] = useState<string>(
+    `session-id-${generateId()}`
+  );
 
   return (
     <>

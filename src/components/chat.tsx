@@ -18,6 +18,7 @@ export interface ChatProps {
 export function Chat({ sessionId, isUploading }: ChatProps) {
   const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
     useChat({
+      maxSteps: 3,
       initialMessages: initialMessages as Message[],
       body: { sessionId },
     });
@@ -41,21 +42,42 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
     handleSubmit(event, chatRequestOptions);
   };
 
+  console.log("$#@$$@#$@$@#!@#!@");
+  console.log("messages", messages);
+
   return (
     <div
       className="rounded-2xl border m:h-[75vh] h-[65vh] flex flex-col justify-between"
       style={isUploading ? { opacity: 0.5, cursor: "not-allowed" } : {}}
     >
       <div className="md:p-6 p-2 overflow-auto" ref={containerRef}>
-        {messages.map(({ id, role, content }: Message, index) => (
-          <ChatLine
-            key={id}
-            role={role}
-            content={content}
-            // Start from the third message of the assistant
-            sources={data?.length ? getSources(data, role, index) : []}
-          />
-        ))}
+        {messages.map(
+          (
+            { id, role, content, toolInvocations, annotations }: Message,
+            index
+          ) => {
+            console.log(id, "annotations", annotations);
+            console.log(id, "toolInvocations", toolInvocations);
+
+            if (content.length === 0) {
+              return (
+                <span key={id} className="italic font-light">
+                  {"calling tool: " + toolInvocations?.[0].toolName}
+                </span>
+              );
+            }
+
+            return (
+              <ChatLine
+                key={id}
+                role={role}
+                content={content}
+                // Start from the third message of the assistant
+                sources={toolInvocations ? getSources(toolInvocations) : []}
+              />
+            );
+          }
+        )}
       </div>
 
       <form
