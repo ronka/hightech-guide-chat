@@ -34,27 +34,25 @@ export default function CVAnalysisPage() {
 
     try {
       if (!file) {
-        throw new Error("Please upload a CV");
+        throw new Error("נא להעלות קורות חיים");
       }
 
       if (debugMode) {
-        // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
-        // Mock response
         setResults({
           match_percentage: jobDescription ? 75 : 50,
           strengths: [
-            "Strong technical background",
-            "Relevant project experience",
-            "Good communication skills",
+            "רקע טכני חזק",
+            "ניסיון בפרויקטים רלוונטיים",
+            "כישורי תקשורת טובים",
           ],
           improvements: [
-            "Add more quantifiable achievements",
+            "הוסף הישגים כמותיים",
             jobDescription
-              ? "Include specific technologies mentioned in job description"
-              : "Consider adding more industry-specific keywords",
-            "Highlight leadership experience",
+              ? "כלול טכנולוגיות ספציפיות שמוזכרות בתיאור המשרה"
+              : "שקול להוסיף מילות מפתח ספציפיות לתעשייה",
+            "הדגש ניסיון בהובלה",
           ],
           keywords_found: ["React", "TypeScript", "Node.js"],
           keywords_missing: ["Docker", "AWS", "CI/CD"],
@@ -72,14 +70,14 @@ export default function CVAnalysisPage() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to analyze CV");
+          throw new Error("ניתוח קורות החיים נכשל");
         }
 
         const data = await response.json();
         setResults(data);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : "אירעה שגיאה");
     } finally {
       setLoading(false);
     }
@@ -87,7 +85,9 @@ export default function CVAnalysisPage() {
 
   return (
     <div className="container max-w-4xl py-8">
-      <h1 className="text-3xl font-bold mb-8">CV Analysis Tool</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        כלי לניתוח קורות חיים
+      </h1>
 
       {results ? (
         <div className="space-y-6">
@@ -102,82 +102,85 @@ export default function CVAnalysisPage() {
               variant="outline"
               className="mt-4"
             >
-              Analyze Another CV
+              נתח קורות חיים נוספים
             </Button>
           </div>
         </div>
       ) : (
         <Card className="p-6 border-2 border-border shadow-lg rounded-xl bg-gradient-to-b from-background to-muted/30">
           <form onSubmit={analyzeCv} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="cv" className="text-lg font-medium">
-                Upload CV (PDF)
-              </Label>
-              <Input
-                id="cv"
-                type="file"
-                accept=".pdf"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-              <Label
-                htmlFor="cv"
-                className="block border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
-              >
-                {file ? (
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Upload className="w-6 h-6 text-primary" />
+            {/* 2 columns on large screens and one column on small screens */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="cv" className="text-lg font-medium">
+                  העלה קורות חיים (PDF)
+                </Label>
+                <Input
+                  id="cv"
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <Label
+                  htmlFor="cv"
+                  className="block border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
+                >
+                  {file ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="bg-primary/10 p-3 rounded-full">
+                        <Upload className="w-6 h-6 text-primary" />
+                      </div>
+                      <p className="font-medium">{file.name}</p>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setFile(null);
+                        }}
+                      >
+                        החלף קובץ
+                      </Button>
                     </div>
-                    <p className="font-medium">{file.name}</p>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setFile(null);
-                      }}
-                    >
-                      Change file
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="bg-muted p-3 rounded-full">
-                      <Upload className="w-6 h-6 text-muted-foreground" />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="bg-muted p-3 rounded-full">
+                        <Upload className="w-6 h-6 text-muted-foreground" />
+                      </div>
+                      <p className="text-muted-foreground">
+                        גרור ושחרר את קורות החיים כאן, או לחץ לבחירה
+                      </p>
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        בחר קובץ
+                      </Button>
                     </div>
-                    <p className="text-muted-foreground">
-                      Drag and drop your CV here, or click to browse
-                    </p>
-                    <Button
-                      variant="secondary"
-                      type="button"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Select File
-                    </Button>
-                  </div>
-                )}
-              </Label>
+                  )}
+                </Label>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="jobDescription" className="text-lg font-medium">
+                  תיאור המשרה{" "}
+                  <span className="text-sm font-normal text-muted-foreground">
+                    (אופציונלי)
+                  </span>
+                </Label>
+                <Textarea
+                  id="jobDescription"
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder="הדבק את תיאור המשרה כאן לקבלת תוצאות מדויקות יותר..."
+                  className="min-h-[165px] resize-y"
+                />
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="jobDescription" className="text-lg font-medium">
-                Job Description{" "}
-                <span className="text-sm font-normal text-muted-foreground">
-                  (optional)
-                </span>
-              </Label>
-              <Textarea
-                id="jobDescription"
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                placeholder="Paste the job description here to get more accurate results..."
-                className="min-h-[150px] resize-y"
-              />
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex justify-center">
               <Button
                 type="submit"
                 disabled={loading || !file}
@@ -185,25 +188,24 @@ export default function CVAnalysisPage() {
                 size="lg"
               >
                 {loading ? (
-                  "Analyzing..."
+                  "מנתח..."
                 ) : (
                   <>
                     <Upload className="w-4 h-4 mr-2" />
-                    Analyze CV
+                    נתח קורות חיים
                   </>
                 )}
               </Button>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <Input
-                  type="checkbox"
-                  checked={debugMode}
-                  onChange={(e) => setDebugMode(e.target.checked)}
-                  className="w-4 h-4"
-                />
-                Debug Mode
-              </label>
             </div>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <Input
+                type="checkbox"
+                checked={debugMode}
+                onChange={(e) => setDebugMode(e.target.checked)}
+                className="w-4 h-4"
+              />
+              מצב דיבאג
+            </label>
 
             {error && (
               <Alert variant="destructive">
