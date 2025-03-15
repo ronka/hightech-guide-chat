@@ -2,15 +2,10 @@ import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/services/utils";
 import { Progress } from "@/components/ui/progress";
+import { CVAnalysisResults as CVAnalysisResultsType } from "@/types/cv-analysis";
 
 interface CVAnalysisResultsProps {
-  results: {
-    match_percentage: number;
-    strengths: string[];
-    improvements: string[];
-    keywords_found: string[];
-    keywords_missing: string[];
-  };
+  results: CVAnalysisResultsType;
   className?: string;
 }
 

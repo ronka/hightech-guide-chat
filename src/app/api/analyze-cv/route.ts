@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { generateObject } from "ai";
+import { google } from "@ai-sdk/google";
+import { CVAnalysisSchema } from "@/types/cv-analysis";
 
 export async function POST(request: Request) {
   try {
@@ -13,27 +16,30 @@ export async function POST(request: Request) {
       );
     }
 
-    // Mock response data
-    const analysisResults = {
-      match_percentage: jobDescription ? 75 : 50,
-      strengths: [
-        "רקע טכני חזק",
-        "ניסיון בפרויקטים רלוונטיים",
-        "כישורי תקשורת טובים",
-      ],
-      improvements: [
-        "הוסף הישגים כמותיים",
-        jobDescription
-          ? "כלול טכנולוגיות ספציפיות שמוזכרות בתיאור המשרה"
-          : "שקול להוסיף מילות מפתח ספציפיות לתעשייה",
-        "הדגש ניסיון בהובלה",
-      ],
-      keywords_found: ["React", "TypeScript", "Node.js"],
-      keywords_missing: ["Docker", "AWS", "CI/CD"],
-    };
+    const cvText = cv instanceof File ? await cv.text() : cv.toString();
 
-    return NextResponse.json(analysisResults);
+    const result = await generateObject({
+      model: google("gemini-2.0-flash-001"),
+      system: `You are a professional CV analyzer. Analyze the CV and provide detailed feedback including:
+        - A match percentage (0-100) based on job fit
+        - Key strengths found in the CV
+        - Areas for improvement
+        - Keywords found in the CV
+        - Important keywords that are missing
+        ${
+          jobDescription
+            ? "Compare the CV against the provided job description."
+            : "Analyze the CV for general job market fit."
+        }`,
+      prompt: `CV Content:\n${cvText}\n${
+        jobDescription ? `Job Description:\n${jobDescription}` : ""
+      }`,
+      schema: CVAnalysisSchema,
+    });
+
+    return NextResponse.json(result);
   } catch (error) {
+    console.error("CV Analysis error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
