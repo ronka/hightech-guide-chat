@@ -36,7 +36,9 @@ export async function POST(request: Request) {
           jobDescription
             ? "Compare the CV against the provided job description."
             : "Analyze the CV for general job market fit."
-        }`,
+        }
+		
+		You MUST respond in Hebrew.`,
       prompt: `CV Content:\n${cvText}\n${
         jobDescription ? `Job Description:\n${jobDescription}` : ""
       }`,
