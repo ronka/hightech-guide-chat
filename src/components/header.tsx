@@ -23,6 +23,7 @@ const Header = () => {
     { href: "/", label: "לספר" },
     { href: "/chat", label: "לצ׳אט" },
     { href: "/explain", label: "מילון מושגים" },
+    { href: "/cv-analysis", label: "ניתוח קורות חיים" },
     { href: "/#contact", label: "צור קשר" },
     { href: "https://www.ronka.dev", label: "לבלוג", target: "_blank" },
   ];
