@@ -70,7 +70,10 @@ export default function CVAnalysisPage() {
 
       {results ? (
         <div className="space-y-6">
-          <CVAnalysisResults results={results} />
+          <CVAnalysisResults
+            results={results}
+            hasJobDescription={!!jobDescription}
+          />
           <div className="flex justify-center">
             <Button
               onClick={() => {

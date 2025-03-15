@@ -7,11 +7,13 @@ import { CVAnalysisResults as CVAnalysisResultsType } from "@/types/cv-analysis"
 interface CVAnalysisResultsProps {
   results: CVAnalysisResultsType;
   className?: string;
+  hasJobDescription?: boolean;
 }
 
 export function CVAnalysisResults({
   results,
   className,
+  hasJobDescription,
 }: CVAnalysisResultsProps) {
   return (
     <Card className={cn("p-6", className)}>
@@ -76,22 +78,24 @@ export function CVAnalysisResults({
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2">
-              <XCircle className="w-5 h-5 text-red-500" />
-              מילות מפתח חסרות
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {results.keywords_missing.map((keyword, index) => (
-                <span
-                  key={index}
-                  className="px-2 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-full text-sm"
-                >
-                  {keyword}
-                </span>
-              ))}
+          {hasJobDescription && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <XCircle className="w-5 h-5 text-red-500" />
+                מילות מפתח חסרות
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {results.keywords_missing.map((keyword, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-full text-sm"
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </Card>
