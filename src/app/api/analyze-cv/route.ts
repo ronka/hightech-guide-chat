@@ -16,7 +16,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const cvText = cv instanceof File ? await cv.text() : cv.toString();
+    // Handle the CV content - FormData files are Blob objects in Next.js
+    let cvText = "";
+    if (cv instanceof Blob) {
+      cvText = await cv.text();
+    } else {
+      cvText = cv.toString();
+    }
 
     const result = await generateObject({
       model: google("gemini-2.0-flash-001"),

@@ -54,7 +54,7 @@ export default function CVAnalysisPage() {
       }
 
       const data = await response.json();
-      setResults(data);
+      setResults(data.object);
     } catch (err) {
       setError(err instanceof Error ? err.message : "אירעה שגיאה");
     } finally {
