@@ -26,19 +26,23 @@ export async function POST(request: Request) {
 
     const result = await generateObject({
       model: google("gemini-2.0-flash-001"),
-      system: `You are a professional CV analyzer. Analyze the CV and provide detailed feedback including:
-        - A match percentage (0-100) based on job fit
-        - Key strengths found in the CV
-        - Areas for improvement
-        - Keywords found in the CV
-        - Important keywords that are missing
-        ${
-          jobDescription
-            ? "Compare the CV against the provided job description."
-            : "Analyze the CV for general job market fit."
-        }
-		
-		You MUST respond in Hebrew.`,
+      system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
+
+- Job Title Identification: Determine the most accurate job title based on the CV's content.
+- Match Percentage (0-100%): Evaluate the CV's overall job fit based on its content, clarity, and industry alignment.
+- Key Strengths: Identify the candidate’s primary strengths, including technical skills, soft skills, and industry experience.
+- Areas for Improvement: Highlight any weaknesses or areas that could be improved for better job prospects.
+- Extracted Keywords: List the most relevant to the job title keywords found in the CV, including skills, technologies, and industry terms.
+- Missing Important Keywords: List keywords that appear in the job description but are not found in the CV.
+
+${
+  jobDescription
+    ? "Compare the CV against the provided job description."
+    : "Analyze the CV for general job market fit."
+}
+
+Ensure that your response is structured, concise, and actionable. If possible, provide insights on how to optimize the CV for better alignment with industry standards and job market trends.		
+You MUST respond in Hebrew.`,
       prompt: `CV Content:\n${cvText}\n${
         jobDescription ? `Job Description:\n${jobDescription}` : ""
       }`,
