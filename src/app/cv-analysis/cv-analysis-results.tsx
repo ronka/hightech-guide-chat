@@ -20,12 +20,12 @@ export function CVAnalysisResults({
 }: CVAnalysisResultsProps) {
   return (
     <Card className={cn("p-6", className)}>
-      <h2 className="text-2xl font-semibold mb-6">Analysis Results</h2>
+      <h2 className="text-2xl font-semibold mb-6">תוצאות ניתוח</h2>
 
       <div className="space-y-6">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Match Score</span>
+            <span className="text-sm font-medium">ציון התאמה</span>
             <span className="text-sm font-medium">
               {results.match_percentage}%
             </span>
@@ -37,7 +37,7 @@ export function CVAnalysisResults({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-500" />
-              Strengths
+              חוזקות
             </h3>
             <ul className="space-y-2">
               {results.strengths.map((strength, index) => (
@@ -51,7 +51,7 @@ export function CVAnalysisResults({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-yellow-500" />
-              Areas for Improvement
+              תחומים לשיפור
             </h3>
             <ul className="space-y-2">
               {results.improvements.map((improvement, index) => (
@@ -67,7 +67,7 @@ export function CVAnalysisResults({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-500" />
-              Keywords Found
+              מילות מפתח שנמצאו
             </h3>
             <div className="flex flex-wrap gap-2">
               {results.keywords_found.map((keyword, index) => (
@@ -84,7 +84,7 @@ export function CVAnalysisResults({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <XCircle className="w-5 h-5 text-red-500" />
-              Missing Keywords
+              מילות מפתח חסרות
             </h3>
             <div className="flex flex-wrap gap-2">
               {results.keywords_missing.map((keyword, index) => (
