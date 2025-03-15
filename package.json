@@ -14,6 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.1.25",
     "@ai-sdk/openai": "^1.1.0",
     "@arcjet/next": "^1.0.0-alpha.18",
     "@arcjet/node": "1.0.0-alpha.18",

@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,10 +14,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 export default function CVAnalysisPage() {
   const [file, setFile] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [debugMode, setDebugMode] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -29,57 +27,38 @@ export default function CVAnalysisPage() {
 
   const analyzeCv = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!file) {
+      setError("נא להעלות קורות חיים");
+      return;
+    }
+
     setError(null);
-    setLoading(true);
+    setIsLoading(true);
 
     try {
-      if (!file) {
-        throw new Error("נא להעלות קורות חיים");
+      const formData = new FormData();
+      formData.append("cv", file);
+
+      if (jobDescription) {
+        formData.append("jobDescription", jobDescription);
       }
 
-      if (debugMode) {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("/api/analyze-cv", {
+        method: "POST",
+        body: formData,
+      });
 
-        setResults({
-          match_percentage: jobDescription ? 75 : 50,
-          strengths: [
-            "רקע טכני חזק",
-            "ניסיון בפרויקטים רלוונטיים",
-            "כישורי תקשורת טובים",
-          ],
-          improvements: [
-            "הוסף הישגים כמותיים",
-            jobDescription
-              ? "כלול טכנולוגיות ספציפיות שמוזכרות בתיאור המשרה"
-              : "שקול להוסיף מילות מפתח ספציפיות לתעשייה",
-            "הדגש ניסיון בהובלה",
-          ],
-          keywords_found: ["React", "TypeScript", "Node.js"],
-          keywords_missing: ["Docker", "AWS", "CI/CD"],
-        });
-      } else {
-        const formData = new FormData();
-        formData.append("cv", file);
-        if (jobDescription) {
-          formData.append("jobDescription", jobDescription);
-        }
-
-        const response = await fetch("/api/analyze-cv", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error("ניתוח קורות החיים נכשל");
-        }
-
-        const data = await response.json();
-        setResults(data);
+      if (!response.ok) {
+        throw new Error("ניתוח קורות החיים נכשל");
       }
+
+      const data = await response.json();
+      setResults(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "אירעה שגיאה");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -109,7 +88,6 @@ export default function CVAnalysisPage() {
       ) : (
         <Card className="p-6 border-2 border-border shadow-lg rounded-xl bg-gradient-to-b from-background to-muted/30">
           <form onSubmit={analyzeCv} className="space-y-6">
-            {/* 2 columns on large screens and one column on small screens */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="cv" className="text-lg font-medium">
@@ -183,11 +161,11 @@ export default function CVAnalysisPage() {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                disabled={loading || !file}
+                disabled={isLoading || !file}
                 className="w-full sm:w-auto"
                 size="lg"
               >
-                {loading ? (
+                {isLoading ? (
                   "מנתח..."
                 ) : (
                   <>
@@ -197,15 +175,6 @@ export default function CVAnalysisPage() {
                 )}
               </Button>
             </div>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Input
-                type="checkbox"
-                checked={debugMode}
-                onChange={(e) => setDebugMode(e.target.checked)}
-                className="w-4 h-4"
-              />
-              מצב דיבאג
-            </label>
 
             {error && (
               <Alert variant="destructive">

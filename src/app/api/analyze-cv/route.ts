@@ -13,17 +13,26 @@ export async function POST(request: Request) {
       );
     }
 
-    // Here you would typically:
-    // 1. Save the CV file (e.g., to blob storage)
-    // 2. Extract text from PDF
-    // 3. Analyze CV against job description (if provided)
-    // 4. Return results
+    // Mock response data
+    const analysisResults = {
+      match_percentage: jobDescription ? 75 : 50,
+      strengths: [
+        "רקע טכני חזק",
+        "ניסיון בפרויקטים רלוונטיים",
+        "כישורי תקשורת טובים",
+      ],
+      improvements: [
+        "הוסף הישגים כמותיים",
+        jobDescription
+          ? "כלול טכנולוגיות ספציפיות שמוזכרות בתיאור המשרה"
+          : "שקול להוסיף מילות מפתח ספציפיות לתעשייה",
+        "הדגש ניסיון בהובלה",
+      ],
+      keywords_found: ["React", "TypeScript", "Node.js"],
+      keywords_missing: ["Docker", "AWS", "CI/CD"],
+    };
 
-    // For now, return an error to indicate this needs to be implemented
-    return NextResponse.json(
-      { error: "API endpoint not implemented" },
-      { status: 501 }
-    );
+    return NextResponse.json(analysisResults);
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },
