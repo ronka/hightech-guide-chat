@@ -28,11 +28,11 @@ export async function POST(request: Request) {
       model: google("gemini-2.0-flash-001"),
       system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
 
-- Job Title Identification: Determine the most accurate job title based on the CV's content.
+- Job Title Identification: Determine the most accurate job title based on the CV's content. set it as <job_title>
 - Match Percentage (0-100%): Evaluate the CV's overall job fit based on its content, clarity, and industry alignment.
 - Key Strengths: Identify the candidate’s primary strengths, including technical skills, soft skills, and industry experience.
 - Areas for Improvement: Highlight any weaknesses or areas that could be improved for better job prospects.
-- Extracted Keywords: List the most relevant to the job title keywords found in the CV, including skills, technologies, and industry terms.
+- Extracted Keywords: List the most relevant to the <job_title> keywords found in the CV, including skills, technologies, and industry terms. see example for keywords in <keywords_examples>
 - Missing Important Keywords: List keywords that appear in the job description but are not found in the CV.
 
 ${
@@ -42,7 +42,16 @@ ${
 }
 
 Ensure that your response is structured, concise, and actionable. If possible, provide insights on how to optimize the CV for better alignment with industry standards and job market trends.		
-You MUST respond in Hebrew.`,
+You MUST respond in Hebrew.
+
+<keywords_examples>
+Small example of keywords for different job titles, this is partial list:
+
+Example of keywords for Front-end: "React" ,"Next.js", "javascript", "typescript", "css", "html", "react native", "flutter", "kotlin", "swift", "react native", "flutter", "kotlin", "swift"
+Example of keywords for Back-end: "Node.js", "Express", "MongoDB", "PostgreSQL", "MySQL", "Java", "Python", "C#", "Ruby", "PHP", "Go", "Kotlin", "Swift"
+Example for all job titles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "Agile methodologies", "עבודת צוות" ).
+</keywords_examples>
+`,
       prompt: `CV Content:\n${cvText}\n${
         jobDescription ? `Job Description:\n${jobDescription}` : ""
       }`,
