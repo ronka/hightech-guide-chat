@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { CVAnalysisResults } from "./cv-analysis-results";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function CVAnalysisPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -19,6 +20,7 @@ export default function CVAnalysisPage() {
   const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
     if (e.target.files?.[0]) {
       setFile(e.target.files[0]);
       setError(null);
@@ -132,13 +134,6 @@ export default function CVAnalysisPage() {
                       <p className="text-muted-foreground">
                         גרור ושחרר את קורות החיים כאן, או לחץ לבחירה
                       </p>
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        בחר קובץ
-                      </Button>
                     </div>
                   )}
                 </Label>
@@ -156,7 +151,7 @@ export default function CVAnalysisPage() {
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
                   placeholder="הדבק את תיאור המשרה כאן לקבלת תוצאות מדויקות יותר..."
-                  className="min-h-[165px] resize-y"
+                  className="min-h-[120px] resize-y"
                 />
               </div>
             </div>
@@ -169,12 +164,15 @@ export default function CVAnalysisPage() {
                 size="lg"
               >
                 {isLoading ? (
-                  "מנתח..."
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <Spinner />
+                    <span>מנתח קורות חיים...</span>
+                  </div>
                 ) : (
-                  <>
+                  <div className="flex items-center justify-center gap-2">
                     <Upload className="w-4 h-4 mr-2" />
                     נתח קורות חיים
-                  </>
+                  </div>
                 )}
               </Button>
             </div>
