@@ -1,49 +1,73 @@
 "use client";
 
-import type React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { CVAnalysisResults } from "./cv-analysis-results";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Spinner } from "@/components/ui/spinner";
+import { FileUpload } from "./file-upload";
+
+interface AnalysisState {
+  file: File | null;
+  jobDescription: string;
+  results: any | null;
+  isLoading: boolean;
+  error: string | null;
+}
 
 export default function CVAnalysisPage() {
-  const [file, setFile] = useState<File | null>(null);
-  const [jobDescription, setJobDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<AnalysisState>({
+    file: null,
+    jobDescription: "",
+    results: null,
+    isLoading: false,
+    error: null,
+  });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
-    if (e.target.files?.[0]) {
-      setFile(e.target.files[0]);
-      setError(null);
-    }
+  const handleFileChange = (file: File | null) => {
+    setState((prev) => ({ ...prev, file }));
+  };
+
+  const handleJobDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setState((prev) => ({ ...prev, jobDescription: e.target.value }));
+  };
+
+  const setError = (error: string | null) => {
+    setState((prev) => ({ ...prev, error }));
+  };
+
+  const resetAnalysis = () => {
+    setState({
+      file: null,
+      jobDescription: "",
+      results: null,
+      isLoading: false,
+      error: null,
+    });
   };
 
   const analyzeCv = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!file) {
+    if (!state.file) {
       setError("נא להעלות קורות חיים");
       return;
     }
 
-    setError(null);
-    setIsLoading(true);
+    setState((prev) => ({ ...prev, error: null, isLoading: true }));
 
     try {
       const formData = new FormData();
-      formData.append("cv", file);
+      formData.append("cv", state.file);
 
-      if (jobDescription) {
-        formData.append("jobDescription", jobDescription);
+      if (state.jobDescription) {
+        formData.append("jobDescription", state.jobDescription);
       }
 
       const response = await fetch("/api/analyze-cv", {
@@ -56,11 +80,13 @@ export default function CVAnalysisPage() {
       }
 
       const data = await response.json();
-      setResults(data.object);
+      setState((prev) => ({ ...prev, results: data.object, isLoading: false }));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "אירעה שגיאה");
-    } finally {
-      setIsLoading(false);
+      setState((prev) => ({
+        ...prev,
+        error: err instanceof Error ? err.message : "אירעה שגיאה",
+        isLoading: false,
+      }));
     }
   };
 
@@ -70,22 +96,14 @@ export default function CVAnalysisPage() {
         כלי לניתוח קורות חיים
       </h1>
 
-      {results ? (
+      {state.results ? (
         <div className="space-y-6">
           <CVAnalysisResults
-            results={results}
-            hasJobDescription={!!jobDescription}
+            results={state.results}
+            hasJobDescription={!!state.jobDescription}
           />
           <div className="flex justify-center">
-            <Button
-              onClick={() => {
-                setResults(null);
-                setFile(null);
-                setJobDescription("");
-              }}
-              variant="outline"
-              className="mt-4"
-            >
+            <Button onClick={resetAnalysis} variant="outline" className="mt-4">
               נתח קורות חיים נוספים
             </Button>
           </div>
@@ -94,50 +112,11 @@ export default function CVAnalysisPage() {
         <Card className="p-6 border-2 border-border shadow-lg rounded-xl bg-gradient-to-b from-background to-muted/30">
           <form onSubmit={analyzeCv} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="cv" className="text-lg font-medium">
-                  העלה קורות חיים (PDF)
-                </Label>
-                <Input
-                  id="cv"
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-                <Label
-                  htmlFor="cv"
-                  className="block border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
-                >
-                  {file ? (
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="bg-primary/10 p-3 rounded-full">
-                        <Upload className="w-6 h-6 text-primary" />
-                      </div>
-                      <p className="font-medium">{file.name}</p>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setFile(null);
-                        }}
-                      >
-                        החלף קובץ
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="bg-muted p-3 rounded-full">
-                        <Upload className="w-6 h-6 text-muted-foreground" />
-                      </div>
-                      <p className="text-muted-foreground">
-                        גרור ושחרר את קורות החיים כאן, או לחץ לבחירה
-                      </p>
-                    </div>
-                  )}
-                </Label>
-              </div>
+              <FileUpload
+                file={state.file}
+                onFileChange={handleFileChange}
+                onError={setError}
+              />
 
               <div className="space-y-2">
                 <Label htmlFor="jobDescription" className="text-lg font-medium">
@@ -148,8 +127,8 @@ export default function CVAnalysisPage() {
                 </Label>
                 <Textarea
                   id="jobDescription"
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
+                  value={state.jobDescription}
+                  onChange={handleJobDescriptionChange}
                   placeholder="הדבק את תיאור המשרה כאן לקבלת תוצאות מדויקות יותר..."
                   className="min-h-[120px] resize-y"
                 />
@@ -159,11 +138,11 @@ export default function CVAnalysisPage() {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                disabled={isLoading || !file}
+                disabled={state.isLoading || !state.file}
                 className="w-full sm:w-auto"
                 size="lg"
               >
-                {isLoading ? (
+                {state.isLoading ? (
                   <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <Spinner />
                     <span>מנתח קורות חיים...</span>
@@ -177,9 +156,9 @@ export default function CVAnalysisPage() {
               </Button>
             </div>
 
-            {error && (
+            {state.error && (
               <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription>{state.error}</AlertDescription>
               </Alert>
             )}
           </form>
