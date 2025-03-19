@@ -92,7 +92,7 @@ export function CVAnalysisClient() {
   };
 
   return (
-    <div className="container max-w-4xl py-8">
+    <div>
       {state.results ? (
         <div className="space-y-6">
           <CVAnalysisResults
@@ -161,8 +161,6 @@ export function CVAnalysisClient() {
           </form>
         </Card>
       )}
-
-      <SeoContent />
     </div>
   );
 }

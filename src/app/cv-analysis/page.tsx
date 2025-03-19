@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { CVAnalysisClient } from "./cv-analysis-client";
+import { SeoContent } from "./seo-content";
 
 export const metadata: Metadata = {
   title: "ניתוח קורות חיים חכם | בדיקת התאמה למערכות ATS",
@@ -25,5 +26,10 @@ export const metadata: Metadata = {
 };
 
 export default function CVAnalysisPage() {
-  return <CVAnalysisClient />;
+  return (
+    <div className="container max-w-4xl py-8">
+      <CVAnalysisClient />
+      <SeoContent />
+    </div>
+  );
 }
