@@ -5,8 +5,6 @@ import { CVAnalysisSchema } from "@/types/cv-analysis";
 import { env } from "@/services/config";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
-import { openai } from "@ai-sdk/openai";
-import pdf from "pdf-parse";
 
 const redis = new Redis({
   url: env.UPSTASH_REDIS_REST_URL,
@@ -51,19 +49,13 @@ export async function POST(request: Request) {
     // Handle the CV content - FormData files are Blob objects in Next.js
     let cvText = "";
     if (cv instanceof Blob) {
-      const buffer = Buffer.from(await cv.arrayBuffer());
-      if (cv.type === "application/pdf") {
-        const pdfData = await pdf(buffer);
-        cvText = pdfData.text;
-      } else {
-        cvText = await cv.text();
-      }
+      cvText = await cv.text();
     } else {
       cvText = cv.toString();
     }
 
     const result = await generateObject({
-      model: openai("gpt-4o-mini"),
+      model: google("gemini-2.0-flash-001"),
       system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
 
 - Job Title Identification: Determine the most accurate job title based on the CV's content. set it as <job_title>
