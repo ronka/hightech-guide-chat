@@ -2,8 +2,37 @@ import { NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { CVAnalysisSchema } from "@/types/cv-analysis";
+import { env } from "@/services/config";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+const redis = new Redis({
+  url: env.UPSTASH_REDIS_REST_URL,
+  token: env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+// Create a new ratelimiter, that allows 5 requests per 1 day
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.fixedWindow(5, "1 d"),
+});
 
 export async function POST(request: Request) {
+  const identifier = "api";
+  const result = await ratelimit.limit(identifier);
+
+  if (!result.success) {
+    return NextResponse.json(
+      { message: "The request has been rate limited." },
+      {
+        status: 400,
+        headers: {
+          "X-RateLimit-Limit": result.limit.toString(),
+          "X-RateLimit-Remaining": result.remaining.toString(),
+        },
+      }
+    );
+  }
+
   try {
     const formData = await request.formData();
     const cv = formData.get("cv");
