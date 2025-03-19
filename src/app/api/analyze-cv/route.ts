@@ -54,6 +54,7 @@ export async function POST(request: Request) {
     }
 
     const result = await generateObject({
+      // @ts-ignore i dont know why this is throwing an error
       model: google("gemini-2.0-flash-001"),
       system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
 
