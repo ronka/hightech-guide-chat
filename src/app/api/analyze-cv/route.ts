@@ -23,12 +23,17 @@ export async function POST(request: Request) {
 
   if (!rateLimitResult.success) {
     return NextResponse.json(
-      { message: "The request has been rate limited." },
       {
-        status: 400,
+        message: `הגעת למגבלת השימוש היומית. נסה שוב בעוד ${Math.ceil(
+          (rateLimitResult.reset - Date.now()) / (1000 * 60 * 60)
+        )} שעות.`,
+      },
+      {
+        status: 429,
         headers: {
           "X-RateLimit-Limit": rateLimitResult.limit.toString(),
           "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+          "X-RateLimit-Reset": rateLimitResult.reset.toString(),
         },
       }
     );

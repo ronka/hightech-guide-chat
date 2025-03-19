@@ -77,7 +77,8 @@ export function CVAnalysisClient() {
       });
 
       if (!response.ok) {
-        throw new Error("ניתוח קורות החיים נכשל");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "ניתוח קורות החיים נכשל");
       }
 
       const data = await response.json();
