@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { CVAnalysisSchema } from "@/types/cv-analysis";
@@ -17,8 +17,10 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.fixedWindow(5, "1 d"),
 });
 
-export async function POST(request: Request) {
-  const identifier = "api";
+export async function POST(request: NextRequest) {
+  const identifier = (
+    request.headers.get("x-forwarded-for") ?? "127.0.0.1"
+  ).split(",")[0];
   const rateLimitResult = await ratelimit.limit(identifier);
 
   if (!rateLimitResult.success) {
