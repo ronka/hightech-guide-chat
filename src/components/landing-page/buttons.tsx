@@ -47,13 +47,13 @@ const ChatBotButton = () => {
   );
 };
 
-const ConsultingButton = () => {
+const ConsultingButton = ({ source = "landing-page" }: { source?: string }) => {
   return (
     <Button className="w-full" size={"lg"} variant={"outline"} asChild>
       <Link
         onClick={() => {
           track("view_content", {
-            source: "landing-page",
+            source,
           });
         }}
         href={"https://ronka.dev/consulting-session-form"}
@@ -64,4 +64,31 @@ const ConsultingButton = () => {
   );
 };
 
-export { SteimatzkyButton, EvritButton, ChatBotButton, ConsultingButton };
+const CVConsultingButton = ({
+  source = "cv-analysis",
+}: {
+  source?: string;
+}) => {
+  return (
+    <Button className="w-full bg-green-500" size={"lg"} asChild>
+      <Link
+        onClick={() => {
+          track("view_content", {
+            source,
+          });
+        }}
+        href={"https://ronka.dev/consulting-session-form"}
+      >
+        קבעו פגישת ייעוץ לשיפור קורות החיים שלכם 📝
+      </Link>
+    </Button>
+  );
+};
+
+export {
+  SteimatzkyButton,
+  EvritButton,
+  ChatBotButton,
+  ConsultingButton,
+  CVConsultingButton,
+};

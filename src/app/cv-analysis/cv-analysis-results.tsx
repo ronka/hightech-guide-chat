@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/services/utils";
 import { Progress } from "@/components/ui/progress";
 import { CVAnalysisResults as CVAnalysisResultsType } from "@/types/cv-analysis";
+import { CVConsultingButton } from "@/components/landing-page/buttons";
 
 interface CVAnalysisResultsProps {
   results: CVAnalysisResultsType;
@@ -96,6 +97,19 @@ export function CVAnalysisResults({
               </div>
             </div>
           )}
+        </div>
+
+        <div className="mt-8 space-y-4">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold mb-2">
+              רוצים לשפר את קורות החיים שלכם?
+            </h3>
+            <p className="text-muted-foreground">
+              קבעו פגישת ייעוץ אישית איתי ואעזור לכם להפוך את קורות החיים שלכם
+              למושכים יותר עבור מגייסים
+            </p>
+          </div>
+          <CVConsultingButton />
         </div>
       </div>
     </Card>
