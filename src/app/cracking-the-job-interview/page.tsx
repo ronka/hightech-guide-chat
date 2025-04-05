@@ -6,6 +6,28 @@ import MicrosoftLogo from "@/components/logos/microsoft.svg";
 import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title:
+    "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים | המדריך להייטקיסט המתחיל",
+  description:
+    "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+  openGraph: {
+    title: "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים",
+    description:
+      "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+    type: "website",
+    locale: "he_IL",
+    siteName: "המדריך להייטקיסט המתחיל",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים",
+    description:
+      "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+  },
+};
 
 interface BuyButtonProps {
   children: React.ReactNode;
