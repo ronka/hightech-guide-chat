@@ -44,7 +44,7 @@ export default function Home() {
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   רוצים להיכנס לעולם ההייטק ולהתקבל למשרת פיתוח ראשונה? הקורס
-                  "לצלוח את ראיון העבודה הבא שלך" נבנה במיוחד עבורכם!
+                  &quot;לצלוח את ראיון העבודה הבא שלך&quot; נבנה במיוחד עבורכם!
                 </p>
               </div>
               <div className="space-y-2">
