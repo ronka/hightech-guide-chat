@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, ArrowLeft } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
-import MetaLogo from "@/components/logos/meta.svg";
+import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
 
@@ -75,7 +75,10 @@ export default function Home() {
                   href="#buy"
                   className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
                 >
-                  קבל גישה ב-198 ₪
+                  <span className="flex items-center gap-2">
+                    <span>קבל גישה ב-198 ₪</span>
+                    <span className="line-through text-gray-300">299 ₪</span>
+                  </span>
                 </Link>
                 {/* <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">
@@ -141,8 +144,8 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src={MetaLogo}
-                  alt="מטא"
+                  src={JfrogLogo}
+                  alt="Jfrog"
                   width={120}
                   height={60}
                   className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
