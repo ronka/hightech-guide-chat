@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
+import GoogleLogo from "@/components/logos/google.svg";
+import MicrosoftLogo from "@/components/logos/microsoft.svg";
+import MetaLogo from "@/components/logos/meta.svg";
+import DropboxLogo from "@/components/logos/dropbox.svg";
+import WscLogo from "@/components/logos/wsc.svg";
 
 export default function Home() {
   return (
@@ -12,48 +17,73 @@ export default function Home() {
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  התוכנית המדויקת שתעזור לך להשיג את עבודת החלומות שלך בהייטק
+                  לא הולך בראיונות העבודה? לא יודעים איך לכתוב קורות חיים?
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  צפה מעבר לכתפיי בזמן שאני חושף את כל מערכת ההכנה לראיונות שלי.
-                  כל מה שלמדתי תוך כדי עזרה ל-500+ מפתחים לעבור בהצלחה ראיונות
-                  טכניים בחברות FAANG.
+                  רוצים להיכנס לעולם ההייטק ולהתקבל למשרת פיתוח ראשונה? הקורס
+                  <strong> "לצלוח את ראיון העבודה הבא שלך"</strong> נבנה במיוחד
+                  עבורכם!
                 </p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>התוכנית המלאה לשליטה בראיונות קוד</span>
+                  <span>להבין לעומק את תהליך הגיוס ואיך מגייסים חושבים</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>קורס וידאו מלא של 10+ שעות עם 50+ בעיות תרגול</span>
+                  <span>
+                    לכתוב קורות חיים מנצחים שיעזרו לכם לבלוט מבין המועמדים
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>מתאים למפתחים מתחילים ומנוסים כאחד</span>
+                  <span>
+                    להתכונן לראיונות טכניים, כולל תקשורת אפקטיבית, Big-O ומבני
+                    נתונים
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>
+                    לשלוט בLeetCode ובאתרי תרגול נוספים לשיפור יכולות הקידוד
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>
+                    להתכונן לראיונות עיצוב מערכות ולהבין את העקרונות שמראיינים
+                    מחפשים
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>לבנות נרטיב אישי חזק שיעזור לכם בראיונות האישיים</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>
+                    להתמודד עם שאלות התנהגותיות ולדעת מה לשאול את המראיינים
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>לקבל טיפים מעשיים מכל שלב בגיוס ועד לחתימת החוזה</span>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
                 <Link
                   href="#buy"
-                  className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-base font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
                 >
-                  קבל גישה עכשיו ב-$99
+                  קבל גישה ב-198 ₪
                 </Link>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">
                     3,500+ עותקים נמכרו כבר
                   </span>
-                </div>
+                </div> */}
               </div>
-              <p className="text-sm text-muted-foreground">
-                🔒 הזמנת מראש את הקורס? פדה את קוד הגישה שלך{" "}
-                <Link href="#" className="text-primary underline">
-                  כאן
-                </Link>
-                .
-              </p>
             </div>
             <div className="relative flex items-center justify-center">
               <div className="relative w-full overflow-hidden rounded-xl border bg-background shadow-xl">
@@ -89,12 +119,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <p className="text-sm font-medium text-muted-foreground">
-              הבוגרים שלנו עובדים בחברות הטכנולוגיה המובילות בעולם
+              הצטרפו לקהילת הלקוחות המצליחים שלנו שהתקבלו לעבודה בחברות מובילות
+              כמו{" "}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-logo.svg"
+                  src={GoogleLogo}
                   alt="גוגל"
                   width={120}
                   height={60}
@@ -103,7 +134,7 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-logo.svg"
+                  src={MicrosoftLogo}
                   alt="מיקרוסופט"
                   width={120}
                   height={60}
@@ -112,16 +143,7 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-logo.svg"
-                  alt="אמזון"
-                  width={120}
-                  height={60}
-                  className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-                />
-              </div>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="/placeholder-logo.svg"
+                  src={MetaLogo}
                   alt="מטא"
                   width={120}
                   height={60}
@@ -130,8 +152,8 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-logo.svg"
-                  alt="אפל"
+                  src={DropboxLogo}
+                  alt="דרופבוקס"
                   width={120}
                   height={60}
                   className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
@@ -139,8 +161,8 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-logo.svg"
-                  alt="נטפליקס"
+                  src={WscLogo}
+                  alt="WSC"
                   width={120}
                   height={60}
                   className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
@@ -229,7 +251,7 @@ export default function Home() {
           <div className="flex justify-center">
             <Link
               href="#buy"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-base font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 animate-pulse hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
             >
               <span>קבל את המערכת המלאה</span>
               <ArrowRight className="ml-2 h-4 w-4" />
