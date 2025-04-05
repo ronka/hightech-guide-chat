@@ -119,8 +119,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <p className="text-sm font-medium text-muted-foreground">
-              הצטרפו לקהילת הלקוחות המצליחים שלנו שהתקבלו לעבודה בחברות מובילות
-              כמו{" "}
+              תלמידים שעברו את הקורס עובדים כיום בחברות מובילות כמו{" "}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
               <div className="flex items-center justify-center">
