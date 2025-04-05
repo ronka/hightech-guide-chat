@@ -264,7 +264,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                מה תלמד
+                מה תלמדו
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 תוכנית לימודים מקיפה שנועדה לקחת אותך מההכנה ועד להצעת העבודה
@@ -273,43 +273,53 @@ export default function Home() {
           </div>
           <div className="mx-auto grid max-w-5xl gap-6 py-12">
             <div className="rounded-xl border bg-card p-6 shadow-sm">
+              <h3 className="text-xl font-bold">1. מבוא לתהליך הגיוס</h3>
+              <p className="mt-2 text-muted-foreground">
+                הבנה מעמיקה של תהליך הגיוס בהייטק, שלבים מרכזיים ומה מצפים ממך
+                בכל שלב.
+              </p>
+            </div>
+            <div className="rounded-xl border bg-card p-6 shadow-sm">
+              <h3 className="text-xl font-bold">2. כתיבת קורות חיים מנצחים</h3>
+              <p className="mt-2 text-muted-foreground">
+                איך לכתוב קורות חיים שיבלטו מעל כולם ויעברו את הסינון הראשוני.
+              </p>
+            </div>
+            <div className="rounded-xl border bg-card p-6 shadow-sm">
               <h3 className="text-xl font-bold">
-                1. יסודות מבני נתונים ואלגוריתמים
+                3. בניית פרופיל לינקדין אפקטיבי
               </h3>
               <p className="mt-2 text-muted-foreground">
-                שליטה במבני הנתונים והאלגוריתמים הבסיסיים שיוצרים את הבסיס
-                לראיונות קוד.
+                איך לבנות פרופיל לינקדין שימשוך את תשומת הלב של מגייסים ומנהלי
+                גיוס.
               </p>
             </div>
             <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">2. מסגרות לפתרון בעיות</h3>
+              <h3 className="text-xl font-bold">4. הכנה לראיונות טכניים</h3>
               <p className="mt-2 text-muted-foreground">
-                למד גישות שיטתיות לפרק ולפתור כל בעיית קוד שתפגוש.
+                איך להתכונן לראיונות קוד, מבני נתונים ואלגוריתמים בצורה
+                אפקטיבית.
               </p>
             </div>
             <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">3. ראיונות עיצוב מערכות</h3>
+              <h3 className="text-xl font-bold">5. ראיונות עיצוב מערכות</h3>
               <p className="mt-2 text-muted-foreground">
-                פיתוח היכולות לעצב מערכות מדרגיות ולהסביר את החלטות העיצוב שלך.
+                איך להתכונן לראיונות System Design ולהציג את היכולות שלך בעיצוב
+                מערכות.
               </p>
             </div>
             <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">4. הכנה לראיונות התנהגותיים</h3>
+              <h3 className="text-xl font-bold">
+                6. ראיונות התנהגותיים ואישיים
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                יצירת סיפורים משכנעים שמציגים את הניסיון והכישורים הרכים שלך
-                ביעילות.
+                איך להתכונן לשאלות אישיות והתנהגותיות ולענות עליהן בצורה משכנעת.
               </p>
             </div>
             <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">5. ראיונות סימולציה ומשוב</h3>
+              <h3 className="text-xl font-bold">7. הצעדים הבאים</h3>
               <p className="mt-2 text-muted-foreground">
-                תרגול עם תרחישי ראיונות מציאותיים וקבלת משוב מפורט לשיפור.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">6. טקטיקות למשא ומתן על שכר</h3>
-              <p className="mt-2 text-muted-foreground">
-                למד אסטרטגיות מוכחות למשא ומתן על חבילת הפיצויים הטובה ביותר.
+                איך להמשיך מהקורס הלאה, לשפר את היכולות שלך ולהתקדם בקריירה.
               </p>
             </div>
           </div>
@@ -337,29 +347,29 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>50+ שיעורי וידאו המכסים את כל סוגי הראיונות</span>
+                  <span>יותר מ-25 שיעורי וידאו מקצועיים</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>100+ בעיות תרגול עם פתרונות מפורטים</span>
+                  <span>קבצי תרגול מעשיים</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>קהילה פרטית לתמיכה ורשתות קשרים</span>
+                  <span>יותר מ-1.5 שעות של תוכן איכותי</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>רשימת בדיקה ותזמון להכנה לראיונות</span>
+                  <span>מועבר על ידי מראיין אמיתי עם ניסיון</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>גישה לכל החיים ועדכונים עתידיים</span>
+                  <span>גישה לכל החיים</span>
                 </div>
               </div>
             </div>
             <div className="relative flex items-center justify-center">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/course-assets/cover.png"
                 width={600}
                 height={400}
                 alt="תצוגה מקדימה של הקורס"
