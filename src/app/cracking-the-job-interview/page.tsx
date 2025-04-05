@@ -7,6 +7,25 @@ import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
 
+interface BuyButtonProps {
+  children: React.ReactNode;
+  href?: string;
+}
+
+const BuyButton = ({
+  children,
+  href = "https://ronka.dev/qcwz",
+}: BuyButtonProps) => {
+  return (
+    <Link
+      href={href}
+      className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
+    >
+      {children}
+    </Link>
+  );
+};
+
 export default function Home() {
   return (
     <main className="flex-1">
@@ -71,15 +90,11 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <Link
-                  href="#buy"
-                  className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
-                >
-                  <span className="flex items-center gap-2">
-                    <span>קבל גישה ב-198 ₪</span>
-                    <span className="line-through text-gray-300">299 ₪</span>
-                  </span>
-                </Link>
+                <BuyButton>
+                  קבל גישה ב-198 ₪{" "}
+                  <span className="line-through text-gray-300">299 ₪</span>
+                </BuyButton>
+
                 {/* <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">
                     3,500+ עותקים נמכרו כבר
@@ -250,13 +265,10 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-center">
-            <Link
-              href="#buy"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
-            >
+            <BuyButton>
               <span>אני רוצה להצליח בראיון הבא שלי!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
-            </Link>
+            </BuyButton>
           </div>
         </div>
       </section>
@@ -327,6 +339,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="flex justify-center">
+          <BuyButton>
+            <span>אני רוצה ללמוד ולהצליח!</span>
+            <ArrowLeft className="ml-2 h-4 w-4" />
+          </BuyButton>
+        </div>
       </section>
 
       {/* Features Section */}
@@ -381,10 +399,16 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="flex justify-center">
+          <BuyButton>
+            <span>לגישה מלאה לקורס! </span>
+            <ArrowLeft className="ml-2 h-4 w-4" />
+          </BuyButton>
+        </div>
       </section>
 
       {/* Testimonials Section */}
-      <section
+      {/* <section
         id="testimonials"
         className="w-full py-12 md:py-24 lg:py-32 bg-muted"
       >
@@ -550,7 +574,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
