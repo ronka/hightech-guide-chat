@@ -10,17 +10,21 @@ import WscLogo from "@/components/logos/wsc.svg";
 interface BuyButtonProps {
   children: React.ReactNode;
   href?: string;
+  size?: "default" | "xl";
 }
 
 const BuyButton = ({
   children,
   href = "https://ronka.dev/qcwz",
+  size = "default",
 }: BuyButtonProps) => {
+  const baseClasses =
+    "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent";
+
+  const sizeClasses = size === "xl" ? "h-16 px-12 text-lg" : "h-12 px-8";
+
   return (
-    <Link
-      href={href}
-      className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
-    >
+    <Link href={href} className={`${baseClasses} ${sizeClasses}`}>
       {children}
     </Link>
   );
@@ -90,7 +94,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <BuyButton>
+                <BuyButton size="xl">
                   קבל גישה ב-198 ₪{" "}
                   <span className="line-through text-gray-300">299 ₪</span>
                 </BuyButton>
@@ -243,23 +247,23 @@ export default function Home() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>הבנה מעמיקה של תהליך הגיוס וחשיבת המגייסים</span>
+                  <span>חוזרים אליו בכל משרה</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>כתיבת קורות חיים מנצחים שיעזרו לכם לבלוט</span>
+                  <span>פונים אליו בלינקדאין מגייסים</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>הכנה מקיפה לראיונות טכניים ותקשורת אפקטיבית</span>
+                  <span>עונה על שאלות LeetCode בקלות</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>שליטה בראיונות עיצוב מערכות ושאלות התנהגותיות</span>
+                  <span>יודע לבנות נרטיב ולשווק את עצמו</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>טיפים מעשיים מכל שלב בגיוס עד לחתימת החוזה</span>
+                  <span>ניגש לראיון עבודה עם ביטחון</span>
                 </li>
               </ul>
             </div>
@@ -399,7 +403,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <BuyButton>
             <span>לגישה מלאה לקורס! </span>
             <ArrowLeft className="ml-2 h-4 w-4" />
