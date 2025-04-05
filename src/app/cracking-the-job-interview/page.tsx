@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowLeft } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
 import MetaLogo from "@/components/logos/meta.svg";
@@ -16,13 +16,12 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  לא הולך בראיונות העבודה? לא יודעים איך לכתוב קורות חיים?
-                </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  כובשים את שוק העבודה: קורס הכנה מקיף למפתחים
+                </h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   רוצים להיכנס לעולם ההייטק ולהתקבל למשרת פיתוח ראשונה? הקורס
-                  <strong> "לצלוח את ראיון העבודה הבא שלך"</strong> נבנה במיוחד
-                  עבורכם!
+                  "לצלוח את ראיון העבודה הבא שלך" נבנה במיוחד עבורכם!
                 </p>
               </div>
               <div className="space-y-2">
@@ -178,7 +177,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                המערכת הראשונה המלאה להצלחה בראיונות קוד
+                הקורס המקיף הראשון בישראל להצלחה בראיונות טכניים
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 הפסק לבזבז זמן עם סרטוני יוטיוב אקראיים ומשאבים מפוזרים
@@ -190,29 +189,29 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😩</span>
                 <h3 className="text-xl font-bold text-rose-500">
-                  ללא Cracking the Code Interview
+                  ללא הכנה מקצועית
                 </h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>אין גישה מובנית להכנה לראיונות</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
+                  <span>לא יודעים לענות על שאלות</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>בזבוז חודשים בניסיון להבין מה ללמוד לבד</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
+                  <span>מבזבז חודשים להבין איך להתכונן לראיון</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>כישלון בראיונות מרובים לפני שמבינים מה עובד</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
+                  <span>נכשל במלא ראיונות עבודה</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>אין מושג למה הצלחת כשזה קורה</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
+                  <span>לא עובר סינון ראשוני</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>החמצת $10K-$50K בשכר פוטנציאלי</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
+                  <span>חוסר ביטחון בתהליך הגיוס</span>
                 </li>
               </ul>
             </div>
@@ -220,29 +219,29 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😎</span>
                 <h3 className="text-xl font-bold text-green-500">
-                  עם Cracking the Code Interview
+                  עם הקורס המקיף
                 </h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>מערכת צעד אחר צעד שהוכחה כעובדת בחברות מובילות</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
+                  <span>הבנה מעמיקה של תהליך הגיוס וחשיבת המגייסים</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>הכנה יעילה עם תוכנית ממוקדת של 6 שבועות</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
+                  <span>כתיבת קורות חיים מנצחים שיעזרו לכם לבלוט</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>שליטה בדפוסים המדויקים שמופיעים בראיונות אמיתיים</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
+                  <span>הכנה מקיפה לראיונות טכניים ותקשורת אפקטיבית</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>רכישת ביטחון עם מסגרות מוכחות לכל בעיה</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
+                  <span>שליטה בראיונות עיצוב מערכות ושאלות התנהגותיות</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>משא ומתן להצעות גבוהות יותר עם טכניקות פנימיות</span>
+                  <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
+                  <span>טיפים מעשיים מכל שלב בגיוס עד לחתימת החוזה</span>
                 </li>
               </ul>
             </div>
@@ -250,10 +249,10 @@ export default function Home() {
           <div className="flex justify-center">
             <Link
               href="#buy"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 animate-pulse hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-8 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent"
             >
-              <span>קבל את המערכת המלאה</span>
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <span>אני רוצה להצליח בראיון הבא שלי!</span>
+              <ArrowLeft className="ml-2 h-4 w-4" />
             </Link>
           </div>
         </div>
