@@ -7,6 +7,7 @@ import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
 import { Metadata } from "next";
+import { About } from "@/components/landing-page/about";
 
 export const metadata: Metadata = {
   title:
@@ -78,47 +79,25 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>להבין לעומק את תהליך הגיוס ואיך מגייסים חושבים</span>
+                  <span>יותר מ-25 שיעורי וידאו מקצועיים</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>יותר מ-1.5 שעות של תוכן איכותי</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
                   <span>
-                    לכתוב קורות חיים מנצחים שיעזרו לכם לבלוט מבין המועמדים
+                    מועבר על ידי מראיין אמיתי עם ניסיון מעשי של מעל 10 שנים
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    להתכונן לראיונות טכניים, כולל תקשורת אפקטיבית, Big-O ומבני
-                    נתונים
-                  </span>
+                  <span>גישה לכל החיים</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    לשלוט בLeetCode ובאתרי תרגול נוספים לשיפור יכולות הקידוד
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    להתכונן לראיונות עיצוב מערכות ולהבין את העקרונות שמראיינים
-                    מחפשים
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>לבנות נרטיב אישי חזק שיעזור לכם בראיונות האישיים</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    להתמודד עם שאלות התנהגותיות ולדעת מה לשאול את המראיינים
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>לקבל טיפים מעשיים מכל שלב בגיוס ועד לחתימת החוזה</span>
+                  <span>קבצי תרגול מעשיים</span>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
@@ -305,8 +284,18 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <div className="container px-4 md:px-6">
+          <About />
+        </div>
+      </section>
+
       {/* What You Will Learn Section */}
-      <section id="learn" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+      <section
+        id="learn"
+        className="w-full py-12 md:py-24 lg:py-32 bg-background"
+      >
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -382,7 +371,7 @@ export default function Home() {
       {/* Features Section */}
       <section
         id="features"
-        className="w-full py-12 md:py-24 lg:py-32 bg-background"
+        className="w-full py-12 md:py-24 lg:py-32 bg-muted"
       >
         <div className="container px-4 md:px-6">
           <div className="grid gap-10 px-10 md:gap-16 lg:grid-cols-2">
@@ -398,25 +387,55 @@ export default function Home() {
                 מוכחות.
               </p>
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>יותר מ-25 שיעורי וידאו מקצועיים</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>קבצי תרגול מעשיים</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>יותר מ-1.5 שעות של תוכן איכותי</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>מועבר על ידי מראיין אמיתי עם ניסיון</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>גישה לכל החיים</span>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>להבין לעומק את תהליך הגיוס ואיך מגייסים חושבים</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      לכתוב קורות חיים מנצחים שיעזרו לכם לבלוט מבין המועמדים
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      להתכונן לראיונות טכניים, כולל תקשורת אפקטיבית, Big-O ומבני
+                      נתונים
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      לשלוט בLeetCode ובאתרי תרגול נוספים לשיפור יכולות הקידוד
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      להתכונן לראיונות עיצוב מערכות ולהבין את העקרונות שמראיינים
+                      מחפשים
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      לבנות נרטיב אישי חזק שיעזור לכם בראיונות האישיים
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      להתמודד עם שאלות התנהגותיות ולדעת מה לשאול את המראיינים
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>
+                      לקבל טיפים מעשיים מכל שלב בגיוס ועד לחתימת החוזה
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
