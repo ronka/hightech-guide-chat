@@ -79,25 +79,28 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>יותר מ-25 שיעורי וידאו מקצועיים</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>יותר מ-1.5 שעות של תוכן איכותי</span>
+                  <span>למעלה מ-25 שיעורי וידאו מקצועיים ומעשיים</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
                   <span>
-                    מועבר על ידי מראיין אמיתי עם ניסיון מעשי של מעל 10 שנים
+                    תוכן איכותי ומקיף של יותר מ-1.5 שעות לימוד מרוכזות
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>גישה לכל החיים</span>
+                  <span>
+                    הדרכה אישית ממראיין בכיר עם ניסיון מוכח של מעל 10 שנים
+                    בתעשייה
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>קבצי תרגול מעשיים</span>
+                  <span>גישה לכל החיים לכל תכני הקורס ועדכונים עתידיים</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>חומרי תרגול מעשיים ודוגמאות אמיתיות מראיונות</span>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
