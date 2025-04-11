@@ -105,7 +105,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
                 <BuyButton size="xl">
-                  קבל גישה ב-198 ₪{" "}
+                  קבלו גישה ב-198 ₪{" "}
                   <span className="line-through text-gray-300">299 ₪</span>
                 </BuyButton>
 
