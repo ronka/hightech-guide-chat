@@ -20,12 +20,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "he_IL",
     siteName: "המדריך להייטקיסט המתחיל",
+    images: [
+      {
+        url: "https://ronka.dev/wp-content/uploads/2025/04/malben-2.png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים",
     description:
       "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+    images: ["https://ronka.dev/wp-content/uploads/2025/04/malben-2.png"],
   },
 };
 
