@@ -71,6 +71,8 @@ export async function POST(request: NextRequest) {
 - Areas for Improvement: Highlight any weaknesses or areas that could be improved for better job prospects.
 - Extracted Keywords: List the most relevant to the <job_title> keywords found in the CV, including skills, technologies, and industry terms. see example for keywords in <keywords_examples>
 - Missing Important Keywords: List keywords that appear in the job description but are not found in the CV.
+    - the missing keywords MUST be in the job description!
+	- if in the resume there are keywords that are simialr to the job description, dont mention them in the missing keywords list. for example: if the job description mentions "accessible technologies" and i have "Led accessibility improvements, achieving WCAG 2.0 AA across all main products." dont mention "accessible technologies" in the missing keywords list.
 
 ${
   jobDescription
