@@ -43,23 +43,14 @@ export async function POST(request: NextRequest) {
 
   try {
     const formData = await request.formData();
-    const cv = formData.get("cv");
-    const jobDescription = formData.get("jobDescription") || "";
+    const cvFile = formData.get("cv");
+    const jobDescription = formData.get("jobDescription")?.toString() || "";
 
-    if (!cv) {
-      return NextResponse.json(
-        { error: "CV file is required" },
-        { status: 400 }
-      );
+    if (!(cvFile instanceof File)) {
+      return NextResponse.json({ error: "CV must be a file" }, { status: 400 });
     }
 
-    // Handle the CV content - FormData files are Blob objects in Next.js
-    let cvText = "";
-    if (cv instanceof Blob) {
-      cvText = await cv.text();
-    } else {
-      cvText = cv.toString();
-    }
+    const cvData = Buffer.from(await cvFile.arrayBuffer());
 
     const result = await generateObject({
       model: google("gemini-2.0-flash-001"),
@@ -91,9 +82,40 @@ Example of keywords for Back-end: "Node.js", "Express", "MongoDB", "PostgreSQL",
 Example for all job titles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "Agile methodologies", "עבודת צוות" ).
 </keywords_examples>
 `,
-      prompt: `CV Content:\n${cvText}\n${
-        jobDescription ? `Job Description:\n${jobDescription}` : ""
-      }`,
+      messages: [
+        {
+          role: "system",
+          content: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements.
+Your task is to analyze the provided CV and deliver a comprehensive review.
+
+${
+  jobDescription
+    ? "Compare the CV against the provided job description."
+    : "Analyze the CV for general job market fit."
+}
+
+You MUST respond in Hebrew.
+`,
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: `Analyze the attached CV.${
+                jobDescription
+                  ? ` Compare against this job description: ${jobDescription}`
+                  : ""
+              }`,
+            },
+            {
+              type: "file",
+              data: cvData,
+              mimeType: cvFile.type,
+            },
+          ],
+        },
+      ],
       schema: CVAnalysisSchema,
     });
 
