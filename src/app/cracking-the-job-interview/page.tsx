@@ -65,6 +65,16 @@ export default function Home() {
       <section className="w-full border-b bg-gradient-to-br from-purple-500/20 via-violet-400/20 to-blue-500/20">
         <div className="container px-4 md:px-6 py-12 md:py-24 lg:py-32">
           <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+            <div className="absolute inset-0 -z-10">
+              <Image
+                src="/book-assets/background.png"
+                alt="Background"
+                layout="fill"
+                objectFit="cover"
+                className="opacity-10 dark:opacity-10 not-sr-only"
+              />
+            </div>
+
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -119,15 +129,18 @@ export default function Home() {
             </div>
             <div className="relative flex items-center justify-center">
               <div className="relative w-full overflow-hidden rounded-xl border bg-background shadow-xl">
-                <div className="flex items-center justify-between border-b px-4 py-2">
+                <div className="flex items-center gap-4 border-b px-4 py-2">
                   <div className="flex gap-1">
                     <div className="h-3 w-3 rounded-full bg-red-500"></div>
                     <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
                     <div className="h-3 w-3 rounded-full bg-green-500"></div>
                   </div>
+                  <div className="text-sm font-medium">
+                    [הצצה] 1.0 - שלום וברוכים הבאים
+                  </div>
                 </div>
 
-                <div className="p-4 mt-4">
+                <div className="p-4">
                   <div
                     className="relative w-full"
                     style={{ paddingBottom: "56.25%" }}
@@ -282,13 +295,13 @@ export default function Home() {
           </div>
           <div className="flex justify-center">
             <div className="flex flex-col items-center gap-2">
-              <span className="text-amber-500 font-medium text-sm">
-                ⏰ המבצע לזמן מוגבל בלבד
-              </span>
               <BuyButton>
                 <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
                 <ArrowLeft className="ml-2 h-4 w-4" />
               </BuyButton>
+              <span className="text-amber-500 font-medium text-sm">
+                ⏰ המבצע לזמן מוגבל בלבד
+              </span>
             </div>
           </div>
         </div>
@@ -372,13 +385,13 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <div className="flex flex-col items-center gap-2">
-            <span className="text-amber-500 font-medium text-sm">
-              ⏰ 40% הנחה - הצעה מוגבלת
-            </span>
             <BuyButton>
               <span>אני רוצה ללמוד ולהצליח!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
             </BuyButton>
+            <span className="text-amber-500 font-medium text-sm">
+              ⏰ 40% הנחה - הצעה מוגבלת
+            </span>
           </div>
         </div>
       </section>
@@ -461,9 +474,6 @@ export default function Home() {
         </div>
         <div className="flex justify-center mt-10">
           <div className="flex flex-col items-center gap-2">
-            <span className="text-amber-500 font-medium text-sm">
-              🔥 40% הנחה + חומרי בונוס
-            </span>
             <BuyButton>
               <span>התחל עכשיו ב-198 ₪ בלבד!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
