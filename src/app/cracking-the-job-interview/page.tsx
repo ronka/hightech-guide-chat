@@ -70,19 +70,18 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="w-full border-b text-gray-200">
-        <div className="container px-4 md:px-6 py-12 md:py-24 lg:py-32">
+      <section className="w-full border-b text-gray-200 relative">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <Image
+            src="/book-assets/background.png"
+            alt="Background"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-10 dark:opacity-10 not-sr-only"
+          />
+        </div>
+        <div className="container px-4 md:px-6 py-12 md:py-24 lg:py-32 ">
           <div className="flex flex-col items-center space-y-6 text-center">
-            <div className="absolute inset-0 -z-10">
-              <Image
-                src="/book-assets/background.png"
-                alt="Background"
-                layout="fill"
-                objectFit="cover"
-                className="opacity-10 dark:opacity-10 not-sr-only"
-              />
-            </div>
-
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
               לעבור את ראיון העבודה הבא שלך{" "}
               <span className="inline-block decoration-primary relative ">
@@ -92,7 +91,8 @@ export default function Home() {
             </h1>
 
             <p className="text-lg font-medium text-green-400">
-              מקפצה לקריירה שלך בהייטק
+              מעובר על ידי מראיין ומרואיין מנוסה עם 10 שנות ניסיון שעובד כיום
+              בגוגל
             </p>
 
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
@@ -225,7 +225,7 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😩</span>
                 <h3 className="text-xl font-bold text-rose-500">
-                  בלי הקורס: נפילה חופשית
+                  בלי המדריך: נפילה חופשית
                 </h3>
               </div>
               <ul className="space-y-4">
@@ -255,7 +255,7 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😎</span>
                 <h3 className="text-xl font-bold text-green-500">
-                  עם הקורס: מסלול מהיר להצלחה
+                  עם המדריך: מסלול מהיר להצלחה
                 </h3>
               </div>
               <ul className="space-y-4">
