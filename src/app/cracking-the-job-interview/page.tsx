@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check, ArrowLeft } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
+import MelioLogo from "@/components/logos/melio.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
 import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
@@ -186,6 +187,15 @@ export default function Home() {
                 <Image
                   src={WscLogo}
                   alt="WSC"
+                  width={120}
+                  height={60}
+                  className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+                />
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src={MelioLogo}
+                  alt="Melio"
                   width={120}
                   height={60}
                   className="h-8 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
@@ -476,13 +486,20 @@ export default function Home() {
           </div>
 
           <div className="mt-10">
-            <div className="grid grid-cols-2 gap-4 max-w-5xl mx-auto ">
+            <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto ">
               <Image
                 src={feedback1}
                 alt="משוב מתלמיד על הקורס - הצלחתי בראיון טכני"
                 className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
                 width={479}
                 height={211}
+              />
+              <Image
+                src={feedback4}
+                alt="משוב על שיפור בראיונות טכניים - הצלחה"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={470}
+                height={135}
               />
               <Image
                 src={feedback2}
@@ -497,13 +514,6 @@ export default function Home() {
                 className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
                 width={614}
                 height={166}
-              />
-              <Image
-                src={feedback4}
-                alt="משוב על שיפור בראיונות טכניים - הצלחה"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={470}
-                height={135}
               />
               <Image
                 src={feedback5}
