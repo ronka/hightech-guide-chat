@@ -10,14 +10,13 @@ import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
 
 export const metadata: Metadata = {
-  title:
-    "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים | המדריך להייטקיסט המתחיל",
+  title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
   description:
-    "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+    "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
   openGraph: {
-    title: "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים",
+    title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
     description:
-      "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+      "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
     type: "website",
     locale: "he_IL",
     siteName: "המדריך להייטקיסט המתחיל",
@@ -29,9 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "כובשים את שוק העבודה: קורס הכנה מקיף למפתחים",
+    title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
     description:
-      "קורס הכנה מקיף למפתחים שרוצים להצליח בראיונות עבודה. למדו איך להתכונן לראיונות טכניים, לכתוב קורות חיים מנצחים, ולבנות נרטיב אישי חזק.",
+      "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
     images: ["https://ronka.dev/wp-content/uploads/2025/04/malben-2.png"],
   },
 };
@@ -68,52 +67,54 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  כובשים את שוק העבודה: קורס הכנה מקיף למפתחים
-                </h2>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים
+                </h1>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  רוצים להיכנס לעולם ההייטק ולהתקבל למשרת פיתוח ראשונה? הקורס
-                  &quot;לצלוח את ראיון העבודה הבא שלך&quot; נבנה במיוחד עבורכם!
+                  סודות המראיינים נחשפים: כשעתיים ממוקדות שיהפכו אותך ממועמד
+                  רגיל למועמד המועדף
                 </p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>למעלה מ-25 שיעורי וידאו מקצועיים ומעשיים</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
                   <span>
-                    תוכן איכותי ומקיף של יותר מ-1.5 שעות לימוד מרוכזות
+                    גישה למעלה מ-25 שיעורי וידאו מעשיים עם דוגמאות אמיתיות
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
                   <span>
-                    הדרכה אישית ממראיין בכיר עם ניסיון מוכח של מעל 10 שנים
-                    בתעשייה
+                    מסלול אישי, ממוקד ומדויק של שעתיים - ללא בזבוז זמן על תוכן
+                    מיותר
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>גישה לכל החיים לכל תכני הקורס ועדכונים עתידיים</span>
+                  <span>
+                    הדרכה ממראיין בכיר עם +10 שנות ניסיון ואלפי ראיונות טכניים
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="h-5 w-5 text-green-500" />
-                  <span>חומרי תרגול מעשיים ודוגמאות אמיתיות מראיונות</span>
+                  <span>
+                    גישה לכל החיים + עדכונים חינמיים כשדרישות השוק משתנות
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span>
+                    חומרי תרגול מעשיים, טמפלייטים לקורות חיים ולינקדאין אופטימלי
+                  </span>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <BuyButton size="xl">
-                  קבלו גישה ב-198 ₪{" "}
-                  <span className="line-through text-gray-300">299 ₪</span>
-                </BuyButton>
-
-                {/* <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">
-                    3,500+ עותקים נמכרו כבר
-                  </span>
-                </div> */}
+                <div className="flex flex-col items-center w-full gap-2">
+                  <BuyButton size="xl">הזמינו את הקורס עכשיו ←</BuyButton>
+                  <div className=" text-amber-200 font-medium rounded-full px-4 py-1 text-sm flex items-center gap-1 mb-2 animate-pulse">
+                    🔥 40% הנחה למאה הרוכשים הבאים
+                  </div>
+                </div>
               </div>
             </div>
             <div className="relative flex items-center justify-center">
@@ -150,7 +151,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <p className="text-sm font-medium text-muted-foreground">
-              תלמידים שעברו את הקורס עובדים כיום בחברות מובילות כמו{" "}
+              בוגרי הקורס עובדים בחברות המובילות בעולם
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
               <div className="flex items-center justify-center">
@@ -209,10 +210,11 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                הקורס המקיף הראשון בישראל להצלחה בראיונות טכניים
+                למה להמשיך להיכשל כשאפשר ללמוד מהטעויות של אחרים?
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                הפסק לבזבז זמן עם סרטוני יוטיוב אקראיים ומשאבים מפוזרים
+                הפסק לבזבז חודשים על ניסוי וטעייה - קבל גישה לידע שיקצר לך את
+                הדרך בשבועות
               </p>
             </div>
           </div>
@@ -221,29 +223,29 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😩</span>
                 <h3 className="text-xl font-bold text-rose-500">
-                  ללא הכנה מקצועית
+                  בלי הקורס: נפילה חופשית
                 </h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>לא יודעים לענות על שאלות</span>
+                  <span>חודשים של חיפוש עבודה ללא תוצאות</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>מבזבז חודשים להבין איך להתכונן לראיון</span>
+                  <span>כישלון אחרי כישלון בראיונות טכניים</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>נכשל במלא ראיונות עבודה</span>
+                  <span>קורות חיים שנזרקים לפח ללא מענה</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>לא עובר סינון ראשוני</span>
+                  <span>תחושת תסכול וחוסר ביטחון מקצועי</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-rose-500"></span>
-                  <span>חוסר ביטחון בתהליך הגיוס</span>
+                  <span>בזבוז זמן יקר על משאבים מפוזרים</span>
                 </li>
               </ul>
             </div>
@@ -251,38 +253,43 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😎</span>
                 <h3 className="text-xl font-bold text-green-500">
-                  עם הקורס המקיף
+                  עם הקורס: מסלול מהיר להצלחה
                 </h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>חוזרים אליו בכל משרה</span>
+                  <span>מראיינים פונים אליך עם הצעות עבודה</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>פונים אליו בלינקדאין מגייסים</span>
+                  <span>פרופיל לינקדאין שמושך מגייסים בכירים</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>עונה על שאלות LeetCode בקלות</span>
+                  <span>ביטחון מלא בכל חלקי הראיון הטכני</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>יודע לבנות נרטיב ולשווק את עצמו</span>
+                  <span>יכולת לנווט את הריאיון ולהוביל אותו</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-2 h-2 w-2 rounded-full bg-green-500"></span>
-                  <span>ניגש לראיון עבודה עם ביטחון</span>
+                  <span>קיצור משמעותי של זמן חיפוש העבודה</span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="flex justify-center">
-            <BuyButton>
-              <span>אני רוצה להצליח בראיון הבא שלי!</span>
-              <ArrowLeft className="ml-2 h-4 w-4" />
-            </BuyButton>
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-amber-500 font-medium text-sm">
+                ⏰ המבצע לזמן מוגבל בלבד
+              </span>
+              <BuyButton>
+                <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
+                <ArrowLeft className="ml-2 h-4 w-4" />
+              </BuyButton>
+            </div>
           </div>
         </div>
       </section>
@@ -364,10 +371,15 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-center">
-          <BuyButton>
-            <span>אני רוצה ללמוד ולהצליח!</span>
-            <ArrowLeft className="ml-2 h-4 w-4" />
-          </BuyButton>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-amber-500 font-medium text-sm">
+              ⏰ 40% הנחה - הצעה מוגבלת
+            </span>
+            <BuyButton>
+              <span>אני רוצה ללמוד ולהצליח!</span>
+              <ArrowLeft className="ml-2 h-4 w-4" />
+            </BuyButton>
+          </div>
         </div>
       </section>
 
@@ -383,48 +395,42 @@ export default function Home() {
                 חבילה מלאה
               </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                כל מה שאתה צריך כדי להצליח בראיונות טכנולוגיים
+                תפסיקו לנחש. קבלו את הכלים להצליח בראיונות טכניים.
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed">
-                זה לא סתם עוד קורס עם תיאוריה בסיסית. זו מערכת שלמה עם תוצאות
-                מוכחות.
+                מעבר לתיאוריה: זו מערכת שלמה, צעד-אחר-צעד, המבוססת על ניסיון
+                מעשי ומובילה לתוצאות מוכחות בשטח.
               </p>
               <div className="space-y-2">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>להבין לעומק את תהליך הגיוס ואיך מגייסים חושבים</span>
+                    <span>הבן איך מגייסים חושבים והשתמש בזה לטובתך</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-green-500" />
+                    <span>צור קורות חיים מנצחים שיבלטו מתוך מאות מועמדים</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
                     <span>
-                      לכתוב קורות חיים מנצחים שיעזרו לכם לבלוט מבין המועמדים
+                      פצח את הקוד של ראיונות טכניים - תקשורת, Big-O וקוד איכותי
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
                     <span>
-                      להתכונן לראיונות טכניים, כולל תקשורת אפקטיבית, Big-O ומבני
-                      נתונים
+                      שלוט בLeetCode בקלות עם מתודולוגיה מוכחת לפתרון בעיות
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>
-                      לשלוט בLeetCode ובאתרי תרגול נוספים לשיפור יכולות הקידוד
-                    </span>
+                    <span>הפגן ידע בעיצוב מערכות גם אם אין לך ניסיון קודם</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
                     <span>
-                      להתכונן לראיונות עיצוב מערכות ולהבין את העקרונות שמראיינים
-                      מחפשים
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="h-5 w-5 text-green-500" />
-                    <span>
-                      לבנות נרטיב אישי חזק שיעזור לכם בראיונות האישיים
+                      בנה נרטיב אישי שישכנע כל מראיין לרצות לעבוד איתך
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -454,10 +460,15 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-center mt-10">
-          <BuyButton>
-            <span>לגישה מלאה לקורס! </span>
-            <ArrowLeft className="ml-2 h-4 w-4" />
-          </BuyButton>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-amber-500 font-medium text-sm">
+              🔥 40% הנחה + חומרי בונוס
+            </span>
+            <BuyButton>
+              <span>התחל עכשיו ב-198 ₪ בלבד!</span>
+              <ArrowLeft className="ml-2 h-4 w-4" />
+            </BuyButton>
+          </div>
         </div>
       </section>
 
