@@ -9,6 +9,13 @@ import WscLogo from "@/components/logos/wsc.svg";
 import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
 
+// Import feedback images
+import feedback1 from "./feedbacks/feedback1.jpg";
+import feedback2 from "./feedbacks/feedback2.jpg";
+import feedback3 from "./feedbacks/feedback3.jpg";
+import feedback4 from "./feedbacks/feedback4.png";
+import feedback5 from "./feedbacks/feedback5.png";
+
 export const metadata: Metadata = {
   title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
   description:
@@ -495,154 +502,44 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-muted h-10 w-10"></div>
-                <div>
-                  <h3 className="font-bold">אלכס צ'ן</h3>
-                  <p className="text-sm text-muted-foreground">
-                    מהנדס תוכנה בגוגל
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4">
-                <p className="text-sm">
-                  "זה משאב ההכנה לראיונות הטוב ביותר שאי פעם השתמשתי בו. אחרי
-                  שנכשלתי בראיונות מרובים בגוגל, עברתי את המערכת הזו וקיבלתי
-                  הצעה עם שכר גבוה ב-$50K מהעבודה הקודמת שלי."
-                </p>
-              </div>
-              <div className="mt-4 flex text-yellow-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-muted h-10 w-10"></div>
-                <div>
-                  <h3 className="font-bold">שרה ג'ונסון</h3>
-                  <p className="text-sm text-muted-foreground">
-                    מפתחת בכירה במיקרוסופט
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4">
-                <p className="text-sm">
-                  "חלק עיצוב המערכות לבד היה שווה את המחיר. נאבקתי עם הראיונות
-                  האלה במשך חודשים, אבל אחרי שעברתי את הקורס הזה, הצלחתי להסביר
-                  בביטחון את הגישה שלי וקיבלתי מספר הצעות."
-                </p>
-              </div>
-              <div className="mt-4 flex text-yellow-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
+
+          <div className="mt-10">
+            <div className="grid grid-cols-2 gap-4 max-w-5xl mx-auto ">
+              <Image
+                src={feedback1}
+                alt="משוב מתלמיד על הקורס - הצלחתי בראיון טכני"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={479}
+                height={211}
+              />
+              <Image
+                src={feedback2}
+                alt="משוב חיובי על התכנית - קיבלתי הצעת עבודה"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={442}
+                height={145}
+              />
+              <Image
+                src={feedback3}
+                alt="חוויה חיובית מהקורס - משוב תלמיד"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={614}
+                height={166}
+              />
+              <Image
+                src={feedback4}
+                alt="משוב על שיפור בראיונות טכניים - הצלחה"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={470}
+                height={135}
+              />
+              <Image
+                src={feedback5}
+                alt="תוצאות חיוביות אחרי הקורס - משוב תלמיד"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={466}
+                height={147}
+              />
             </div>
           </div>
         </div>
