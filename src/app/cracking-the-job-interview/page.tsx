@@ -239,7 +239,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
+            <div className="rounded-xl card rounded-box bg-base-100  border border-red-300 bg-red-950/10 p-6 shadow-sm ">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😩</span>
                 <h3 className="text-xl font-bold text-rose-500">
@@ -269,7 +269,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
+            <div className="rounded-xl p-6 shadow-sm card rounded-box  bg-base-100  border border-green-300 bg-green-950/10">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">😎</span>
                 <h3 className="text-xl font-bold text-green-500">
