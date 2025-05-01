@@ -69,9 +69,12 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="w-full border-b bg-gradient-to-br from-purple-500/20 via-violet-400/20 to-blue-500/20">
+      <section className="w-full border-b text-gray-200">
         <div className="container px-4 md:px-6 py-12 md:py-24 lg:py-32">
-          <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+          <div className="flex flex-col items-center space-y-6 text-center">
+            <div className="text-sm text-muted-foreground mb-4">
+              ⭐️ מועבר ע"י מראיין בכיר עם +10 שנות ניסיון
+            </div>
             <div className="absolute inset-0 -z-10">
               <Image
                 src="/book-assets/background.png"
@@ -82,71 +85,38 @@ export default function Home() {
               />
             </div>
 
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים
-                </h1>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  סודות המראיינים נחשפים: כשעתיים ממוקדות שיהפכו אותך ממועמד
-                  רגיל למועמד המועדף
-                </p>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    גישה למעלה מ-25 שיעורי וידאו מעשיים עם דוגמאות אמיתיות
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    מסלול אישי, ממוקד ומדויק של שעתיים - ללא בזבוז זמן על תוכן
-                    מיותר
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    הדרכה ממראיין בכיר עם +10 שנות ניסיון ואלפי ראיונות טכניים
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    גישה לכל החיים + עדכונים חינמיים כשדרישות השוק משתנות
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="h-5 w-5 text-green-500" />
-                  <span>
-                    חומרי תרגול מעשיים, טמפלייטים לקורות חיים ולינקדאין אופטימלי
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-                <div className="flex flex-col items-center w-full gap-2">
-                  <BuyButton size="xl">הזמינו את הקורס עכשיו ←</BuyButton>
-                  <div className=" text-amber-200 font-medium rounded-full px-4 py-1 text-sm flex items-center gap-1 mb-2 animate-pulse">
-                    🔥 40% הנחה למאה הרוכשים הבאים
-                  </div>
-                </div>
+            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
+              לכבוש את הראיון: המדריך למשרת הפיתוח הבאה שלך
+            </h1>
+
+            <p className="text-lg font-medium text-green-400">
+              מקפצה לקריירה שלך בהייטק
+            </p>
+
+            <p className="max-w-[700px] text-muted-foreground md:text-xl">
+              קורס וידאו מקיף עם +25 שיעורים מעשיים וליווי של מראיין בכיר. קבלו
+              את הכלים לכבוש את ראיון העבודה ולהתקבל למשרת הפיתוח הראשונה שלכם.
+            </p>
+
+            <div className="flex flex-col items-center w-full gap-3 pt-4">
+              <BuyButton size="xl">הזמינו את הקורס עכשיו ←</BuyButton>
+              <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
+                🔥 40% הנחה למאה הרוכשים הבאים
               </div>
             </div>
-            <div className="relative flex items-center justify-center">
-              <div className="relative w-full overflow-hidden rounded-xl border bg-background shadow-xl">
-                <div className="flex items-center gap-4 border-b px-4 py-2">
-                  <div className="flex gap-1">
+
+            <div className="relative mt-8 flex w-full max-w-3xl items-center justify-center">
+              <div className="relative w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-800 shadow-xl">
+                <div className="flex items-center gap-4 border-b border-gray-700 px-4 py-2">
+                  <div className="flex gap-1.5">
                     <div className="h-3 w-3 rounded-full bg-red-500"></div>
                     <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
                     <div className="h-3 w-3 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="text-sm font-medium">
+                  <div className="text-sm font-medium text-gray-300">
                     [הצצה] 1.0 - שלום וברוכים הבאים
                   </div>
                 </div>
-
                 <div className="p-4">
                   <div
                     className="relative w-full"
