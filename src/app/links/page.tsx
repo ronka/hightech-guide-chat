@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ronka.dev"),
   title: "רון קנטור - קישורים שימושיים",
   description:
     "קישורים שימושיים של רון קנטור: טיפים לראיונות עבודה, המדריך להייטקיסט המתחיל, ניוזלטר ועוד.",
