@@ -9,6 +9,7 @@ import {
   FileVideo2,
   GraduationCap,
   Mail,
+  PenIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
@@ -50,8 +51,13 @@ const links = [
     icon: GraduationCap,
   },
   {
+    href: "https://ronka.dev/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=blog_work_study_cs&utm_content=blog_work_study_cs_button",
+    text: "הבלוג שלי",
+    icon: PenIcon,
+  },
+  {
     href: "https://ronka.dev/newsletter-register/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=newsletter_signup&utm_content=newsletter_signup_button",
-    text: "הניוזלטר שלי",
+    text: "הרשמו לניוזלטר שלי",
     icon: Mail,
   },
 ];
