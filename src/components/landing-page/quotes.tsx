@@ -1,4 +1,6 @@
 import { Quote } from "lucide-react";
+import { RonkaPhysicalBookButton } from "./buttons";
+import { RonkaDigitalBookButton } from "./buttons";
 
 const QuoteIcon = ({ children }: { children: any }) => {
   const colors = [
@@ -69,6 +71,16 @@ const Quotes = () => {
             <QuoteIcon>🙃</QuoteIcon>
             <p className="text-sm text-gray-500">- ולדיסלב, מתכנת באינטל</p>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h3 className="text-xl font-semibold text-center mb-10">
+          רוצים גם להיות מרוצים ולשלוח המלצות? הזמינו את הספר עכשיו!
+        </h3>
+        <div className="flex flex-col gap-2 min-[400px]:flex-row">
+          <RonkaPhysicalBookButton />
+          <RonkaDigitalBookButton />
         </div>
       </div>
     </div>

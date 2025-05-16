@@ -6,6 +6,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { cn } from "@/services/utils";
 import { Badge } from "../ui/badge";
+import { RonkaDigitalBookButton } from "./buttons";
+import { RonkaPhysicalBookButton } from "./buttons";
 
 interface Chapter {
   title: string;
@@ -141,6 +143,16 @@ export default function TableOfContents() {
             )}
           </div>
         ))}
+
+        <div>
+          <h3 className="text-xl font-semibold text-center mb-10">
+            רוצים לקרוא את הספר? הזמינו עכשיו!
+          </h3>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row">
+            <RonkaPhysicalBookButton />
+            <RonkaDigitalBookButton />
+          </div>
+        </div>
       </div>
     </div>
   );
