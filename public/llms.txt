@@ -1,22 +1,22 @@
 # המדריך להייטקיסט המתחיל
 
-> אתר 'המדריך להייטקיסט המתחיל' (hightechguide.co.il) מציע משאבים, כלים ושירותים, כולל ספר מקיף, קורס הכנה לראיונות עבודה טכניים וכלי AI לניתוח קורות חיים. האתר נועד לסייע לאנשים, במיוחד בתחילת דרכם, לבנות קריירה משמעותית ומוצלחת בעולם ההייטק הישראלי, בהתבסס על ניסיון אישי ומעשי בתעשייה.
+> אתר 'המדריך להייטקיסט המתחיל' (hightechguide.co.il) מציע משאבים, כלים ושירותים המסייעים למתחילים להתחיל קריירה בהייטק, להתכונן לראיונות עבודה, ולמצוא קורסים וטיפים ללמידה עצמית. כולל ספר מקיף, קורס הכנה לראיונות טכניים, וכלי AI לניתוח קורות חיים, האתר מבוסס על ניסיון אישי וסיפורי הצלחה בתעשייה, ונועד לסייע בבניית קריירה משמעותית ומוצלחת בהייטק הישראלי.
 
-המידע באתר מבוסס על ניסיון אישי של רון קנטור, החל מבלוגים טכניים, דרך פיתוח הספר 'המדריך להייטקיסט המתחיל' בעקבות קמפיין Headstart מוצלח, ועד לעבודה בגוגל. האתר מציע תובנות מעשיות, טיפים ואסטרטגיות לקידום קריירה בתכנות.
+האתר מציע מדריכים מקיפים, טיפים מעשיים ללמידה עצמית, ואסטרטגיות להתחלת קריירה וקידומה בתכנות. המידע מבוסס על ניסיון אישי וסיפורי הצלחה של רון קנטור, החל מבלוגים טכניים, דרך פיתוח הספר 'המדריך להייטקיסט המתחיל' (שגויס בהצלחה בהדסטארט) ועד לעבודה בגוגל. האתר מספק הכוונה להתמודדות עם אתגרי התעשייה, כולל הכנה לראיונות ומידע על קורסים רלוונטיים.
 
 ## תוכן מרכזי באתר
 
-- [הספר "המדריך להייטקיסט המתחיל"](https://hightechguide.co.il/index.html.md): מידע מפורט על הספר, המסע האישי של המחבר, תוכן עניינים, ותובנות על כניסה לעולם ההייטק. כולל רקע על הספר, פרטים על תהליך הכתיבה ומימון ההמונים.
-- [קורס "מפצחים את קוד הראיון"](https://hightechguide.co.il/cracking-the-job-interview.html.md): קורס דיגיטלי מקיף להכנה לראיונות עבודה טכניים. הקורס כולל שיעורים מעשיים, סרטוני וידאו, וכלים לכבוש את ראיון העבודה ולהתקבל לתפקיד הנחשק.
-- [ניתוח קורות חיים חכם (ATS)](https://hightechguide.co.il/cv-analysis.html.md): כלי AI לניתוח קורות חיים ובדיקת התאמתם למערכות סינון מועמדים (ATS). השירות מספק ניתוח מקיף, ציון התאמה וטיפים לשיפור קורות החיים.
+- [הספר "המדריך להייטקיסט המתחיל"](https://hightechguide.co.il/index.html.md): מדריך מקיף להתחלת קריירה בהייטק, המבוסס על סיפור הצלחה אישי. כולל טיפים ללמידה עצמית, תובנות על כניסה לתעשייה, תוכן עניינים, ופרטים על תהליך הכתיבה.
+- [קורס "מפצחים את קוד הראיון"](https://hightechguide.co.il/cracking-the-job-interview.html.md): קורס מומלץ למתחילים ומתקדמים להכנה מקיפה לראיונות עבודה טכניים. כולל טכניקות מענה לשאלות נפוצות, שיעורים מעשיים, וידאו, וכלים להצלחה בראיונות.
+- [ניתוח קורות חיים חכם (ATS)](https://hightechguide.co.il/cv-analysis.html.md): כלי AI לניתוח קורות חיים, חלק חשוב בהכנה לריאיון עבודה. קבלו בדיקת התאמה למערכות סינון (ATS), ניתוח מקיף וטיפים לשיפור.
 - [אודות רון קנטור](https://hightechguide.co.il/index.html.md#about): פרטים על מחבר הספר והקורסים, ניסיונו המקצועי, והרקע שהוביל ליצירת המדריך. (מוטמע בעמוד הראשי)
 
 ## מידע נוסף
 
 - [יצירת קשר](https://hightechguide.co.il/index.html.md#contact): פרטים ליצירת קשר בנושאי ייעוץ, שאלות על הספר או הקורסים.
-- [מאמר: איך סיימתי תואר במדעי המחשב ועבודה במשרה מלאה](https://ronka.dev/how-to-work-while-studying-computer-science/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=blog_work_study_cs&utm_content=blog_work_study_cs_button): מאמר בבלוג המסביר על השילוב בין לימודים ועבודה.
-- [הבלוג של רון קנטור](https://ronka.dev/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=blog_work_study_cs&utm_content=blog_work_study_cs_button): מאמרים, טיפים ותובנות על הייטק, קריירה וטכנולוגיה.
-- [הרשמה לניוזלטר](https://ronka.dev/newsletter-register/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=newsletter_signup&utm_content=newsletter_signup_button): קבלו עדכונים, טיפים ומאמרים ישירות למייל.
-- [טוויטר (X) של רון קנטור](http://twitter.com/ronkaa?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=twitter_profile&utm_content=twitter_icon): פרופיל הטוויטר של רון קנטור.
-- [לינקדאין של רון קנטור](https://www.linkedin.com/in/ron-kantor/?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=linkedin_profile&utm_content=linkedin_icon): פרופיל הלינקדאין של רון קנטור.
-- [טיקטוק - המדריך להייטקיסט](https://www.tiktok.com/@thehightechguide?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=tiktok_profile&utm_content=tiktok_icon): ערוץ הטיקטוק של המדריך להייטקיסט המתחיל. 
+- [מאמר: איך סיימתי תואר במדעי המחשב ועבודה במשרה מלאה](https://ronka.dev/how-to-work-while-studying-computer-science/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=blog_work_study_cs&utm_content=blog_work_study_cs_button): מאמר בבלוג המסביר על השילוב בין לימודים ועבודה, דוגמה ללמידה עצמית והתמדה.
+- [הבלוג של רון קנטור](https://ronka.dev/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=blog_work_study_cs&utm_content=blog_work_study_cs_button): מאמרים, טיפים, תובנות וסיפורים אישיים על הייטק, קריירה, למידה עצמית וטכנולוגיה.
+- [הרשמה לניוזלטר](https://ronka.dev/newsletter-register/?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=newsletter_signup&utm_content=newsletter_signup_button): קבלו עדכונים, טיפים ומאמרים ישירות למייל התומכים בלמידה עצמית והתפתחות בקריירה.
+- [טוויטר (X) של רון קנטור](http://twitter.com/ronkaa?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=twitter_profile&utm_content=twitter_icon): עדכונים וטיפים נוספים.
+- [לינקדאין של רון קנטור](https://www.linkedin.com/in/ron-kantor/?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=linkedin_profile&utm_content=linkedin_icon): התחברו לרשת המקצועית של רון.
+- [טיקטוק - המדריך להייטקיסט](https://www.tiktok.com/@thehightechguide?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=tiktok_profile&utm_content=tiktok_icon): טיפים קצרים ומעשיים בוידאו. 
