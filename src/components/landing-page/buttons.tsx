@@ -5,6 +5,33 @@ import { track } from "@/services/analytics";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
+const RONKA_BOOK_PYSHICAL_ID = "704";
+const RONKA_BOOK_DIGITAL_ID = "712";
+
+const RonkaPhysicalBookButton = () => {
+  return (
+    <Button className="w-full bg-green-500" size={"lg"} asChild>
+      <Link
+        href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_PYSHICAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
+      >
+        אני רוצה כזה! עותק פיזי 📚
+      </Link>
+    </Button>
+  );
+};
+
+const RonkaDigitalBookButton = () => {
+  return (
+    <Button className="w-full bg-sky-500" size={"lg"} asChild>
+      <Link
+        href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_DIGITAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=digital_book&utm_content=digital_book_button`}
+      >
+        אני רוצה כזה! עותק דיגיטלי 📱
+      </Link>
+    </Button>
+  );
+};
+
 const SteimatzkyButton = () => {
   return (
     <Button className="w-full bg-green-500" size={"lg"} asChild>
@@ -41,7 +68,7 @@ const EvritButton = () => {
 
 const ChatBotButton = () => {
   return (
-    <Button className="w-full" size={"lg"} asChild>
+    <Button size={"lg"} asChild>
       <Link href={"/chat"}>בואו לדבר עם הספר 🤖</Link>
     </Button>
   );
@@ -85,10 +112,23 @@ const CVConsultingButton = ({
   );
 };
 
+const CrackingTheJobInterviewButton = () => {
+  return (
+    <Button className="w-full bg-gray-300" size={"lg"} asChild>
+      <Link href={"/cracking-the-job-interview"}>
+        אני רוצה לעבור את ראיון העבודה הבא שלי בהצלחה 🎓{" "}
+      </Link>
+    </Button>
+  );
+};
+
 export {
   SteimatzkyButton,
   EvritButton,
   ChatBotButton,
+  CrackingTheJobInterviewButton,
   ConsultingButton,
   CVConsultingButton,
+  RonkaPhysicalBookButton,
+  RonkaDigitalBookButton,
 };

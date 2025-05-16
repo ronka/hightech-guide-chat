@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BOOK_PROMO } from "@/constants/links";
 import { track } from "@/services/analytics";
+import {
+  RonkaDigitalBookButton,
+  RonkaPhysicalBookButton,
+} from "./landing-page/buttons";
 
 export function BookPromo() {
   return (
@@ -24,30 +28,8 @@ export function BookPromo() {
             בספר שבידיכם.
           </p>
         </div>
-        <Button className="w-full bg-green-500" asChild>
-          <Link
-            onClick={() => {
-              track("view_content", {
-                source: "STEIMATZKY",
-              });
-            }}
-            href={BOOK_PROMO.STEIMATZKY}
-          >
-            📚 קנה עכשיו מסטימצקי
-          </Link>
-        </Button>
-        <Button className="w-full bg-sky-500" asChild>
-          <Link
-            onClick={() => {
-              track("view_content", {
-                source: "EVRIT",
-              });
-            }}
-            href={BOOK_PROMO.EVRIT}
-          >
-            📱 קנה עכשיו מע-ברית
-          </Link>
-        </Button>
+        <RonkaPhysicalBookButton />
+        <RonkaDigitalBookButton />
       </CardContent>
     </Card>
   );

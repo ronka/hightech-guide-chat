@@ -5,8 +5,9 @@ import { Section } from "./section";
 import {
   ChatBotButton,
   ConsultingButton,
-  EvritButton,
-  SteimatzkyButton,
+  CrackingTheJobInterviewButton,
+  RonkaDigitalBookButton,
+  RonkaPhysicalBookButton,
 } from "./buttons";
 import TableOfContents from "./table-of-content";
 import { ContactForm } from "./contact-form";
@@ -54,11 +55,12 @@ const Main = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <SteimatzkyButton />
-                <EvritButton />
+                <RonkaPhysicalBookButton />
+                <RonkaDigitalBookButton />
               </div>
+
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <ChatBotButton />
+                <CrackingTheJobInterviewButton />
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <ConsultingButton />
@@ -95,6 +97,10 @@ const Main = () => {
                 מידע על עולם האופציות והמניות בסטארטאפים. כל מה שרציתם לדעת ולא
                 העזתם לשאול על עולם ההייטק המורכב תוכלו למצוא בספר שבידיכם.
               </p>
+            </div>
+
+            <div className="flex justify-center">
+              <ChatBotButton />
             </div>
           </div>
         </div>
