@@ -31,7 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       lang="en"
       dir="rtl"
       suppressHydrationWarning
-      className={googleFont.className}
+      className={`dark ${googleFont.className}`}
     >
       <head>
         <link
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <FacebookPixel />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider>
           <PHProvider>
             <Header />
             {children}
