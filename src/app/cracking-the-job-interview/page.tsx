@@ -9,6 +9,7 @@ import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
 import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
+import { track } from "@/services/analytics";
 
 // Import feedback images
 import feedback1 from "./feedbacks/feedback1.jpg";
@@ -59,8 +60,24 @@ const BuyButton = ({
 
   const sizeClasses = size === "xl" ? "h-16 px-12 text-lg" : "h-12 px-8";
 
+  const handleClick = () => {
+    track("add_to_cart", {
+      value: 198,
+      currency: "ILS",
+      content_ids: ["wc_post_id_819"],
+      content_name: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
+      content_category: "כללי",
+      content_type: "product",
+      source: "high-tech-guide",
+    });
+  };
+
   return (
-    <Link href={href} className={`${baseClasses} ${sizeClasses}`}>
+    <Link
+      href={href}
+      className={`${baseClasses} ${sizeClasses}`}
+      onClick={handleClick}
+    >
       {children}
     </Link>
   );
