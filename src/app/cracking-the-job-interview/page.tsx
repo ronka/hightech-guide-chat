@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowLeft, Play, Clock } from "lucide-react";
+import { Check, ArrowLeft, Clock } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MelioLogo from "@/components/logos/melio.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
@@ -319,9 +319,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>שלום וברוכים הבאים</span>
+                      <div>
+                        <div className="font-medium">שלום וברוכים הבאים</div>
+                        <div className="text-sm text-muted-foreground">
+                          היכרות עם הקורס ומה צפוי לכם
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -329,9 +331,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>הבנה של תהליך הגיוס</span>
+                      <div>
+                        <div className="font-medium">הבנה של תהליך הגיוס</div>
+                        <div className="text-sm text-muted-foreground">
+                          שלבי הגיוס בהייטק ומה מצפים בכל שלב
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -356,9 +360,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>איך לכתוב קורות חיים</span>
+                      <div>
+                        <div className="font-medium">איך לכתוב קורות חיים</div>
+                        <div className="text-sm text-muted-foreground">
+                          עקרונות יסוד לכתיבת קורות חיים מקצועיים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -366,9 +372,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>מה לעשות אם זה משרה ראשונה</span>
+                      <div>
+                        <div className="font-medium">
+                          מה לעשות אם זה משרה ראשונה
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          טיפים למועמדים ללא ניסיון תעסוקתי
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -376,9 +386,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>מה לעשות עם קורות חיים</span>
+                      <div>
+                        <div className="font-medium">
+                          מה לעשות עם קורות חיים
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          איך לנהל ולעדכן את קורות החיים שלכם
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -386,9 +400,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>בונוס: ניתוח קורות חיים עם AST</span>
+                      <div>
+                        <div className="font-medium">
+                          בונוס: ניתוח קורות חיים עם AST
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          דוגמה מעשית לניתוח קורות חיים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -413,9 +431,13 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>איך לבנות פרופיל לינקדאין מנצח</span>
+                      <div>
+                        <div className="font-medium">
+                          איך לבנות פרופיל לינקדאין מנצח
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          אסטרטגיות למשיכת מגייסים בלינקדאין
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -440,9 +462,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>הקדמה</span>
+                      <div>
+                        <div className="font-medium">הקדמה</div>
+                        <div className="text-sm text-muted-foreground">
+                          מבוא לראיונות טכניים ומה צפוי
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -450,9 +474,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>תקשורת בראיון</span>
+                      <div>
+                        <div className="font-medium">תקשורת בראיון</div>
+                        <div className="text-sm text-muted-foreground">
+                          איך לתקשר ביעילות עם המראיין
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -460,9 +486,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>סיבוכיות ה-Big-O</span>
+                      <div>
+                        <div className="font-medium">סיבוכיות ה-Big-O</div>
+                        <div className="text-sm text-muted-foreground">
+                          הבנת ניתוח יעילות אלגוריתמים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -470,9 +498,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>הקדמה למבני נתונים – 6 שחייבים להכיר</span>
+                      <div>
+                        <div className="font-medium">
+                          הקדמה למבני נתונים – 6 שחייבים להכיר
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          מבני הנתונים החיוניים לראיונות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -480,9 +512,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>ערמה – Heap</span>
+                      <div>
+                        <div className="font-medium">ערמה – Heap</div>
+                        <div className="text-sm text-muted-foreground">
+                          מבנה נתונים לניהול עדיפויות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -490,9 +524,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>חלון הזזה – Sliding Window</span>
+                      <div>
+                        <div className="font-medium">
+                          חלון הזזה – Sliding Window
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          טכניקה לפתרון בעיות על מערכים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -500,9 +538,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>חיפוש בינארי – Binary Search</span>
+                      <div>
+                        <div className="font-medium">
+                          חיפוש בינארי – Binary Search
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          אלגוריתם חיפוש יעיל במערכים ממוינים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -510,9 +552,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>אלגוריתם חיפוש לעומק ולרוחב – DFS & BFS</span>
+                      <div>
+                        <div className="font-medium">
+                          אלגוריתם חיפוש לעומק ולרוחב – DFS & BFS
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          אלגוריתמי מעבר על גרפים ועצים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -520,9 +566,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>רקורסיה – Recursion</span>
+                      <div>
+                        <div className="font-medium">רקורסיה – Recursion</div>
+                        <div className="text-sm text-muted-foreground">
+                          הבנה ויישום של פונקציות רקורסיביות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -530,9 +578,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>טבלת גיבוב – Hashmap</span>
+                      <div>
+                        <div className="font-medium">טבלת גיבוב – Hashmap</div>
+                        <div className="text-sm text-muted-foreground">
+                          מבנה נתונים לגישה מהירה למידע
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -540,9 +590,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>איך ללמוד לראיון עבודה טכני</span>
+                      <div>
+                        <div className="font-medium">
+                          איך ללמוד לראיון עבודה טכני
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          אסטרטגיות לימוד ותכנון הכנה
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -550,9 +604,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>בונוס: פותרים תרגיל ביחד</span>
+                      <div>
+                        <div className="font-medium">
+                          בונוס: פותרים תרגיל ביחד
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          דוגמה מעשית לפתרון בעיה אלגוריתמית
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -577,9 +635,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>מבוא</span>
+                      <div>
+                        <div className="font-medium">מבוא</div>
+                        <div className="text-sm text-muted-foreground">
+                          מבוא לעיצוב מערכות וחשיבותו בראיונות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -587,9 +647,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>אנטומיה של עיצוב מערכות</span>
+                      <div>
+                        <div className="font-medium">
+                          אנטומיה של עיצוב מערכות
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          רכיבים ועקרונות בסיסיים בעיצוב מערכות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -597,9 +661,13 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>דוגמא להצגת עיצוב מערכת</span>
+                      <div>
+                        <div className="font-medium">
+                          דוגמא להצגת עיצוב מערכת
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          דוגמה מעשית לפתרון בעיית עיצוב מערכת
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -624,9 +692,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>מבוא</span>
+                      <div>
+                        <div className="font-medium">מבוא</div>
+                        <div className="text-sm text-muted-foreground">
+                          מבוא לשאלות התנהגותיות ואישיות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -634,9 +704,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>איך לענות על שאלות</span>
+                      <div>
+                        <div className="font-medium">איך לענות על שאלות</div>
+                        <div className="text-sm text-muted-foreground">
+                          טכניקות למענה יעיל על שאלות התנהגותיות
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -644,9 +716,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>שאלות למראיינים</span>
+                      <div>
+                        <div className="font-medium">שאלות למראיינים</div>
+                        <div className="text-sm text-muted-foreground">
+                          שאלות חכמות שכדאי לשאול את המראיין
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -654,9 +728,11 @@ export default function Home() {
                       </div>
                     </li>
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>סיכום הפרק</span>
+                      <div>
+                        <div className="font-medium">סיכום הפרק</div>
+                        <div className="text-sm text-muted-foreground">
+                          סיכום נקודות מפתח בראיונות התנהגותיים
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
@@ -681,9 +757,11 @@ export default function Home() {
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Play className="h-4 w-4 text-primary" />
-                        <span>איך ממשיכים מפה</span>
+                      <div>
+                        <div className="font-medium">איך ממשיכים מפה</div>
+                        <div className="text-sm text-muted-foreground">
+                          הצעדים הבאים והמשך הדרך להצלחה
+                        </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-3 w-3" />
