@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowLeft } from "lucide-react";
+import { Check, ArrowLeft, Play, Clock } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MelioLogo from "@/components/logos/melio.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
@@ -10,6 +10,12 @@ import WscLogo from "@/components/logos/wsc.svg";
 import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
 import { BuyButton } from "@/components/buy-button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 // Import feedback images
 import feedback1 from "./feedbacks/feedback1.jpg";
@@ -297,57 +303,397 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-6 py-12">
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">1. מבוא לתהליך הגיוס</h3>
-              <p className="mt-2 text-muted-foreground">
-                הבנה מעמיקה של תהליך הגיוס בהייטק, שלבים מרכזיים ומה מצפים ממך
-                בכל שלב.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">2. כתיבת קורות חיים מנצחים</h3>
-              <p className="mt-2 text-muted-foreground">
-                איך לכתוב קורות חיים שיבלטו מעל כולם ויעברו את הסינון הראשוני.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">
-                3. בניית פרופיל לינקדין אפקטיבי
-              </h3>
-              <p className="mt-2 text-muted-foreground">
-                איך לבנות פרופיל לינקדין שימשוך את תשומת הלב של מגייסים ומנהלי
-                גיוס.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">4. הכנה לראיונות טכניים</h3>
-              <p className="mt-2 text-muted-foreground">
-                איך להתכונן לראיונות קוד, מבני נתונים ואלגוריתמים בצורה
-                אפקטיבית.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">5. ראיונות עיצוב מערכות</h3>
-              <p className="mt-2 text-muted-foreground">
-                איך להתכונן לראיונות System Design ולהציג את היכולות שלך בעיצוב
-                מערכות.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">
-                6. ראיונות התנהגותיים ואישיים
-              </h3>
-              <p className="mt-2 text-muted-foreground">
-                איך להתכונן לשאלות אישיות והתנהגותיות ולענות עליהן בצורה משכנעת.
-              </p>
-            </div>
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
-              <h3 className="text-xl font-bold">7. הצעדים הבאים</h3>
-              <p className="mt-2 text-muted-foreground">
-                איך להמשיך מהקורס הלאה, לשפר את היכולות שלך ולהתקדם בקריירה.
-              </p>
-            </div>
+          <div className="mx-auto max-w-5xl py-12">
+            <Accordion type="multiple" className="w-full space-y-4">
+              <AccordionItem
+                value="intro"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  1. מבוא לתהליך הגיוס
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    הבנה מעמיקה של תהליך הגיוס בהייטק, שלבים מרכזיים ומה מצפים
+                    ממך בכל שלב.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>שלום וברוכים הבאים</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>01:01</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>הבנה של תהליך הגיוס</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:59</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="cv"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  2. איך לכתוב קורות חיים שבולטים
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    איך לכתוב קורות חיים שיבלטו מעל כולם ויעברו את הסינון
+                    הראשוני.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>איך לכתוב קורות חיים</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>10:22</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>מה לעשות אם זה משרה ראשונה</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:57</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>מה לעשות עם קורות חיים</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:40</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>בונוס: ניתוח קורות חיים עם AST</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>05:37</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="linkedin"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  3. איך לבנות פרופיל לינקדין מנצח
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    איך לבנות פרופיל לינקדין שימשוך את תשומת הלב של מגייסים
+                    ומנהלי גיוס.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>איך לבנות פרופיל לינקדאין מנצח</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>04:45</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="technical"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  4. איך להתכונן לראיון עבודה טכני
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    הכנה מעשית לראיונות קידוד, כולל אסטרטגיות פתרון בעיות
+                    ותקשורת עם המראיינים.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>הקדמה</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:07</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>תקשורת בראיון</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:57</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>סיבוכיות ה-Big-O</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>07:24</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>הקדמה למבני נתונים – 6 שחייבים להכיר</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>01:33</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>ערמה – Heap</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:30</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>חלון הזזה – Sliding Window</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:17</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>חיפוש בינארי – Binary Search</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:22</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>אלגוריתם חיפוש לעומק ולרוחב – DFS & BFS</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:52</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>רקורסיה – Recursion</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:16</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>טבלת גיבוב – Hashmap</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:34</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>איך ללמוד לראיון עבודה טכני</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>05:45</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>בונוס: פותרים תרגיל ביחד</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>09:33</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="system-design"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  5. איך להתכונן לראיון עיצוב מערכות – System Design
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    הבנה של שלב עיצוב המערכות וכיצד לגשת אליו בצורה מובנית
+                    וברורה.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>מבוא</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>04:47</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>אנטומיה של עיצוב מערכות</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>05:08</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>דוגמא להצגת עיצוב מערכת</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:38</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="behavioral"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  6. איך להתכונן לשאלות אישיות ושאלות התנהגות
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    בניית סיפור אישי, הצגת נקודות חוזק והתמודדות עם שאלות רכות
+                    ופתוחות.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>מבוא</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>05:02</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>איך לענות על שאלות</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>02:39</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>שאלות למראיינים</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>03:36</span>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>סיכום הפרק</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>00:45</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="next-steps"
+                className="border border-border rounded-lg px-6"
+              >
+                <AccordionTrigger className="text-xl font-bold text-right">
+                  7. איך ממשיכים מפה
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground mb-4">
+                    טיפים אחרונים, סיכום התהליך והצעד הבא שלכם בדרך להשגת המשרה
+                    הראשונה. 🚀
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Play className="h-4 w-4 text-primary" />
+                        <span>איך ממשיכים מפה</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>01:51</span>
+                      </div>
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
         <div className="flex justify-center">
