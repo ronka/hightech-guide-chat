@@ -86,9 +86,11 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col items-center w-full gap-3 pt-4">
-              <BuyButton size="xl">הזמינו את הקורס עכשיו ←</BuyButton>
+              <BuyButton size="xl">אני רוצה להצליח בראיון ←</BuyButton>
               <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
-                🔥 40% הנחה למאה הרוכשים הבאים
+                <span>🔥</span>
+                <span>קנה עכשיו ב-198 ₪ בלבד! </span>
+                <span className="line-through text-red-400">299 ₪</span>
               </div>
             </div>
 
@@ -272,9 +274,11 @@ export default function Home() {
                 <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
                 <ArrowLeft className="ml-2 h-4 w-4" />
               </BuyButton>
-              <span className="text-amber-500 font-medium text-sm">
-                ⏰ המבצע לזמן מוגבל בלבד
-              </span>
+              <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
+                <span>🔥</span>
+                <span>קנה עכשיו ב-198 ₪ בלבד! </span>
+                <span className="line-through text-red-400">299 ₪</span>
+              </div>
             </div>
           </div>
         </div>

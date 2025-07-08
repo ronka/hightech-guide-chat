@@ -59,8 +59,14 @@ const Main = () => {
                 <RonkaDigitalBookButton />
               </div>
 
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex flex-col gap-2 min-[400px]:flex-row items-center">
                 <CrackingTheJobInterviewButton />
+                <span className="text-amber-500 font-semibold text-lg ml-2 rtl:mr-2">
+                  רק 198 ₪{" "}
+                  <span className="line-through text-gray-400 text-base">
+                    299 ₪
+                  </span>
+                </span>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <ConsultingButton />
