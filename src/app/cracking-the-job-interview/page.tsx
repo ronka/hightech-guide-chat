@@ -91,8 +91,7 @@ export default function Home() {
               </BuyButton>
               <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
                 <span>🔥</span>
-                <span>40% הנחה ל100 קונים ראשונים</span>
-                <span className="line-through text-red-400">299 ₪</span>
+                <span>מחיר מיוחד לזמן מוגבל – רק 198 ₪ במקום 299 ₪</span>
               </div>
             </div>
 
