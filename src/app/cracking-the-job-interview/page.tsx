@@ -86,10 +86,12 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col items-center w-full gap-3 pt-4">
-              <BuyButton size="xl">אני רוצה להצליח בראיון ←</BuyButton>
+              <BuyButton size="xl">
+                🔥 אני רוצה להצליח בראיון – רק ב־198 ₪
+              </BuyButton>
               <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
                 <span>🔥</span>
-                <span>קנה עכשיו ב-198 ₪ בלבד! </span>
+                <span>40% הנחה ל100 קונים ראשונים</span>
                 <span className="line-through text-red-400">299 ₪</span>
               </div>
             </div>
