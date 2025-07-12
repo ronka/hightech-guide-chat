@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { track } from "@/services/analytics";
 
 interface BuyButtonProps {
@@ -10,22 +11,19 @@ interface BuyButtonProps {
   size?: "default" | "xl";
 }
 
-export const BuyButton = ({
+function BuyButtonInner({
   children,
   href = "https://ronka.dev/checkout/?custom-add-to-cart=819&quantity=1",
   size = "default",
-}: BuyButtonProps) => {
+}: BuyButtonProps) {
   const searchParams = useSearchParams();
 
   const getFullUrl = () => {
     const baseUrl = new URL(href);
     const currentParams = new URLSearchParams(searchParams.toString());
-
-    // Add all current query params to the checkout URL
     currentParams.forEach((value, key) => {
       baseUrl.searchParams.append(key, value);
     });
-
     return baseUrl.toString();
   };
 
@@ -55,4 +53,12 @@ export const BuyButton = ({
       {children}
     </Link>
   );
-};
+}
+
+export function BuyButton(props: BuyButtonProps) {
+  return (
+    <Suspense fallback={null}>
+      <BuyButtonInner {...props} />
+    </Suspense>
+  );
+}
