@@ -13,7 +13,7 @@ interface BuyButtonProps {
 
 function BuyButtonInner({
   children,
-  href = "https://ronka.dev/checkout/?custom-add-to-cart=819&quantity=1",
+  href = "https://ronka.dev/cart/?custom-add-to-cart=819&quantity=1",
   size = "default",
 }: BuyButtonProps) {
   const searchParams = useSearchParams();
