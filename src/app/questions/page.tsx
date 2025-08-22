@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Dispatch, SetStateAction } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, ArrowRight, Loader2 } from "lucide-react"
+import { Search, Filter, ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 interface Question {
@@ -18,10 +18,79 @@ interface Question {
   categoryEn: string
   solved: boolean
   acceptance: string
+  slug: string
 }
 
 const categories = ["הכל", "מערכים", "מחרוזות", "רשימות מקושרות", "עצים", "גרפים", "מחסנית"]
 const difficulties = ["הכל", "קל", "בינוני", "קשה"]
+
+interface FiltersProps {
+  searchTerm: string
+  setSearchTerm: Dispatch<SetStateAction<string>>
+  categories: string[]
+  selectedCategory: string
+  setSelectedCategory: Dispatch<SetStateAction<string>>
+  difficulties: string[]
+  selectedDifficulty: string
+  setSelectedDifficulty: Dispatch<SetStateAction<string>>
+}
+
+function QuestionsFilters({
+  searchTerm,
+  setSearchTerm,
+  categories,
+  selectedCategory,
+  setSelectedCategory,
+  difficulties,
+  selectedDifficulty,
+  setSelectedDifficulty,
+}: FiltersProps) {
+  return (
+    <div className="flex flex-col lg:flex-row gap-4">
+      {/* Search */}
+      <div className="flex-1 relative">
+        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+        <Input
+          placeholder="חפש שאלה..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pr-10"
+        />
+      </div>
+
+      {/* Category Filter */}
+      <div className="flex items-center gap-2">
+        <Filter className="w-4 h-4 text-slate-500" />
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="px-3 py-2 border border-slate-200 rounded-md bg-white text-slate-700"
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Difficulty Filter */}
+      <div>
+        <select
+          value={selectedDifficulty}
+          onChange={(e) => setSelectedDifficulty(e.target.value)}
+          className="px-3 py-2 border border-slate-200 rounded-md bg-white text-slate-700"
+        >
+          {difficulties.map((difficulty) => (
+            <option key={difficulty} value={difficulty}>
+              {difficulty}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  )
+}
 
 export default function QuestionsDirectory() {
   const [questions, setQuestions] = useState<Question[]>([])
@@ -71,7 +140,7 @@ export default function QuestionsDirectory() {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex items-center justify-center"
+        className=" flex items-center justify-center"
         dir="rtl"
       >
         <div className="text-center">
@@ -89,104 +158,63 @@ export default function QuestionsDirectory() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2">מאגר שאלות LeetCode</h1>
+              <h1 className="text-4xl font-bold mb-2">מאגר שאלות מראיונות עבודה</h1>
               <p className="">עיין בכל השאלות הזמינות ומצא את הפתרון המושלם</p>
             </div>
-            <Link href="/">
-              <Button variant="outline" className="flex items-center gap-2 bg-transparent">
-                <ArrowRight className="w-4 h-4" />
-                חזרה לעמוד הראשי
-              </Button>
-            </Link>
           </div>
 
           {/* Search and Filters */}
-          <Card>
+          {/* <Card>
             <CardContent className="p-6">
-              <div className="flex flex-col lg:flex-row gap-4">
-                {/* Search */}
-                <div className="flex-1 relative">
-                  <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-                  <Input
-                    placeholder="חפש שאלה..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pr-10"
-                  />
-                </div>
-
-                {/* Category Filter */}
-                <div className="flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-slate-500" />
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-3 py-2 border border-slate-200 rounded-md bg-white text-slate-700"
-                  >
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Difficulty Filter */}
-                <div>
-                  <select
-                    value={selectedDifficulty}
-                    onChange={(e) => setSelectedDifficulty(e.target.value)}
-                    className="px-3 py-2 border border-slate-200 rounded-md bg-white text-slate-700"
-                  >
-                    {difficulties.map((difficulty) => (
-                      <option key={difficulty} value={difficulty}>
-                        {difficulty}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+              <QuestionsFilters
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                categories={categories}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                difficulties={difficulties}
+                selectedDifficulty={selectedDifficulty}
+                setSelectedDifficulty={setSelectedDifficulty}
+              />
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
 
         {/* Questions Grid */}
         <div className="grid gap-4">
           {filteredQuestions.map((question) => (
-            <Card key={question.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 flex-1">
-                    {/* Question Number */}
-                    <div className="flex items-center justify-center w-12 h-12 bg-orange-100 text-orange-800 rounded-lg font-bold">
-                      {question.id}
+            <Link href={`/questions/${question.slug}`} key={question.slug}>
+              <Card key={question.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4 flex-1">
+                      {/* Question Number */}
+                      <div className="flex items-center justify-center w-12 h-12 bg-orange-100 text-orange-800 rounded-lg font-bold">
+                        {question.id}
+                      </div>
+
+                      {/* Question Info */}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-semibold ">{question.titleHe}</h3>
+                          {question.solved && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
+                        </div>
+                        <p className="text-sm mb-2">{question.title}</p>
+                        <div className="flex items-center gap-3">
+                          <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
+                          <Badge variant="outline">{question.category}</Badge>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Question Info */}
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-lg font-semibold ">{question.titleHe}</h3>
-                        {question.solved && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
-                      </div>
-                      <p className="text-sm mb-2">{question.title}</p>
-                      <div className="flex items-center gap-3">
-                        <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
-                        <Badge variant="outline">{question.category}</Badge>
-                        <span className="text-sm ">קבלה: {question.acceptance}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <Link href={`/?question=${question.id}`}>
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                    <Button className="bg-blue-500 hover:bg-blue-600 text-white">
                       פתח שאלה
-                      <ArrowRight className="w-4 h-4 mr-2" />
+                      <ArrowLeft className="w-4 h-4 mr-2" />
                     </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
@@ -231,6 +259,6 @@ export default function QuestionsDirectory() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </div >
   )
 }

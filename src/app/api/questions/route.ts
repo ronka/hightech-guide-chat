@@ -13,6 +13,7 @@ type QuestionListItem = {
     categoryEn: string;
     solved: boolean;
     acceptance: string;
+    slug: string;
 };
 
 function parseTitlesFromH1(content: string): { he?: string; en?: string } {
@@ -58,6 +59,7 @@ export async function GET() {
                     categoryEn: (frontmatter as any).category || "General",
                     solved: Boolean((frontmatter as any).solved) || false,
                     acceptance: (frontmatter as any).acceptance || "—",
+                    slug: fileName.replace(".mdx", ""),
                 };
                 items.push(item);
             } catch (e) {
