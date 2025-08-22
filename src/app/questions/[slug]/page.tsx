@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import { QuestionCard } from "@/components/question-card";
 import { CodeSolution } from "@/components/code-solution";
 import { VideoEmbed } from "@/components/video-embed";
+import { QuestionFrontmatterSchema } from "@/types/questions";
 
 export async function generateMetadata({
     params,
@@ -24,7 +25,12 @@ async function getQuestionData(slug: string) {
     const filePath = path.join(process.cwd(), "src/questions", `${slug}.mdx`);
     try {
         const fileContents = await fs.readFile(filePath, "utf8");
-        const { data: frontmatter, content } = matter(fileContents);
+        const { data: frontmatterRaw, content } = matter(fileContents);
+        const parsed = QuestionFrontmatterSchema.safeParse(frontmatterRaw);
+        if (!parsed.success) {
+            return { frontmatter: null, content: null };
+        }
+        const frontmatter = parsed.data;
         return { frontmatter, content };
     } catch (error) {
         return { frontmatter: null, content: null };
@@ -109,6 +115,8 @@ export default async function QuestionPage({
                             },
                             difficulty: (frontmatter as any).difficulty,
                             description: { he: descriptionHe || "", en: "" },
+                            source: (frontmatter as any).source,
+                            companies: Array.isArray((frontmatter as any).companies) ? (frontmatter as any).companies : undefined,
                         }} />
 
                         <CodeSolution solutions={solutionsByLang} />

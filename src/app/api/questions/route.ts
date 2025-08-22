@@ -2,19 +2,9 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+import { QuestionListItemSchema } from "@/types/questions";
 
-type QuestionListItem = {
-    id: number;
-    title: string;
-    titleHe: string;
-    difficulty: string;
-    difficultyEn: string;
-    category: string;
-    categoryEn: string;
-    solved: boolean;
-    acceptance: string;
-    slug: string;
-};
+type QuestionListItem = import("@/types/questions").QuestionListItem;
 
 function parseTitlesFromH1(content: string): { he?: string; en?: string } {
     const h1Match = content.match(/^#\s*(.+)$/m);
@@ -60,8 +50,13 @@ export async function GET() {
                     solved: Boolean((frontmatter as any).solved) || false,
                     acceptance: (frontmatter as any).acceptance || "—",
                     slug: fileName.replace(".mdx", ""),
+                    source: (frontmatter as any).source,
+                    companies: Array.isArray((frontmatter as any).companies) ? (frontmatter as any).companies : undefined,
                 };
-                items.push(item);
+                const parsed = QuestionListItemSchema.safeParse(item);
+                if (parsed.success) {
+                    items.push(parsed.data);
+                }
             } catch (e) {
                 // skip invalid file
             }

@@ -7,6 +7,8 @@ interface QuestionCardProps {
         title: { he: string; en: string }
         difficulty: string
         description: { he: string; en: string }
+        source?: string
+        companies?: string[]
     }
 }
 
@@ -31,10 +33,21 @@ export function QuestionCard({ question }: QuestionCardProps) {
                     <div className="flex-1">
                         <CardTitle className="text-xl mb-2">{question.title["he"]}</CardTitle>
                         <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
+                        {(question.source || (question.companies && question.companies.length > 0)) && (
+                            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                                {question.source && (
+                                    <span className="inline-flex items-center">
+                                        מקור: {question.source}
+                                    </span>
+                                )}
+                                {question.companies && question.companies.length > 0 && (
+                                    <span className="inline-flex items-center">
+                                        נשאל ב: {question.companies.join(", ")}
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     </div>
-                    <span className="text-sm text-muted-foreground">
-                        שאלה #{question.id}
-                    </span>
                 </div>
             </CardHeader>
             <CardContent>

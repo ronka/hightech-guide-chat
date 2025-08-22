@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, Dispatch, SetStateAction } from "react"
+import { QuestionsResponseSchema, type QuestionListItem } from "@/types/questions"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,18 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Filter, ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
 
-interface Question {
-  id: number
-  title: string
-  titleHe: string
-  difficulty: string
-  difficultyEn: string
-  category: string
-  categoryEn: string
-  solved: boolean
-  acceptance: string
-  slug: string
-}
+type Question = QuestionListItem
 
 const categories = ["הכל", "מערכים", "מחרוזות", "רשימות מקושרות", "עצים", "גרפים", "מחסנית"]
 const difficulties = ["הכל", "קל", "בינוני", "קשה"]
@@ -104,7 +94,8 @@ export default function QuestionsDirectory() {
       try {
         const response = await fetch("/api/questions")
         const data = await response.json()
-        setQuestions(data)
+        const parsed = QuestionsResponseSchema.parse(data)
+        setQuestions(parsed)
       } catch (error) {
         console.error("Failed to load questions:", error)
       } finally {
@@ -200,9 +191,15 @@ export default function QuestionsDirectory() {
                           {question.solved && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
                         </div>
                         <p className="text-sm mb-2">{question.title}</p>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap">
                           <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
                           <Badge variant="outline">{question.category}</Badge>
+                          {question.source && (
+                            <Badge variant="outline">מקור: {question.source}</Badge>
+                          )}
+                          {Array.isArray((question as any).companies) && (question as any).companies.length > 0 && (
+                            <Badge variant="outline">נשאל ב: {(question as any).companies.join(", ")}</Badge>
+                          )}
                         </div>
                       </div>
                     </div>
