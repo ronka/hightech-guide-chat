@@ -1,0 +1,48 @@
+---
+id: 1
+title: "Two Sum"
+difficulty: "קל"
+videoUrl: "https://www.youtube.com/embed/KLlXCFG5TnA"
+---
+
+# Two Sum / סכום שניים
+
+## תיאור השאלה
+
+ניתן להחזיר את התשובה בכל סדר.
+
+## פיתרון
+
+```javascript
+const twoSum = (array, goal) => {
+    let indexes = [];
+
+    for(let i = 0; i < array.length; i++){
+       for(let j = i + 1; j < array.length; j++){
+          if (array[i] + array[j] === goal) {
+        indexes.push(i);
+        indexes.push(j);
+          }
+       }
+    }
+    return indexes;
+}
+```
+
+```python
+example
+```
+
+## דוגמאות
+
+**דוגמה 1:**
+\`\`\`
+קלט: nums = [2,7,11,15], target = 9
+פלט: [0,1]
+הסבר: nums[0] + nums[1] = 2 + 7 = 9
+\`\`\`
+
+**דוגמה 2:**
+\`\`\`
+קלט: nums = [3,2,4], target = 6
+פלט: [1,2]
