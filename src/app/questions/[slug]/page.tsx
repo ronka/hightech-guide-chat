@@ -7,6 +7,8 @@ import { QuestionCard } from "@/components/question-card";
 import { CodeSolution } from "@/components/code-solution";
 import { VideoEmbed } from "@/components/video-embed";
 import { QuestionFrontmatterSchema, type QuestionFrontmatter } from "@/types/questions";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export async function generateMetadata({
     params,
@@ -131,8 +133,13 @@ export default async function QuestionPage({
     return (
         <div className="min-h-screen">
             <div className=" mx-auto px-4">
+                <div className="py-4 flex justify-end ">
+                    <Link href="/questions" className="inline-flex items-center text-sm hover:underline" aria-label="חזרה לשאלות">
+                        חזרה לשאלות
+                        <ArrowLeft className="h-4 w-4" />
+                    </Link>
+                </div>
                 <div className="grid grid-cols-1 gap-6">
-
                     <div className="lg:col-span-3 space-y-6">
                         <QuestionCard question={{
                             id: frontmatter.id ?? 0,
