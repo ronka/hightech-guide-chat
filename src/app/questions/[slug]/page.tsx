@@ -15,10 +15,34 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { frontmatter } = await getQuestionData(params.slug);
     if (!frontmatter) return { title: "שאלה לא נמצאה" };
-    const title = frontmatter.title || "שאלה";
+    const displayTitle = frontmatter.titleHe || frontmatter.title || "שאלה";
+    const baseDesc = `כיצד לפתור את השאלה ${displayTitle} מראיון עבודה`;
+    const extras: string[] = [];
+    if (frontmatter.source) extras.push(`שאלת ${frontmatter.source}`);
+    if (Array.isArray(frontmatter.companies) && frontmatter.companies.length > 0) {
+        extras.push(`נשאל ב: ${frontmatter.companies.join(", ")}`);
+    }
+    const description = [baseDesc, ...extras].join(" · ");
     return {
-        title: `${title} - הפתרון לשאלה מראיון עבודה`,
-        description: `כיצד לפתור את השאלה ${title} מראיון עבודה`,
+        title: `${displayTitle} - הפתרון לשאלה מראיון עבודה`,
+        description,
+        keywords: [
+            displayTitle,
+            "שאלות מראיונות עבודה",
+            "פתרון",
+            ...(frontmatter.source ? [frontmatter.source] : []),
+            ...((Array.isArray(frontmatter.companies) ? frontmatter.companies : []) as string[]),
+        ],
+        openGraph: {
+            title: `${displayTitle} - הפתרון לשאלה מראיון עבודה`,
+            description,
+            url: `/questions/${params.slug}`,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${displayTitle} - הפתרון לשאלה מראיון עבודה`,
+            description,
+        },
     };
 }
 
