@@ -7,6 +7,21 @@ import { Button } from "../ui/button";
 
 const RONKA_BOOK_PYSHICAL_ID = "704";
 const RONKA_BOOK_DIGITAL_ID = "712";
+const RONKA_COURSE_ID = "819";
+
+
+const RonkaCourseButton = () => {
+  return (
+    <Button className="w-full bg-blue-500" size={"lg"} asChild>
+      <Link
+        href={`https://ronka.dev/cart/?custom-add-to-cart=${RONKA_COURSE_ID}&quantity=1&utm_source=htstarter&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
+      >
+        התחל עכשיו ב-198 ₪ בלבד! 🚀
+      </Link>
+    </Button>
+  );
+};
+
 
 const RonkaPhysicalBookButton = () => {
   return (
@@ -130,5 +145,6 @@ export {
   ConsultingButton,
   CVConsultingButton,
   RonkaPhysicalBookButton,
+  RonkaCourseButton,
   RonkaDigitalBookButton,
 };
