@@ -1,11 +1,12 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import { QuestionCard } from "@/components/question-card";
 import { CodeSolution } from "@/components/code-solution";
 import { VideoEmbed } from "@/components/video-embed";
-import { QuestionFrontmatterSchema } from "@/types/questions";
+import { QuestionFrontmatterSchema, type QuestionFrontmatter } from "@/types/questions";
 
 export async function generateMetadata({
     params,
@@ -14,14 +15,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { frontmatter } = await getQuestionData(params.slug);
     if (!frontmatter) return { title: "שאלה לא נמצאה" };
-    const title = (frontmatter as any).title || "שאלה";
+    const title = frontmatter.title || "שאלה";
     return {
         title: `${title} - הפתרון לשאלה מראיון עבודה`,
         description: `כיצד לפתור את השאלה ${title} מראיון עבודה`,
     };
 }
 
-async function getQuestionData(slug: string) {
+type QuestionData = { frontmatter: QuestionFrontmatter | null; content: string | null };
+
+async function getQuestionData(slug: string): Promise<QuestionData> {
     const filePath = path.join(process.cwd(), "src/questions", `${slug}.mdx`);
     try {
         const fileContents = await fs.readFile(filePath, "utf8");
@@ -30,7 +33,7 @@ async function getQuestionData(slug: string) {
         if (!parsed.success) {
             return { frontmatter: null, content: null };
         }
-        const frontmatter = parsed.data;
+        const frontmatter: QuestionFrontmatter = parsed.data;
         return { frontmatter, content };
     } catch (error) {
         return { frontmatter: null, content: null };
@@ -94,7 +97,7 @@ export default async function QuestionPage({
     const { frontmatter, content } = await getQuestionData(params.slug);
 
     if (!frontmatter || !content) {
-        return <div>שאלה לא נמצאה</div>
+        redirect("/questions");
     }
 
     const descriptionHe = extractSection(content, "תיאור השאלה");
@@ -108,22 +111,22 @@ export default async function QuestionPage({
 
                     <div className="lg:col-span-3 space-y-6">
                         <QuestionCard question={{
-                            id: (frontmatter as any).id,
+                            id: frontmatter.id ?? 0,
                             title: {
-                                he: (frontmatter as any).titleHe || titles.he || (frontmatter as any).title || "",
-                                en: (frontmatter as any).title || titles.en || "",
+                                he: frontmatter.titleHe || titles.he || frontmatter.title || "",
+                                en: frontmatter.title || titles.en || "",
                             },
-                            difficulty: (frontmatter as any).difficulty,
+                            difficulty: frontmatter.difficulty ?? "",
                             description: { he: descriptionHe || "", en: "" },
-                            source: (frontmatter as any).source,
-                            companies: Array.isArray((frontmatter as any).companies) ? (frontmatter as any).companies : undefined,
+                            source: frontmatter.source,
+                            companies: Array.isArray(frontmatter.companies) ? frontmatter.companies : undefined,
                         }} />
 
                         <CodeSolution solutions={solutionsByLang} />
 
                         <VideoEmbed
-                            videoUrl={(frontmatter as any).videoUrl}
-                            title={(frontmatter as any).titleHe || titles.he || (frontmatter as any).title || titles.en || ""}
+                            videoUrl={frontmatter.videoUrl}
+                            title={frontmatter.titleHe || titles.he || frontmatter.title || titles.en || ""}
                         />
                     </div>
                 </div>
