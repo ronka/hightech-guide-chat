@@ -179,18 +179,12 @@ export default function QuestionsDirectory() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
-                      {/* Question Number */}
-                      <div className="flex items-center justify-center w-12 h-12 bg-orange-100 text-orange-800 rounded-lg font-bold">
-                        {question.id}
-                      </div>
-
                       {/* Question Info */}
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold ">{question.titleHe}</h3>
+                          <h3 className="text-lg font-semibold ">{question.title}</h3>
                           {question.solved && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
                         </div>
-                        <p className="text-sm mb-2">{question.title}</p>
                         <div className="flex items-center gap-3 flex-wrap">
                           <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
                           <Badge variant="outline">{question.category}</Badge>

@@ -148,10 +148,12 @@ export default async function QuestionPage({
 
                         <CodeSolution solutions={solutionsByLang} />
 
-                        <VideoEmbed
-                            videoUrl={frontmatter.videoUrl}
-                            title={frontmatter.titleHe || titles.he || frontmatter.title || titles.en || ""}
-                        />
+                        {frontmatter.videoUrl && (
+                            <VideoEmbed
+                                videoUrl={frontmatter.videoUrl}
+                                title={frontmatter.titleHe || titles.he || frontmatter.title || titles.en || ""}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

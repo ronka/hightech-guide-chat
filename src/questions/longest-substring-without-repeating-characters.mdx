@@ -1,0 +1,69 @@
+---
+id: 3
+title: "Longest Substring Without Repeating Characters"
+difficulty: "בינוני"
+source: "LeetCode"
+videoUrl: "https://www.youtube.com/embed/fL7GTj49qfI"
+companies:
+  - Microsoft
+---
+
+# Longest Substring Without Repeating Characters
+
+## תיאור השאלה
+
+Given a string `s`, find the length of the longest substring without repeating characters.
+
+## פיתרון
+
+```javascript
+function lengthOfLongestSubstring(s) {
+  let maxLen = 0;
+  let start = 0;
+  const lastSeen = new Map();
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    if (lastSeen.has(ch) && lastSeen.get(ch) >= start) {
+      start = lastSeen.get(ch) + 1;
+    }
+    lastSeen.set(ch, i);
+    maxLen = Math.max(maxLen, i - start + 1);
+  }
+
+  return maxLen;
+}
+```
+
+```python
+def lengthOfLongestSubstring(s: str) -> int:
+    last_seen = {}
+    start = 0
+    max_len = 0
+
+    for i, ch in enumerate(s):
+        if ch in last_seen and last_seen[ch] >= start:
+            start = last_seen[ch] + 1
+        last_seen[ch] = i
+        max_len = max(max_len, i - start + 1)
+
+    return max_len
+```
+
+## דוגמאות
+
+**Example 1:**
+```
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+```
+
+**Example 2:**
+```
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+```
+
+

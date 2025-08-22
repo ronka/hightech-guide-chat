@@ -33,7 +33,7 @@ export function VideoEmbed({ videoId, videoUrl, title }: VideoEmbedProps) {
             <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                     <Play className="h-5 w-5 text-primary" />
-                    הסבר וידאו
+                    הסבר וידאו כיצד לפתור את השאלה
                 </CardTitle>
             </CardHeader>
             <CardContent>
@@ -46,7 +46,6 @@ export function VideoEmbed({ videoId, videoUrl, title }: VideoEmbedProps) {
                         allowFullScreen
                     />
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">הסבר מפורט לפתרון השאלה עם דוגמאות וניתוח מורכבות</p>
             </CardContent>
         </Card>
     )

@@ -1,0 +1,84 @@
+---
+id: 8
+title: "String to Integer (atoi)"
+difficulty: "בינוני"
+source: "LeetCode"
+videoUrl: "https://www.youtube.com/embed/74H-eq_S_dM"
+---
+
+# String to Integer (atoi)
+
+## תיאור השאלה
+
+Implement the `atoi` function, which converts a string to a 32-bit signed integer according to the following rules:
+
+- Discard leading whitespace.
+- Check for an optional sign (`+` or `-`).
+- Read in next digits until a non-digit character is encountered.
+- Clamp the integer to the range `[-2^31, 2^31 - 1]`.
+
+## פיתרון
+
+```javascript
+function myAtoi(s) {
+  const INT_MIN = -2147483648;
+  const INT_MAX = 2147483647;
+  let i = 0, n = s.length;
+  while (i < n && s[i] === ' ') i++;
+  let sign = 1;
+  if (i < n && (s[i] === '+' || s[i] === '-')) {
+    sign = s[i] === '-' ? -1 : 1;
+    i++;
+  }
+  let result = 0;
+  while (i < n && s[i] >= '0' && s[i] <= '9') {
+    const digit = s.charCodeAt(i) - 48;
+    result = result * 10 + digit;
+    const signed = sign * result;
+    if (signed > INT_MAX) return INT_MAX;
+    if (signed < INT_MIN) return INT_MIN;
+    i++;
+  }
+  return sign * result;
+}
+```
+
+```python
+def myAtoi(s: str) -> int:
+    INT_MIN = -2**31
+    INT_MAX = 2**31 - 1
+    i = 0
+    n = len(s)
+    while i < n and s[i] == ' ':
+        i += 1
+    sign = 1
+    if i < n and (s[i] == '+' or s[i] == '-'):
+        sign = -1 if s[i] == '-' else 1
+        i += 1
+    result = 0
+    while i < n and s[i].isdigit():
+        result = result * 10 + (ord(s[i]) - ord('0'))
+        signed = sign * result
+        if signed > INT_MAX:
+            return INT_MAX
+        if signed < INT_MIN:
+            return INT_MIN
+        i += 1
+    return sign * result
+```
+
+## דוגמאות
+
+**Example 1:**
+```
+Input: s = "42"
+Output: 42
+```
+
+**Example 2:**
+```
+Input: s = "   -42"
+Output: -42
+```
+
+

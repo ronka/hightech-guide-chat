@@ -30,29 +30,20 @@ export function QuestionCard({ question }: QuestionCardProps) {
         <Card>
             <CardHeader>
                 <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                        <CardTitle className="text-xl mb-2">{question.title["he"]}</CardTitle>
-                        <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
-                        {(question.source || (question.companies && question.companies.length > 0)) && (
-                            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                                {question.source && (
-                                    <span className="inline-flex items-center">
-                                        מקור: {question.source}
-                                    </span>
-                                )}
-                                {question.companies && question.companies.length > 0 && (
-                                    <span className="inline-flex items-center">
-                                        נשאל ב: {question.companies.join(", ")}
-                                    </span>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                    <CardTitle className="text-xl mb-2">{question.title["he"]}</CardTitle>
+                    <Badge className={getDifficultyColor(question.difficulty)}>{question.difficulty}</Badge>
                 </div>
             </CardHeader>
-            <CardContent>
-                <div className="prose prose-sm max-w-none dark:prose-invert">
-                    <p className="text-foreground leading-relaxed">{question.description["he"]}</p>
+            <CardContent className="flex flex-col gap-10">
+                <div>
+                    שאלה מראיונות עבודה ממאגר שאלות של {question.source} שאלה מספר {question.id} {question.companies && question.companies.length > 0 && (
+                        <span className="inline-flex items-center">
+                            נשאל ב: {question.companies.join(", ")}
+                        </span>
+                    )}
+                </div>
+                <div className="prose prose-sm max-w-none dark:prose-invert" dir="ltr">
+                    <pre className="whitespace-pre-wrap">{question.description["he"]}</pre>
                 </div>
             </CardContent>
         </Card>

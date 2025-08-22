@@ -1,0 +1,55 @@
+---
+id: 6
+title: "Zigzag Conversion"
+difficulty: "בינוני"
+source: "LeetCode"
+videoUrl: "https://www.youtube.com/embed/eNkGxcGiDy4"
+---
+
+# Zigzag Conversion
+
+## תיאור השאלה
+
+Convert the string `s` to a zigzag pattern on a given number of rows `numRows`, and then read line by line to create the final string.
+
+## פיתרון
+
+```javascript
+function convert(s, numRows) {
+  if (numRows === 1 || s.length <= numRows) return s;
+  const rows = Array.from({ length: numRows }, () => []);
+  let row = 0;
+  let direction = -1;
+  for (const ch of s) {
+    rows[row].push(ch);
+    if (row === 0 || row === numRows - 1) direction *= -1;
+    row += direction;
+  }
+  return rows.map(r => r.join("")).join("");
+}
+```
+
+```python
+def convert(s: str, numRows: int) -> str:
+    if numRows == 1 or len(s) <= numRows:
+        return s
+    rows = [[] for _ in range(numRows)]
+    row = 0
+    direction = -1
+    for ch in s:
+        rows[row].append(ch)
+        if row == 0 or row == numRows - 1:
+            direction *= -1
+        row += direction
+    return "".join("".join(r) for r in rows)
+```
+
+## דוגמאות
+
+**Example:**
+```
+Input: s = "PAYPALISHIRING", numRows = 3
+Output: "PAHNAPLSIIGYIR"
+```
+
+
