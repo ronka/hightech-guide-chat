@@ -8,7 +8,7 @@ import {
 } from "@/services/embedding";
 import logger from "@/services/logger";
 import { SYSTEM_PROMPT } from "@/services/prompt-templates";
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import {
   streamText,
   createDataStreamResponse,
@@ -38,32 +38,32 @@ export async function POST(req: NextRequest) {
       dataStream.writeData("initialized call");
 
       const result = streamText({
-        model: openai("gpt-4o"),
+        model: google("gemini-2.0-flash-001"),
         messages,
         system: SYSTEM_PROMPT,
         tools: {
           getFirstJob: tool({
-            description: `get first job from the book`,
+            description: `How to get your first job`,
             parameters: z.object({}),
             execute: async () => getFirstJob(),
           }),
           getLinksFromTheBook: tool({
-            description: `get links from the book if asked what is linked in the book`,
+            description: `Get links descibred in the book`,
             parameters: z.object({}),
             execute: async () => getLinksFromTheBook(),
           }),
           getExtraLinks: tool({
-            description: `get resources links`,
+            description: `Get extra links mentioned from the book`,
             parameters: z.object({}),
             execute: async () => getExtraLinks(),
           }),
           getTheBook: tool({
-            description: `asked how to buy the book`,
+            description: `Get links to buy the book`,
             parameters: z.object({}),
             execute: async () => getTheBookPurchaseLinks(),
           }),
           getInformation: tool({
-            description: `get information about the book to answer questions.`,
+            description: `Get information about the book to answer questions.`,
             parameters: z.object({
               question: z.string().describe("the users question"),
             }),
