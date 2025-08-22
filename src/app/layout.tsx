@@ -8,6 +8,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/facebook-pixel";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { QueryProvider } from "@/providers/query";
 
 // If loading a variable font, you don't need to specify the font weight
 const googleFont = Assistant({
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ThemeProvider>
           <PHProvider>
-            <Header />
-            {children}
-            <Footer />
+            <QueryProvider>
+              <Header />
+              {children}
+              <Footer />
+            </QueryProvider>
           </PHProvider>
           <Analytics />
           <GoogleAnalytics gaId="G-C1Q1JYQ35E" />

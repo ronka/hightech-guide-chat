@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect, Dispatch, SetStateAction } from "react"
-import { QuestionsResponseSchema, type QuestionListItem } from "@/types/questions"
+import { useState, Dispatch, SetStateAction } from "react"
+import { type QuestionListItem } from "@/types/questions"
+import { useQuestionsQuery } from "@/hooks/useQuestionsQuery"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -83,28 +84,11 @@ function QuestionsFilters({
 }
 
 export default function QuestionsDirectory() {
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("הכל")
   const [selectedDifficulty, setSelectedDifficulty] = useState("הכל")
 
-  useEffect(() => {
-    const loadQuestions = async () => {
-      try {
-        const response = await fetch("/api/questions")
-        const data = await response.json()
-        const parsed = QuestionsResponseSchema.parse(data)
-        setQuestions(parsed)
-      } catch (error) {
-        console.error("Failed to load questions:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadQuestions()
-  }, [])
+  const { data: questions = [], isLoading, isError } = useQuestionsQuery()
 
   const filteredQuestions = questions.filter((question) => {
     const matchesSearch =
@@ -128,7 +112,7 @@ export default function QuestionsDirectory() {
     }
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div
         className=" flex items-center justify-center"
@@ -137,6 +121,24 @@ export default function QuestionsDirectory() {
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-orange-500" />
           <p className="">טוען שאלות...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen" dir="rtl">
+        <div className="container mx-auto px-4 py-8">
+          <Card className="mt-8">
+            <CardContent className="p-12 text-center">
+              <div className="mb-4">
+                <Search className="w-16 h-16 mx-auto" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">אירעה שגיאה בטעינת השאלות</h3>
+              <p className="">נא לנסות לרענן את הדף</p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     )
@@ -228,7 +230,7 @@ export default function QuestionsDirectory() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
                 <div className="text-2xl font-bold text-orange-600">{questions.length}</div>
-                <div className="text-sm ">סה"כ שאלות</div>
+                <div className="text-sm ">סה&rdquo;כ שאלות</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-green-600">{questions.filter((q) => q.solved).length}</div>
