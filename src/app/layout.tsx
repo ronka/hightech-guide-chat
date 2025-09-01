@@ -64,7 +64,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </QueryProvider>
           </PHProvider>
           <Analytics />
-          <GoogleAnalytics gaId="G-C1Q1JYQ35E" />
           <GoogleAnalytics gaId="G-07PEBMF7K9" />
         </ThemeProvider>
       </body>

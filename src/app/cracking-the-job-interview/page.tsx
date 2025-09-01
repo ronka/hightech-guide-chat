@@ -193,6 +193,63 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                סיפורי הצלחה מהסטודנטים שלנו
+              </h2>
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                הצטרף לאלפי מפתחים שהפכו את הקריירה שלהם
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto ">
+              <Image
+                src={feedback1}
+                alt="משוב מתלמיד על הקורס - הצלחתי בראיון טכני"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={479}
+                height={211}
+              />
+              <Image
+                src={feedback4}
+                alt="משוב על שיפור בראיונות טכניים - הצלחה"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={470}
+                height={135}
+              />
+              <Image
+                src={feedback2}
+                alt="משוב חיובי על התכנית - קיבלתי הצעת עבודה"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={442}
+                height={145}
+              />
+              <Image
+                src={feedback3}
+                alt="חוויה חיובית מהקורס - משוב תלמיד"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={614}
+                height={166}
+              />
+              <Image
+                src={feedback5}
+                alt="תוצאות חיוביות אחרי הקורס - משוב תלמיד"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                width={466}
+                height={147}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
         <div className="container px-4 md:px-6">
@@ -878,61 +935,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                סיפורי הצלחה מהסטודנטים שלנו
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                הצטרף לאלפי מפתחים שהפכו את הקריירה שלהם
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10">
-            <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto ">
-              <Image
-                src={feedback1}
-                alt="משוב מתלמיד על הקורס - הצלחתי בראיון טכני"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={479}
-                height={211}
-              />
-              <Image
-                src={feedback4}
-                alt="משוב על שיפור בראיונות טכניים - הצלחה"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={470}
-                height={135}
-              />
-              <Image
-                src={feedback2}
-                alt="משוב חיובי על התכנית - קיבלתי הצעת עבודה"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={442}
-                height={145}
-              />
-              <Image
-                src={feedback3}
-                alt="חוויה חיובית מהקורס - משוב תלמיד"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={614}
-                height={166}
-              />
-              <Image
-                src={feedback5}
-                alt="תוצאות חיוביות אחרי הקורס - משוב תלמיד"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
-                width={466}
-                height={147}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
