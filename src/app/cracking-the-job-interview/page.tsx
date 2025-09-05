@@ -10,6 +10,7 @@ import WscLogo from "@/components/logos/wsc.svg";
 import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
 import { BuyButton } from "@/components/buy-button";
+import { AnimatedStudentsCounter } from "@/components/animated-students-counter";
 import {
   Accordion,
   AccordionContent,
@@ -89,10 +90,7 @@ export default function Home() {
               <BuyButton size="xl">
                 🔥 אני רוצה להצליח בראיון – רק ב־198 ₪
               </BuyButton>
-              <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
-                <span>🔥</span>
-                <span>מחיר מיוחד לזמן מוגבל – רק 198 ₪ במקום 299 ₪</span>
-              </div>
+              <AnimatedStudentsCounter />
             </div>
 
             <div className="relative mt-8 flex w-full max-w-3xl items-center justify-center">
