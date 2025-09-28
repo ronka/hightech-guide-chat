@@ -16,4 +16,26 @@ Given an array representing stones' positions, determine the minimal maximum jum
 
 ## פיתרון
 
+The optimal route skips every other stone, so the answer is the maximum gap between stones two positions apart (with the first jump handled separately).
+
+```javascript
+function maxJump(stones) {
+  let answer = stones[1] - stones[0];
+  for (let i = 2; i < stones.length; i++) {
+    answer = Math.max(answer, stones[i] - stones[i - 2]);
+  }
+  return answer;
+}
+```
+
+```python
+from typing import List
+
+
+def maxJump(stones: List[int]) -> int:
+    answer = stones[1] - stones[0]
+    for i in range(2, len(stones)):
+        answer = max(answer, stones[i] - stones[i - 2])
+    return answer
+```
 

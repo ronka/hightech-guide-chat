@@ -14,4 +14,70 @@ Given a string containing digits from `2-9` inclusive, return all possible lette
 
 ## פיתרון
 
+Backtrack across the digit string, expanding each digit into its mapped letters.
 
+```javascript
+function letterCombinations(digits) {
+  if (!digits.length) return [];
+  const mapping = {
+    "2": "abc",
+    "3": "def",
+    "4": "ghi",
+    "5": "jkl",
+    "6": "mno",
+    "7": "pqrs",
+    "8": "tuv",
+    "9": "wxyz",
+  };
+  const result = [];
+  const path = [];
+
+  function backtrack(index) {
+    if (index === digits.length) {
+      result.push(path.join(""));
+      return;
+    }
+    for (const char of mapping[digits[index]]) {
+      path.push(char);
+      backtrack(index + 1);
+      path.pop();
+    }
+  }
+
+  backtrack(0);
+  return result;
+}
+```
+
+```python
+from typing import List
+
+
+def letterCombinations(digits: str) -> List[str]:
+    if not digits:
+        return []
+    mapping = {
+        "2": "abc",
+        "3": "def",
+        "4": "ghi",
+        "5": "jkl",
+        "6": "mno",
+        "7": "pqrs",
+        "8": "tuv",
+        "9": "wxyz",
+    }
+    result: List[str] = []
+    path: List[str] = []
+
+    def backtrack(index: int) -> None:
+        if index == len(digits):
+            result.append("".join(path))
+            return
+        for char in mapping[digits[index]]:
+            path.append(char)
+            backtrack(index + 1)
+            path.pop()
+
+    backtrack(0)
+    return result
+```

@@ -16,4 +16,63 @@ Given the head of a linked list, rotate the list to the right by `k` places.
 
 ## פיתרון
 
+Turn the list into a cycle, then break it after `length - (k % length)` nodes to rotate.
+
+```javascript
+function rotateRight(head, k) {
+  if (!head || !head.next || k === 0) {
+    return head;
+  }
+  let tail = head;
+  let length = 1;
+  while (tail.next) {
+    tail = tail.next;
+    length++;
+  }
+  k %= length;
+  if (k === 0) {
+    return head;
+  }
+  tail.next = head;
+  let stepsToNewTail = length - k - 1;
+  let newTail = head;
+  while (stepsToNewTail--) {
+    newTail = newTail.next;
+  }
+  const newHead = newTail.next;
+  newTail.next = null;
+  return newHead;
+}
+```
+
+```python
+from typing import Optional
+
+
+class ListNode:
+    def __init__(self, val: int = 0, next: Optional["ListNode"] = None):
+        self.val = val
+        self.next = next
+
+
+def rotateRight(head: Optional[ListNode], k: int) -> Optional[ListNode]:
+    if not head or not head.next or k == 0:
+        return head
+    tail = head
+    length = 1
+    while tail.next:
+        tail = tail.next
+        length += 1
+    k %= length
+    if k == 0:
+        return head
+    tail.next = head
+    steps_to_new_tail = length - k - 1
+    new_tail = head
+    for _ in range(steps_to_new_tail):
+        new_tail = new_tail.next
+    new_head = new_tail.next
+    new_tail.next = None
+    return new_head
+```
 

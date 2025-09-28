@@ -16,4 +16,26 @@ There is a robot on an `m x n` grid. The robot is initially located at the top-l
 
 ## פיתרון
 
+Use a 1D dynamic programming array to accumulate paths column by column.
+
+```javascript
+function uniquePaths(m, n) {
+  const dp = new Array(n).fill(1);
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[j] += dp[j - 1];
+    }
+  }
+  return dp[n - 1];
+}
+```
+
+```python
+def uniquePaths(m: int, n: int) -> int:
+    dp = [1] * n
+    for _ in range(1, m):
+        for j in range(1, n):
+            dp[j] += dp[j - 1]
+    return dp[-1]
+```
 

@@ -16,4 +16,46 @@ Convert an integer to a Roman numeral.
 
 ## פיתרון
 
+Convert greedily using value-symbol pairs ordered from largest to smallest.
+
+```javascript
+function intToRoman(num) {
+  const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+  const symbols = [
+    "M",
+    "CM",
+    "D",
+    "CD",
+    "C",
+    "XC",
+    "L",
+    "XL",
+    "X",
+    "IX",
+    "V",
+    "IV",
+    "I",
+  ];
+  let result = "";
+  for (let i = 0; i < values.length && num > 0; i++) {
+    while (num >= values[i]) {
+      num -= values[i];
+      result += symbols[i];
+    }
+  }
+  return result;
+}
+```
+
+```python
+def intToRoman(num: int) -> str:
+    values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+    symbols = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+    result = []
+    for value, symbol in zip(values, symbols):
+        while num >= value:
+            num -= value
+            result.append(symbol)
+    return "".join(result)
+```
 

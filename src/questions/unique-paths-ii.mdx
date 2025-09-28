@@ -16,4 +16,41 @@ Now consider obstacles on the grid; determine the number of unique paths from to
 
 ## פיתרון
 
+Carry a running count per column while skipping blocked cells.
+
+```javascript
+function uniquePathsWithObstacles(grid) {
+  const rows = grid.length;
+  const cols = grid[0].length;
+  const dp = new Array(cols).fill(0);
+  dp[0] = grid[0][0] === 0 ? 1 : 0;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) {
+        dp[c] = 0;
+      } else if (c > 0) {
+        dp[c] += dp[c - 1];
+      }
+    }
+  }
+  return dp[cols - 1];
+}
+```
+
+```python
+from typing import List
+
+
+def uniquePathsWithObstacles(grid: List[List[int]]) -> int:
+    rows, cols = len(grid), len(grid[0])
+    dp = [0] * cols
+    dp[0] = 1 if grid[0][0] == 0 else 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                dp[c] = 0
+            elif c > 0:
+                dp[c] += dp[c - 1]
+    return dp[-1]
+```
 
