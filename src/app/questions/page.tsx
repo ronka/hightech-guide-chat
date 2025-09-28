@@ -184,7 +184,7 @@ export default function QuestionsDirectory() {
                       {/* Question Info */}
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold ">{question.title}</h3>
+                          <h3 className="text-lg font-semibold ">שאלה #{question.id} - {question.title}</h3>
                           {question.solved && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
                         </div>
                         <div className="flex items-center gap-3 flex-wrap">
