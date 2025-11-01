@@ -12,7 +12,8 @@ export type EventName =
   | "lead"
   | "view_content"
   | "like_word"
-  | "add_to_cart";
+  | "add_to_cart"
+  | "video_play";
 // Add other event names as needed
 
 // Map PostHog events to Facebook standard events
@@ -28,6 +29,7 @@ const fbEventMap: Record<EventName, string> = {
   view_content: "ViewContent",
   like_word: "ViewContent",
   add_to_cart: "AddToCart",
+  video_play: "ViewContent",
   // Add other mappings as needed
 };
 

@@ -16,7 +16,7 @@ const RonkaCourseButton = () => {
       <Link
         href={`https://ronka.dev/cart/?custom-add-to-cart=${RONKA_COURSE_ID}&quantity=1&utm_source=htstarter&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
       >
-        התחל עכשיו ב-198 ₪ בלבד! 🚀
+        התחל עכשיו ב-99 ₪ בלבד! 🚀
       </Link>
     </Button>
   );

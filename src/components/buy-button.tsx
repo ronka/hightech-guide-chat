@@ -34,7 +34,7 @@ function BuyButtonInner({
 
   const handleClick = () => {
     track("add_to_cart", {
-      value: 198,
+      value: 99,
       currency: "ILS",
       content_ids: ["wc_post_id_819"],
       content_name: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",

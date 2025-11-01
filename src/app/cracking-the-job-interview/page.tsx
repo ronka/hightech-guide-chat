@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Check, ArrowLeft, Clock } from "lucide-react";
@@ -7,7 +9,6 @@ import MicrosoftLogo from "@/components/logos/microsoft.svg";
 import JfrogLogo from "@/components/logos/jfrog.svg";
 import DropboxLogo from "@/components/logos/dropbox.svg";
 import WscLogo from "@/components/logos/wsc.svg";
-import { Metadata } from "next";
 import { About } from "@/components/landing-page/about";
 import { BuyButton } from "@/components/buy-button";
 import { AnimatedStudentsCounter } from "@/components/animated-students-counter";
@@ -17,6 +18,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { track } from "@/services/analytics";
+import { useEffect } from "react";
 
 // Import feedback images
 import feedback1 from "./feedbacks/feedback1.jpg";
@@ -25,33 +28,61 @@ import feedback3 from "./feedbacks/feedback3.jpg";
 import feedback4 from "./feedbacks/feedback4.png";
 import feedback5 from "./feedbacks/feedback5.png";
 
-export const metadata: Metadata = {
-  title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
-  description:
-    "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
-  openGraph: {
-    title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
-    description:
-      "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
-    type: "website",
-    locale: "he_IL",
-    siteName: "המדריך להייטקיסט המתחיל",
-    images: [
-      {
-        url: "https://ronka.dev/wp-content/uploads/2025/04/malben-2.png",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
-    description:
-      "הקורס היחיד שהופך את תהליך הראיונות ממפחיד למנצח. שעתיים ממוקדות שיעניקו לך את הכלים להתקבל לתפקיד שאתה רוצה.",
-    images: ["https://ronka.dev/wp-content/uploads/2025/04/malben-2.png"],
-  },
-};
+export default function CrackingTheJobInterviewPage() {
+  // Track page view when component mounts
+  useEffect(() => {
+    track("view_content", {
+      content_type: "course_page",
+      content_id: "cracking-the-job-interview",
+      course_name: "מפצחים את קוד הראיון",
+      page_title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
+      currency: "ILS",
+      value: 99,
+    });
+  }, []);
 
-export default function Home() {
+  // Track video interactions
+  const handleVideoPlay = () => {
+    track("view_content", {
+      video_title: "הצצה - שלום וברוכים הבאים",
+      video_id: "w86FMn_9eZY",
+      course_name: "מפצחים את קוד הראיון",
+      content_type: "preview_video",
+      interaction_type: "video_play",
+    });
+  };
+
+  // Track accordion interactions
+  const handleAccordionOpen = (section: string) => {
+    track("view_content", {
+      content_type: "course_section",
+      section_name: section,
+      course_name: "מפצחים את קוד הראיון",
+      interaction_type: "accordion_open",
+    });
+  };
+
+  // Track testimonial interactions
+  const handleTestimonialView = (testimonialId: string) => {
+    track("view_content", {
+      content_type: "testimonial",
+      testimonial_id: testimonialId,
+      course_name: "מפצחים את קוד הראיון",
+      interaction_type: "testimonial_hover",
+    });
+  };
+
+  // Track buy button clicks
+  const handleBuyButtonClick = (location: string) => {
+    track("add_to_cart", {
+      content_type: "course",
+      content_id: "cracking-the-job-interview",
+      course_name: "מפצחים את קוד הראיון",
+      currency: "ILS",
+      value: 99,
+      button_location: location,
+    });
+  };
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -87,9 +118,11 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col items-center w-full gap-3 pt-4">
-              <BuyButton size="xl">
-                🔥 אני רוצה להצליח בראיון – רק ב־198 ₪
-              </BuyButton>
+              <div onClick={() => handleBuyButtonClick("hero")}>
+                <BuyButton size="xl">
+                  🔥 אני רוצה להצליח בראיון – רק ב־99 ₪
+                </BuyButton>
+              </div>
               <AnimatedStudentsCounter />
             </div>
 
@@ -111,10 +144,19 @@ export default function Home() {
                     style={{ paddingBottom: "56.25%" }}
                   >
                     <iframe
-                      src="https://www.youtube.com/embed/w86FMn_9eZY?showinfo=0"
+                      src="https://www.youtube.com/embed/w86FMn_9eZY?showinfo=0&enablejsapi=1"
                       className="absolute top-0 left-0 w-full h-full rounded-md"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
+                      onLoad={() => {
+                        // Track video load
+                        track("view_content", {
+                          content_type: "video_load",
+                          video_title: "הצצה - שלום וברוכים הבאים",
+                          video_id: "w86FMn_9eZY",
+                          course_name: "מפצחים את קוד הראיון",
+                        });
+                      }}
                     />
                   </div>
                 </div>
@@ -211,37 +253,47 @@ export default function Home() {
               <Image
                 src={feedback1}
                 alt="משוב מתלמיד על הקורס - הצלחתי בראיון טכני"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2] cursor-pointer"
                 width={479}
                 height={211}
+                onMouseEnter={() => handleTestimonialView("feedback1")}
+                onClick={() => handleTestimonialView("feedback1_click")}
               />
               <Image
                 src={feedback4}
                 alt="משוב על שיפור בראיונות טכניים - הצלחה"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2] cursor-pointer"
                 width={470}
                 height={135}
+                onMouseEnter={() => handleTestimonialView("feedback4")}
+                onClick={() => handleTestimonialView("feedback4_click")}
               />
               <Image
                 src={feedback2}
                 alt="משוב חיובי על התכנית - קיבלתי הצעת עבודה"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2] cursor-pointer"
                 width={442}
                 height={145}
+                onMouseEnter={() => handleTestimonialView("feedback2")}
+                onClick={() => handleTestimonialView("feedback2_click")}
               />
               <Image
                 src={feedback3}
                 alt="חוויה חיובית מהקורס - משוב תלמיד"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2] cursor-pointer"
                 width={614}
                 height={166}
+                onMouseEnter={() => handleTestimonialView("feedback3")}
+                onClick={() => handleTestimonialView("feedback3_click")}
               />
               <Image
                 src={feedback5}
                 alt="תוצאות חיוביות אחרי הקורס - משוב תלמיד"
-                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+                className="w-full object-contain transition-transform duration-300 hover:scale-[1.2] cursor-pointer"
                 width={466}
                 height={147}
+                onMouseEnter={() => handleTestimonialView("feedback5")}
+                onClick={() => handleTestimonialView("feedback5_click")}
               />
             </div>
           </div>
@@ -326,13 +378,15 @@ export default function Home() {
           </div>
           <div className="flex justify-center">
             <div className="flex flex-col items-center gap-2">
-              <BuyButton>
-                <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
-                <ArrowLeft className="ml-2 h-4 w-4" />
-              </BuyButton>
+              <div onClick={() => handleBuyButtonClick("comparison")}>
+                <BuyButton>
+                  <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
+                  <ArrowLeft className="ml-2 h-4 w-4" />
+                </BuyButton>
+              </div>
               <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
                 <span>🔥</span>
-                <span>קנה עכשיו ב-198 ₪ בלבד! </span>
+                <span>קנה עכשיו ב-99 ₪ בלבד! </span>
                 <span className="line-through text-red-400">299 ₪</span>
               </div>
             </div>
@@ -369,7 +423,10 @@ export default function Home() {
                 value="intro"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("מבוא לתהליך הגיוס")}
+                >
                   1. מבוא לתהליך הגיוס
                 </AccordionTrigger>
                 <AccordionContent>
@@ -410,7 +467,10 @@ export default function Home() {
                 value="cv"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך לכתוב קורות חיים שבולטים")}
+                >
                   2. איך לכתוב קורות חיים שבולטים
                 </AccordionTrigger>
                 <AccordionContent>
@@ -481,7 +541,10 @@ export default function Home() {
                 value="linkedin"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך לבנות פרופיל לינקדין מנצח")}
+                >
                   3. איך לבנות פרופיל לינקדין מנצח
                 </AccordionTrigger>
                 <AccordionContent>
@@ -512,7 +575,10 @@ export default function Home() {
                 value="technical"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך להתכונן לראיון עבודה טכני")}
+                >
                   4. איך להתכונן לראיון עבודה טכני
                 </AccordionTrigger>
                 <AccordionContent>
@@ -685,7 +751,10 @@ export default function Home() {
                 value="system-design"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך להתכונן לראיון עיצוב מערכות")}
+                >
                   5. איך להתכונן לראיון עיצוב מערכות – System Design
                 </AccordionTrigger>
                 <AccordionContent>
@@ -742,7 +811,10 @@ export default function Home() {
                 value="behavioral"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך להתכונן לשאלות אישיות ושאלות התנהגות")}
+                >
                   6. איך להתכונן לשאלות אישיות ושאלות התנהגות
                 </AccordionTrigger>
                 <AccordionContent>
@@ -807,7 +879,10 @@ export default function Home() {
                 value="next-steps"
                 className="border border-border rounded-lg px-6"
               >
-                <AccordionTrigger className="text-xl font-bold text-right">
+                <AccordionTrigger
+                  className="text-xl font-bold text-right"
+                  onClick={() => handleAccordionOpen("איך ממשיכים מפה")}
+                >
                   7. איך ממשיכים מפה
                 </AccordionTrigger>
                 <AccordionContent>
@@ -836,10 +911,12 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <div className="flex flex-col items-center gap-2">
-            <BuyButton>
-              <span>אני רוצה ללמוד ולהצליח!</span>
-              <ArrowLeft className="ml-2 h-4 w-4" />
-            </BuyButton>
+            <div onClick={() => handleBuyButtonClick("curriculum")}>
+              <BuyButton>
+                <span>אני רוצה ללמוד ולהצליח!</span>
+                <ArrowLeft className="ml-2 h-4 w-4" />
+              </BuyButton>
+            </div>
             <span className="text-amber-500 font-medium text-sm">
               ⏰ 40% הנחה - הצעה מוגבלת
             </span>
@@ -925,10 +1002,12 @@ export default function Home() {
         </div>
         <div className="flex justify-center mt-10">
           <div className="flex flex-col items-center gap-2">
-            <BuyButton>
-              <span>התחל עכשיו ב-198 ₪ בלבד!</span>
-              <ArrowLeft className="ml-2 h-4 w-4" />
-            </BuyButton>
+            <div onClick={() => handleBuyButtonClick("features")}>
+              <BuyButton>
+                <span>התחל עכשיו ב-99 ₪ בלבד!</span>
+                <ArrowLeft className="ml-2 h-4 w-4" />
+              </BuyButton>
+            </div>
           </div>
         </div>
       </section>
