@@ -2,6 +2,10 @@ import { redirect } from "next/navigation";
 
 export default function Page({ params }: { params: { slug: string } }) {
   switch (params.slug) {
+    case "car2car":
+      redirect("https://apps.apple.com/il/app/car2car/id6752951383");
+    case "car2car-linkedin":
+      redirect("https://apps.apple.com/il/app/car2car/id6752951383");
     case "iftach-bar-salary-talk":
       redirect("https://www.youtube.com/watch?v=pzq37L4UBUU");
     case "cs-facebook-group":
