@@ -11,6 +11,8 @@ import {
   Mail,
   PenIcon,
   FileArchive,
+  YoutubeIcon,
+  InstagramIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
@@ -83,6 +85,16 @@ const socialLinks = [
     href: "https://www.tiktok.com/@thehightechguide?utm_source=ron_kantor_links&utm_medium=social_icon&utm_campaign=tiktok_profile&utm_content=tiktok_icon",
     icon: FileVideo2,
     label: "טיקטוק",
+  },
+  {
+    href: "https://www.youtube.com/@thehightechguide",
+    icon: YoutubeIcon,
+    label: "יוטיוב",
+  },
+  {
+    href: "https://www.instagram.com/hightechguide",
+    icon: InstagramIcon,
+    label: "אינסטגרם",
   },
 ];
 
