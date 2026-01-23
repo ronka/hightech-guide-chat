@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateObject } from "ai";
-import { google } from "@ai-sdk/google";
+import { generateText, Output } from "ai";
 import { CVAnalysisSchema } from "@/types/cv-analysis";
 import { env } from "@/services/config";
 import { Redis } from "@upstash/redis";
@@ -52,8 +51,12 @@ export async function POST(request: NextRequest) {
 
     const cvData = Buffer.from(await cvFile.arrayBuffer());
 
-    const result = await generateObject({
-      model: google("gemini-2.0-flash-001"),
+    const result = await generateText({
+      model: "google/gemini-2.5-flash",
+      // output: Output.object({ schema: CVAnalysisSchema }),
+      output: Output.object({
+        schema: CVAnalysisSchema
+      }),
       system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
 
 - Job Title Identification: Determine the most accurate job title based on the CV's content. set it as <job_title>
@@ -65,34 +68,32 @@ export async function POST(request: NextRequest) {
     - the missing keywords MUST be in the job description!
 	- If a resume contains keywords similar to those in the job description, don't list them as missing keywords. for example: if the job description mentions "accessible technologies" and i have "Led accessibility improvements, achieving WCAG 2.0 AA across all main products." dont mention "accessible technologies" in the missing keywords list. if "Front-end" is mentioned in the job description, dont mention "Frontend" in the missing keywords list.
 
-${
-  jobDescription
-    ? "Compare the CV against the provided job description."
-    : "Analyze the CV for general job market fit."
-}
+${jobDescription
+          ? "Compare the CV against the provided job description."
+          : "Analyze the CV for general job market fit."
+        }
 
-Ensure that your response is structured, concise, and actionable. If possible, provide insights on how to optimize the CV for better alignment with industry standards and job market trends.		
+Ensure that your response is structured, concise, and actionable.If possible, provide insights on how to optimize the CV for better alignment with industry standards and job market trends.
 You MUST respond in Hebrew.
 
 <keywords_examples>
 Small example of keywords for different job titles, this is partial list:
 
-Example of keywords for Front-end: "React" ,"Next.js", "javascript", "typescript", "css", "html", "react native", "flutter", "kotlin", "swift", "react native", "flutter", "kotlin", "swift"
-Example of keywords for Back-end: "Node.js", "Express", "MongoDB", "PostgreSQL", "MySQL", "Java", "Python", "C#", "Ruby", "PHP", "Go", "Kotlin", "Swift"
+Example of keywords for Front - end: "React", "Next.js", "javascript", "typescript", "css", "html", "react native", "flutter", "kotlin", "swift", "react native", "flutter", "kotlin", "swift"
+Example of keywords for Back - end: "Node.js", "Express", "MongoDB", "PostgreSQL", "MySQL", "Java", "Python", "C#", "Ruby", "PHP", "Go", "Kotlin", "Swift"
 Example for all job titles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "Agile methodologies", "עבודת צוות" ).
-</keywords_examples>
-`,
+  </keywords_examples>
+    `,
       messages: [
         {
           role: "system",
           content: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements.
 Your task is to analyze the provided CV and deliver a comprehensive review.
 
-${
-  jobDescription
-    ? "Compare the CV against the provided job description."
-    : "Analyze the CV for general job market fit."
-}
+    ${jobDescription
+              ? "Compare the CV against the provided job description."
+              : "Analyze the CV for general job market fit."
+            }
 
 You MUST respond in Hebrew.
 `,
@@ -102,24 +103,23 @@ You MUST respond in Hebrew.
           content: [
             {
               type: "text",
-              text: `Analyze the attached CV.${
-                jobDescription
-                  ? ` Compare against this job description: ${jobDescription}`
-                  : ""
-              }`,
+              text: `Analyze the attached CV.${jobDescription
+                ? ` Compare against this job description: ${jobDescription}`
+                : ""
+                } `,
             },
             {
               type: "file",
               data: cvData,
-              mimeType: cvFile.type,
+              mediaType: cvFile.type,
             },
           ],
         },
       ],
-      schema: CVAnalysisSchema,
     });
 
-    return NextResponse.json(result);
+    const output = await result.output;
+    return NextResponse.json({ object: output });
   } catch (error) {
     console.error("CV Analysis error:", error);
     return NextResponse.json(

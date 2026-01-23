@@ -1,8 +1,8 @@
-import { Message } from "ai";
+import { type UIMessage } from "ai";
 import { useEffect, useRef } from "react";
 
 interface Props {
-  messages: Message[];
+  messages: UIMessage[];
 }
 
 const useScrollToBottom = ({ messages }: Props) => {

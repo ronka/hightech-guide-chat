@@ -1,34 +1,34 @@
-import { type Message } from "ai/react";
+import { type UIMessage } from "ai";
 import { ChatLine } from "./chat-line";
 import { getSources } from "@/services/utils";
+import { getMessageContent, getToolParts, getToolName } from "@/services/message-utils";
 
 const shouldSkipMessage = (
-  message: Message,
-  messages: Message[],
+  message: UIMessage,
+  messages: UIMessage[],
   index: number
 ): boolean => {
-  return (
-    message.content.length === 0 &&
-    index < messages.length - 1 &&
-    messages[index + 1].content.length > 0
-  );
+  const content = getMessageContent(message);
+  const nextContent = index < messages.length - 1 ? getMessageContent(messages[index + 1]) : "";
+  return content.length === 0 && index < messages.length - 1 && nextContent.length > 0;
 };
 
 const getCombinedToolInvocations = (
-  message: Message,
-  prevMessage: Message | null
+  message: UIMessage,
+  prevMessage: UIMessage | null
 ) => {
-  if (!prevMessage || prevMessage.content.length !== 0) {
-    return message.toolInvocations;
+  const getToolInvocations = (msg: UIMessage) => getToolParts(msg);
+
+  const prevContent = prevMessage ? getMessageContent(prevMessage) : "";
+  if (!prevMessage || prevContent.length !== 0) {
+    return getToolInvocations(message);
   }
-  return [
-    ...(prevMessage.toolInvocations || []),
-    ...(message.toolInvocations || []),
-  ];
+
+  return [...getToolInvocations(prevMessage), ...getToolInvocations(message)];
 };
 
 interface ChatMessagesProps {
-  messages: Message[];
+  messages: UIMessage[];
 }
 
 const ThinkingIndicator = ({ toolName = "" }: { toolName?: string }) => {
@@ -47,13 +47,14 @@ const ThinkingIndicator = ({ toolName = "" }: { toolName?: string }) => {
 };
 
 interface ChatMessageProps {
-  message: Message;
-  messages: Message[];
+  message: UIMessage;
+  messages: UIMessage[];
   index: number;
 }
 
 const ChatMessage = ({ message, messages, index }: ChatMessageProps) => {
-  const { id, role, content, toolInvocations } = message;
+  const { id, role, parts } = message;
+  const content = getMessageContent(message);
 
   if (shouldSkipMessage(message, messages, index)) {
     return null;
@@ -65,10 +66,11 @@ const ChatMessage = ({ message, messages, index }: ChatMessageProps) => {
     prevMessage
   );
 
+  const toolParts = getToolParts(message);
+
   if (content.length === 0) {
-    return (
-      <ThinkingIndicator key={id} toolName={toolInvocations?.[0].toolName} />
-    );
+    const toolName = toolParts.length > 0 ? getToolName(toolParts[0]) : undefined;
+    return <ThinkingIndicator key={id} toolName={toolName} />;
   }
 
   return (
@@ -77,7 +79,9 @@ const ChatMessage = ({ message, messages, index }: ChatMessageProps) => {
       role={role}
       content={content}
       sources={
-        combinedToolInvocations ? getSources(combinedToolInvocations) : []
+        combinedToolInvocations.length > 0
+          ? getSources(combinedToolInvocations)
+          : []
       }
     />
   );

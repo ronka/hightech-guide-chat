@@ -1,7 +1,5 @@
-import type { Message, ToolInvocation } from "ai";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { JSONValue } from "ai";
 import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
@@ -44,12 +42,24 @@ export function formattedText(inputText: string) {
   return `...${text}...`;
 }
 
+// Initial message structure for AI SDK v5
+interface InitialMessage {
+  role: string;
+  id: string;
+  parts: Array<{ type: "text"; text: string }>;
+}
+
 // Default UI Message
-export const initialMessages: Message[] = [
+export const initialMessages: InitialMessage[] = [
   {
     role: "assistant",
     id: "0",
-    content: `היי! אני עוזר דיגיטלי חכם שמבוסס על הספר "המדריך להייטקיסט המתחיל". אשמח לענות על שאלות בנושאי קריירה בהייטק, טיפים למתחילים בתעשייה, או כל דבר שקשור לעולם ההייטק ולתוכן הספר בפרט. במה אוכל לעזור לך היום?`,
+    parts: [
+      {
+        type: "text",
+        text: `היי! אני עוזר דיגיטלי חכם שמבוסס על הספר "המדריך להייטקיסט המתחיל". אשמח לענות על שאלות בנושאי קריירה בהייטק, טיפים למתחילים בתעשייה, או כל דבר שקשור לעולם ההייטק ולתוכן הספר בפרט. במה אוכל לעזור לך היום?`,
+      },
+    ],
   },
 ];
 
@@ -67,23 +77,48 @@ const dataSchema: z.ZodSchema<Data> = z.object({
   ),
 });
 
+// Tool part interface for AI SDK v5
+interface ToolPart {
+  type?: string;
+  toolName?: string;
+  state?: string;
+  output?: Array<{ pageContent: string; pageNumber: number }>;
+}
+
 // Maps the sources with the right ai-message
-export const getSources = (toolInvocations: ToolInvocation[]): Source[] => {
-  console.log("getSources");
+// In AI SDK v5, tool invocations are parts with type starting with "tool-"
+export const getSources = (toolParts: unknown[]): Source[] => {
   const sources: Source[] = [];
 
-  toolInvocations.forEach((toolInvocation) => {
-    if (toolInvocation.toolName !== "getInformation") {
+  toolParts.forEach((part) => {
+    if (!part || typeof part !== "object") return;
+
+    const toolPart = part as ToolPart;
+
+    // Get tool name from type (e.g., "tool-getInformation" -> "getInformation")
+    // or from toolName property for dynamic tools
+    const toolName =
+      toolPart.toolName ||
+      (toolPart.type?.startsWith("tool-")
+        ? toolPart.type.replace("tool-", "")
+        : null);
+
+    if (toolName !== "getInformation") {
       return;
     }
 
-    if (toolInvocation.state !== "result") {
+    // In AI SDK v5, check for output-available state
+    if (
+      toolPart.state !== "output-available" &&
+      toolPart.state !== "result"
+    ) {
       return;
     }
 
-    const { result } = toolInvocation;
+    const output = toolPart.output;
+    if (!output || !Array.isArray(output)) return;
 
-    result.map((source: { pageContent: string; pageNumber: number }) => {
+    output.forEach((source: { pageContent: string; pageNumber: number }) => {
       sources.push({
         pageContent: source.pageContent,
         pageNumber: source.pageNumber,

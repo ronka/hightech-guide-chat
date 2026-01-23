@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { initialMessages } from "@/services/utils";
-import { type Message, useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./ui/spinner";
 import { useScrollToBottom } from "@/hooks/useScrollToBottom";
 import { track } from "@/services/analytics";
 import { ChatMessages } from "./chat-messages";
+import { getMessageContent } from "@/services/message-utils";
 
 export interface ChatProps {
   sessionId: string;
@@ -15,30 +18,33 @@ export interface ChatProps {
 }
 
 export function Chat({ sessionId, isUploading }: ChatProps) {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      maxSteps: 3,
-      initialMessages: initialMessages as Message[],
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status } = useChat({
+    messages: initialMessages as UIMessage[],
+    transport: new DefaultChatTransport({
       body: { sessionId },
-    });
+    }),
+  });
+
+  const isLoading = status === "streaming" || status === "submitted";
 
   const { containerRef } = useScrollToBottom({ messages });
 
-  const handleSubmitWithAnalytics = (
-    event?: {
-      preventDefault?: () => void;
-    },
-    chatRequestOptions?: any
-  ) => {
+  const handleSubmit = (event?: { preventDefault?: () => void }) => {
+    event?.preventDefault?.();
+
+    if (!input.trim()) return;
+
     track("view_content", {
       input: input,
       messages: messages
         .slice(1)
-        .map((message) => message.content)
+        .map((message) => getMessageContent(message))
         .toString(),
     });
 
-    handleSubmit(event, chatRequestOptions);
+    sendMessage({ text: input });
+    setInput("");
   };
 
   return (
@@ -50,14 +56,11 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
         <ChatMessages messages={messages} />
       </div>
 
-      <form
-        onSubmit={handleSubmitWithAnalytics}
-        className="p-4 flex clear-both"
-      >
+      <form onSubmit={handleSubmit} className="p-4 flex clear-both">
         <Input
           value={input}
           placeholder={"הקלד שאלה פה ..."}
-          onChange={handleInputChange}
+          onChange={(e) => setInput(e.target.value)}
           style={isUploading ? { pointerEvents: "none" } : {}}
           className="ml-2"
         />

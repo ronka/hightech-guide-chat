@@ -13,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { pageNumberToChapter, formattedText, Source } from "@/services/utils";
-import type { Message } from "ai/react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Balancer from "react-wrap-balancer";
@@ -64,15 +63,13 @@ const ChapterBadge = ({ pageNumber }: { pageNumber: number }) => {
   return <Badge variant={"secondary"}>{chapter}</Badge>;
 };
 
-interface ChatLineProps extends Partial<Message> {
+interface ChatLineProps {
+  role: string;
+  content: string;
   sources: Source[];
 }
 
-export function ChatLine({
-  role = "assistant",
-  content,
-  sources,
-}: ChatLineProps) {
+export function ChatLine({ role = "assistant", content, sources }: ChatLineProps) {
   if (!content) {
     return null;
   }
