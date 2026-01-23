@@ -8,7 +8,7 @@ import {
 } from "@/services/embedding";
 import logger from "@/services/logger";
 import { SYSTEM_PROMPT } from "@/services/prompt-templates";
-import { streamText, tool, gateway } from "ai";
+import { streamText, tool, convertToModelMessages } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -18,10 +18,11 @@ export async function POST(req: NextRequest) {
   const sessionId = body.sessionId;
 
   const messages = body.messages ?? [];
+  const modelMessages = await convertToModelMessages(messages);
 
   const result = streamText({
     model: "google/gemini-2.5-flash",
-    messages,
+    messages: modelMessages,
     system: SYSTEM_PROMPT,
     tools: {
       getFirstJob: tool({
