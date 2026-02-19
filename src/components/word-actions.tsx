@@ -39,7 +39,7 @@ export function WordActions({ slug, title }: WordActionsProps) {
       <Button
         variant="outline"
         onClick={() => {
-          track("term_shared", { slug, title, method: navigator.share ? "native_share" : "clipboard" });
+          track("term_shared", { slug, title, method: typeof navigator.share === "function" ? "native_share" : "clipboard" });
           if (navigator.share) {
             navigator
               .share({
