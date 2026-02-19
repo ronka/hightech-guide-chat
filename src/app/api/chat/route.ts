@@ -8,7 +8,7 @@ import {
 } from "@/services/embedding";
 import logger from "@/services/logger";
 import { SYSTEM_PROMPT } from "@/services/prompt-templates";
-import { streamText, tool, convertToModelMessages } from "ai";
+import { streamText, tool, convertToModelMessages, stepCountIs } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     model: "google/gemini-2.5-flash",
     messages: modelMessages,
     system: SYSTEM_PROMPT,
+    stopWhen: stepCountIs(5),
     tools: {
       getFirstJob: tool({
         description: `How to get your first job`,
