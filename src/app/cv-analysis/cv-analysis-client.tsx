@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Spinner } from "@/components/ui/spinner";
 import { FileUpload } from "./file-upload";
 import { SeoContent } from "./seo-content";
+import { track } from "@/services/analytics";
 
 interface AnalysisState {
   file: File | null;
@@ -30,6 +31,13 @@ export function CVAnalysisClient() {
   });
 
   const handleFileChange = (file: File | null) => {
+    if (file) {
+      track("cv_file_selected", {
+        file_name: file.name,
+        file_size_kb: Math.round(file.size / 1024),
+        has_job_description: !!state.jobDescription,
+      });
+    }
     setState((prev) => ({ ...prev, file }));
   };
 
@@ -44,6 +52,10 @@ export function CVAnalysisClient() {
   };
 
   const resetAnalysis = () => {
+    track("cv_analysis_reset", {
+      had_results: !!state.results,
+      had_error: !!state.error,
+    });
     setState({
       file: null,
       jobDescription: "",
@@ -83,10 +95,19 @@ export function CVAnalysisClient() {
 
       const data = await response.json();
       setState((prev) => ({ ...prev, results: data.object, isLoading: false }));
+      track("cv_analyzed", {
+        has_job_description: !!state.jobDescription,
+        file_name: state.file?.name,
+      });
     } catch (err) {
+      const error_message = err instanceof Error ? err.message : "אירעה שגיאה";
+      track("cv_analysis_error", {
+        error_message,
+        has_job_description: !!state.jobDescription,
+      });
       setState((prev) => ({
         ...prev,
-        error: err instanceof Error ? err.message : "אירעה שגיאה",
+        error: error_message,
         isLoading: false,
       }));
     }

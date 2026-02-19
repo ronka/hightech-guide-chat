@@ -25,6 +25,7 @@ import { words } from "@/lib/words";
 import { useDebouncedCallback } from "use-debounce";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { track } from "@/services/analytics";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -96,6 +97,7 @@ function WordsPageContent() {
       const params = new URLSearchParams(searchParams);
       if (value) {
         params.set("search", value);
+        track("dictionary_searched", { search_term: value, results_count: filteredWords.length });
       } else {
         params.delete("search");
       }

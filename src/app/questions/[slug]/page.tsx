@@ -9,6 +9,7 @@ import { VideoEmbed } from "@/components/video-embed";
 import { QuestionFrontmatterSchema, type QuestionFrontmatter } from "@/types/questions";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { QuestionViewTracker } from "./question-view-tracker";
 
 export async function generateMetadata({
     params,
@@ -132,6 +133,12 @@ export default async function QuestionPage({
 
     return (
         <div className="min-h-screen">
+            <QuestionViewTracker
+                slug={params.slug}
+                title={frontmatter.titleHe || frontmatter.title || ""}
+                difficulty={frontmatter.difficulty ?? ""}
+                category={frontmatter.category}
+            />
             <div className=" mx-auto px-4">
                 <div className="py-4 flex justify-end ">
                     <Link href="/questions" className="inline-flex items-center text-sm hover:underline" aria-label="חזרה לשאלות">

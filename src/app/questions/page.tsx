@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, Dispatch, SetStateAction } from "react"
+import { track } from "@/services/analytics"
 import { type QuestionListItem } from "@/types/questions"
 import { useQuestionsQuery } from "@/hooks/useQuestionsQuery"
 import { Card, CardContent } from "@/components/ui/card"
@@ -20,10 +21,10 @@ interface FiltersProps {
   setSearchTerm: Dispatch<SetStateAction<string>>
   categories: string[]
   selectedCategory: string
-  setSelectedCategory: Dispatch<SetStateAction<string>>
+  setSelectedCategory: (v: string) => void
   difficulties: string[]
   selectedDifficulty: string
-  setSelectedDifficulty: Dispatch<SetStateAction<string>>
+  setSelectedDifficulty: (v: string) => void
 }
 
 function QuestionsFilters({
@@ -87,6 +88,9 @@ export default function QuestionsDirectory() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("הכל")
   const [selectedDifficulty, setSelectedDifficulty] = useState("הכל")
+
+  const handleCategoryChange = (v: string) => { setSelectedCategory(v); track("questions_filtered", { filter_type: "category", filter_value: v }); }
+  const handleDifficultyChange = (v: string) => { setSelectedDifficulty(v); track("questions_filtered", { filter_type: "difficulty", filter_value: v }); }
 
   const { data: questions = [], isLoading, isError } = useQuestionsQuery()
 

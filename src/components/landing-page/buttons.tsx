@@ -14,6 +14,7 @@ const RonkaCourseButton = () => {
   return (
     <Button className="w-full bg-blue-500" size={"lg"} asChild>
       <Link
+        onClick={() => track("book_click", { source: "RonkaCourse", product_id: RONKA_COURSE_ID, product_type: "course" })}
         href={`https://ronka.dev/cart/?custom-add-to-cart=${RONKA_COURSE_ID}&quantity=1&utm_source=htstarter&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
       >
         התחל עכשיו ב-99 ₪ בלבד! 🚀
@@ -27,6 +28,7 @@ const RonkaPhysicalBookButton = () => {
   return (
     <Button className="w-full bg-green-500" size={"lg"} asChild>
       <Link
+        onClick={() => track("book_click", { source: "RonkaPhysical", product_id: RONKA_BOOK_PYSHICAL_ID, product_type: "physical_book" })}
         href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_PYSHICAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
       >
         אני רוצה כזה! עותק פיזי 📚
@@ -39,6 +41,7 @@ const RonkaDigitalBookButton = () => {
   return (
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <Link
+        onClick={() => track("book_click", { source: "RonkaDigital", product_id: RONKA_BOOK_DIGITAL_ID, product_type: "digital_book" })}
         href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_DIGITAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=digital_book&utm_content=digital_book_button`}
       >
         אני רוצה כזה! עותק דיגיטלי 📱
@@ -52,9 +55,7 @@ const SteimatzkyButton = () => {
     <Button className="w-full bg-green-500" size={"lg"} asChild>
       <Link
         onClick={() => {
-          track("view_content", {
-            source: "STEIMATZKY",
-          });
+          track("book_click", { source: "Steimatzky", product_type: "physical_book" });
         }}
         href={BOOK_PROMO.STEIMATZKY}
       >
@@ -69,9 +70,7 @@ const EvritButton = () => {
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <Link
         onClick={() => {
-          track("view_content", {
-            source: "EVRIT",
-          });
+          track("book_click", { source: "Evrit", product_type: "digital_book" });
         }}
         href={BOOK_PROMO.EVRIT}
       >
@@ -94,9 +93,7 @@ const ConsultingButton = ({ source = "landing-page" }: { source?: string }) => {
     <Button className="w-full" size={"lg"} variant={"outline"} asChild>
       <Link
         onClick={() => {
-          track("view_content", {
-            source,
-          });
+          track("consulting_click", { source });
         }}
         href={"https://ronka.dev/consulting-session-form"}
       >
@@ -115,9 +112,7 @@ const CVConsultingButton = ({
     <Button className="w-full bg-green-500" size={"lg"} asChild>
       <Link
         onClick={() => {
-          track("view_content", {
-            source,
-          });
+          track("consulting_click", { source });
         }}
         href={"https://ronka.dev/consulting-session-form"}
       >

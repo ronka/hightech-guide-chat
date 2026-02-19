@@ -13,8 +13,19 @@ export type EventName =
   | "view_content"
   | "like_word"
   | "add_to_cart"
-  | "video_play";
-// Add other event names as needed
+  | "video_play"
+  | "chat_message_sent"
+  | "cv_file_selected"
+  | "cv_analyzed"
+  | "cv_analysis_error"
+  | "cv_analysis_reset"
+  | "dictionary_searched"
+  | "term_viewed"
+  | "term_shared"
+  | "question_viewed"
+  | "questions_filtered"
+  | "book_click"
+  | "consulting_click";
 
 // Map PostHog events to Facebook standard events
 const fbEventMap: Record<EventName, string> = {
@@ -30,7 +41,18 @@ const fbEventMap: Record<EventName, string> = {
   like_word: "ViewContent",
   add_to_cart: "AddToCart",
   video_play: "ViewContent",
-  // Add other mappings as needed
+  chat_message_sent: "ViewContent",
+  cv_file_selected: "ViewContent",
+  cv_analyzed: "Lead",
+  cv_analysis_error: "ViewContent",
+  cv_analysis_reset: "ViewContent",
+  dictionary_searched: "Search",
+  term_viewed: "ViewContent",
+  term_shared: "ViewContent",
+  question_viewed: "ViewContent",
+  questions_filtered: "ViewContent",
+  book_click: "AddToCart",
+  consulting_click: "Lead",
 };
 
 export function initAnaylitcs() {

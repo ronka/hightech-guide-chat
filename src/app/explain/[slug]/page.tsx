@@ -16,6 +16,7 @@ import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BookPromo } from "@/components/book-promo";
 import { WordActions } from "@/components/word-actions";
+import { TermViewTracker } from "./term-view-tracker";
 
 export async function generateMetadata({
   params,
@@ -95,6 +96,7 @@ export default async function WordPage({
 					))}
 					</div>
 				</div> */}
+              <TermViewTracker slug={params.slug} title={frontmatter.title} category={frontmatter.category} />
               <WordActions slug={params.slug} title={frontmatter.title} />
             </CardContent>
           </Card>

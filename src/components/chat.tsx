@@ -35,12 +35,9 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
 
     if (!input.trim()) return;
 
-    track("view_content", {
-      input: input,
-      messages: messages
-        .slice(1)
-        .map((message) => getMessageContent(message))
-        .toString(),
+    track("chat_message_sent", {
+      message_count: messages.slice(1).length,
+      session_id: sessionId,
     });
 
     sendMessage({ text: input });
