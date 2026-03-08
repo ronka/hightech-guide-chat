@@ -38,9 +38,6 @@ export function MagicLinkForm({ callbackUrl }: { callbackUrl?: string }) {
           שלחנו לך קישור כניסה לכתובת <strong>{email}</strong>.
           לחץ על הקישור כדי להיכנס.
         </p>
-        <p className="text-xs text-muted-foreground">
-          (בסביבת פיתוח: הקישור מודפס בלוג השרת)
-        </p>
       </div>
     );
   }
