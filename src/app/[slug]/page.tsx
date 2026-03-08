@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  switch (params.slug) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  switch (slug) {
     case "car2car":
       redirect("https://apps.apple.com/il/app/car2car/id6752951383");
     case "car2car-linkedin":

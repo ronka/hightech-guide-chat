@@ -14,9 +14,10 @@ import { QuestionViewTracker } from "./question-view-tracker";
 export async function generateMetadata({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    const { frontmatter } = await getQuestionData(params.slug);
+    const { slug } = await params;
+    const { frontmatter } = await getQuestionData(slug);
     if (!frontmatter) return { title: "שאלה לא נמצאה" };
     const displayTitle = frontmatter.titleHe || frontmatter.title || "שאלה";
     const baseDesc = `כיצד לפתור את השאלה ${displayTitle} מראיון עבודה`;
@@ -39,7 +40,7 @@ export async function generateMetadata({
         openGraph: {
             title: `${displayTitle} - הפתרון לשאלה מראיון עבודה`,
             description,
-            url: `/questions/${params.slug}`,
+            url: `/questions/${slug}`,
         },
         twitter: {
             card: "summary_large_image",
@@ -119,9 +120,10 @@ function extractSolutionsByLanguage(content: string): Record<string, string> {
 export default async function QuestionPage({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
-    const { frontmatter, content } = await getQuestionData(params.slug);
+    const { slug } = await params;
+    const { frontmatter, content } = await getQuestionData(slug);
 
     if (!frontmatter || !content) {
         redirect("/questions");
@@ -134,7 +136,7 @@ export default async function QuestionPage({
     return (
         <div className="min-h-screen">
             <QuestionViewTracker
-                slug={params.slug}
+                slug={slug}
                 title={frontmatter.titleHe || frontmatter.title || ""}
                 difficulty={frontmatter.difficulty ?? ""}
                 category={frontmatter.category}

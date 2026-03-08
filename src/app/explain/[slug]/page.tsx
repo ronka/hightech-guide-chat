@@ -21,9 +21,10 @@ import { TermViewTracker } from "./term-view-tracker";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { frontmatter } = await getWordData(params.slug);
+  const { slug } = await params;
+  const { frontmatter } = await getWordData(slug);
   if (!frontmatter) return { title: "Word Not Found" };
   return {
     title: `${frontmatter.title} - המדריך להייטיקיסט המתחיל - מילון מושגים`,
@@ -45,12 +46,13 @@ async function getWordData(slug: string) {
 export default async function WordPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { frontmatter, content } = await getWordData(params.slug);
+  const { slug } = await params;
+  const { frontmatter, content } = await getWordData(slug);
 
   if (!frontmatter || !content) {
-    redirect(`/explain?search=${encodeURIComponent(params.slug)}`);
+    redirect(`/explain?search=${encodeURIComponent(slug)}`);
   }
 
   return (
@@ -96,8 +98,8 @@ export default async function WordPage({
 					))}
 					</div>
 				</div> */}
-              <TermViewTracker slug={params.slug} title={frontmatter.title} category={frontmatter.category} />
-              <WordActions slug={params.slug} title={frontmatter.title} />
+              <TermViewTracker slug={slug} title={frontmatter.title} category={frontmatter.category} />
+              <WordActions slug={slug} title={frontmatter.title} />
             </CardContent>
           </Card>
         </div>

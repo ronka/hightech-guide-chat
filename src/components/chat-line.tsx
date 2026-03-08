@@ -108,7 +108,7 @@ export function ChatLine({ role = "assistant", content, sources }: ChatLineProps
                     </AccordionTrigger>
                     <AccordionContent>
                       <blockquote className="bg-muted p-4 rounded-md border-l-4 border-primary">
-                        <ReactMarkdown linkTarget="_blank">
+                        <ReactMarkdown components={{ a: (props) => <a {...props} target="_blank" rel="noopener noreferrer" /> }}>
                           {formattedText(source.pageContent)}
                         </ReactMarkdown>
                       </blockquote>

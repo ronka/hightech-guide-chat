@@ -115,30 +115,31 @@ export default function TableOfContents() {
                   openPreview === chapter.title ? "block" : "hidden"
                 }`}
               >
-                <ReactMarkdown
-                  components={{
-                    h1: ({ children }) => (
-                      <h1 className="text-xl font-bold mb-2 mt-4">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 className="text-lg font-semibold mb-2 mt-3">
-                        {children}
-                      </h2>
-                    ),
-                    p: ({ children }) => (
-                      <p className="mb-2 leading-relaxed">{children}</p>
-                    ),
-                  }}
-                  className={cn(
+                <div className={cn(
                     "bg-gray-100 dark:bg-gray-800 p-4 rounded-md",
                     "border-l-4 border-gray-300 dark:border-gray-600",
                     "text-gray-700 dark:text-gray-300 "
-                  )}
-                >
-                  {chapter.preview}
-                </ReactMarkdown>
+                  )}>
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ children }) => (
+                        <h1 className="text-xl font-bold mb-2 mt-4">
+                          {children}
+                        </h1>
+                      ),
+                      h2: ({ children }) => (
+                        <h2 className="text-lg font-semibold mb-2 mt-3">
+                          {children}
+                        </h2>
+                      ),
+                      p: ({ children }) => (
+                        <p className="mb-2 leading-relaxed">{children}</p>
+                      ),
+                    }}
+                  >
+                    {chapter.preview}
+                  </ReactMarkdown>
+                </div>
               </div>
             )}
           </div>
