@@ -1,18 +1,27 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { type NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
+const PROTECTED_ROUTES = ["/courses"];
 
-  if (!sessionCookie && request.nextUrl.pathname.startsWith("/courses")) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
+function isProtectedRoute(pathname: string) {
+  return PROTECTED_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+}
+
+export function middleware(request: NextRequest) {
+  if (isProtectedRoute(request.nextUrl.pathname)) {
+    const sessionCookie = getSessionCookie(request);
+    if (!sessionCookie) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/courses/:path*"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api).*)"],
 };
