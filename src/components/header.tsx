@@ -13,11 +13,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useSession, signOut } from "@/lib/auth-client";
 
 const Header = () => {
   const pathname = usePathname();
   const isChatPage = pathname === "/chat";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const navItems = [
     { href: "/", label: "לספר" },
@@ -46,7 +48,7 @@ const Header = () => {
         </div>
       </Link>
 
-      <nav className="hidden sm:flex gap-4 sm:gap-6">
+      <nav className="hidden sm:flex gap-4 sm:gap-6 items-center">
         {navItems.map((item) => (
           <Link
             key={item.href}
@@ -60,6 +62,18 @@ const Header = () => {
             {item.label}
           </Link>
         ))}
+        {/* {session ? (
+          <Button variant="ghost" size="sm" onClick={() => signOut()}>
+            יציאה
+          </Button>
+        ) : (
+          <Link
+            href="/login"
+            className="text-sm font-medium hover:underline underline-offset-4"
+          >
+            כניסה
+          </Link>
+        )} */}
       </nav>
 
       <DropdownMenu>
@@ -77,6 +91,15 @@ const Header = () => {
               </Link>
             </DropdownMenuItem>
           ))}
+          {session ? (
+            <DropdownMenuItem onClick={() => signOut()}>
+              יציאה
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem asChild>
+              <Link href="/login">כניסה</Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
