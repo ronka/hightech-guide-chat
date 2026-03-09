@@ -1,20 +1,15 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import { getAllCourses, getCourseBySlug } from "@/lib/courses";
+import { getCourseBySlug } from "@/lib/courses";
 import { COURSE_PAYLINKS, type CourseSlug } from "@/lib/paylinks";
 import { auth } from "@/lib/auth";
 import { db } from "@/db/index";
 import { coursePurchase } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { CourseModuleList } from "./CourseModuleList";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -28,18 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${course.title} | ronka.dev`,
     description: course.description,
   };
-}
-
-const MODULE_LABELS: Record<string, string> = {
-  module1: "מודול 1",
-  module2: "מודול 2",
-  module3: "מודול 3",
-  module4: "מודול 4",
-  module5: "מודול 5",
-};
-
-function moduleLabel(slug: string): string {
-  return MODULE_LABELS[slug] ?? slug;
 }
 
 export default async function CourseOverviewPage({ params }: Props) {
@@ -58,7 +41,6 @@ export default async function CourseOverviewPage({ params }: Props) {
         .then((rows) => rows.length > 0)
     : false;
 
-  const defaultOpen = course.modules[0]?.slug ? [course.modules[0].slug] : undefined;
   const buyLink = COURSE_PAYLINKS[courseSlug as CourseSlug];
 
   return (
@@ -92,37 +74,7 @@ export default async function CourseOverviewPage({ params }: Props) {
 
         <h2 className="text-xl font-bold text-foreground mb-4">תוכן הקורס</h2>
 
-        <Accordion type="multiple" defaultValue={defaultOpen} className="w-full">
-          {course.modules.map((mod) => (
-            <AccordionItem key={mod.slug} value={mod.slug}>
-              <AccordionTrigger className="text-base font-semibold">
-                {moduleLabel(mod.slug)}
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="space-y-1 pb-2">
-                  {mod.lessons.map((lesson) => (
-                    <li key={lesson.slug}>
-                      {purchased ? (
-                        <Link
-                          href={`/courses/${courseSlug}/${mod.slug}/${lesson.slug}`}
-                          className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm text-foreground/80 hover:bg-muted hover:text-foreground transition-colors"
-                        >
-                          <span className="text-muted-foreground text-xs">▶</span>
-                          {lesson.title}
-                        </Link>
-                      ) : (
-                        <div className="flex items-center gap-2 px-2 py-2 text-sm text-muted-foreground">
-                          <span className="text-xs">🔒</span>
-                          {lesson.title}
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <CourseModuleList modules={course.modules} courseSlug={courseSlug} purchased={purchased} />
 
         <div className="mt-8">
           {purchased ? (

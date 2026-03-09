@@ -22,6 +22,7 @@ export interface LessonMeta {
   description?: string;
   youtube?: string;
   attachments?: Attachment[];
+  duration?: string;
 }
 
 export interface Module {
@@ -60,6 +61,7 @@ function parseLessonFile(filePath: string): LessonMeta {
     description: data.description,
     youtube: data.youtube,
     attachments: data.attachments ?? [],
+    duration: data.duration,
   };
 }
 

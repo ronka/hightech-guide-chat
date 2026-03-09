@@ -85,6 +85,9 @@ export function CourseSidebar({
                           {isActive ? "◀" : watched ? "✓" : "○"}
                         </span>
                         <span className="leading-snug">{lesson.title}</span>
+                        {lesson.duration && (
+                          <span className="text-xs text-muted-foreground/60 shrink-0 mr-auto">{lesson.duration}</span>
+                        )}
                       </Link>
                     </li>
                   );
