@@ -158,7 +158,22 @@ export default async function LessonPage({ params }: Props) {
           {/* Lesson body */}
           {lesson.content && (
             <div className="prose">
-              <ReactMarkdown>{lesson.content}</ReactMarkdown>
+              <ReactMarkdown components={{
+                h1: ({ children }) => (
+                  <h1 className="text-xl font-bold mb-2 mt-4">
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children }) => (
+                  <h2 className="text-lg font-semibold mb-2 mt-3">
+                    {children}
+                  </h2>
+                ),
+                p: ({ children }) => (
+                  <p className="mb-2 leading-relaxed">{children}</p>
+                ),
+              }}
+              >{lesson.content}</ReactMarkdown>
             </div>
           )}
 

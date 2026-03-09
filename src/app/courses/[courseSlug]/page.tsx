@@ -34,11 +34,11 @@ export default async function CourseOverviewPage({ params }: Props) {
 
   const purchased = email
     ? await db
-        .select()
-        .from(coursePurchase)
-        .where(and(eq(coursePurchase.email, email), eq(coursePurchase.courseSlug, courseSlug)))
-        .limit(1)
-        .then((rows) => rows.length > 0)
+      .select()
+      .from(coursePurchase)
+      .where(and(eq(coursePurchase.email, email), eq(coursePurchase.courseSlug, courseSlug)))
+      .limit(1)
+      .then((rows) => rows.length > 0)
     : false;
 
   const buyLink = COURSE_PAYLINKS[courseSlug as CourseSlug];
@@ -46,7 +46,7 @@ export default async function CourseOverviewPage({ params }: Props) {
   return (
     <div className="bg-background min-h-screen">
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <div className="mb-2">
+        <div className="mb-2 text-left">
           <Link
             href="/courses"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -65,7 +65,22 @@ export default async function CourseOverviewPage({ params }: Props) {
           <>
             <Separator className="mb-8" />
             <div className="prose mb-10">
-              <ReactMarkdown>{course.content}</ReactMarkdown>
+              <ReactMarkdown components={{
+                h1: ({ children }) => (
+                  <h1 className="text-xl font-bold mb-2 mt-4">
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children }) => (
+                  <h2 className="text-lg font-semibold mb-2 mt-3">
+                    {children}
+                  </h2>
+                ),
+                p: ({ children }) => (
+                  <p className="mb-2 leading-relaxed">{children}</p>
+                ),
+              }}
+              >{course.content}</ReactMarkdown>
             </div>
           </>
         )}
