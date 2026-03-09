@@ -10,13 +10,6 @@ import {
 import { useWatchedLessons } from "@/hooks/useWatchedLessons";
 import type { Module } from "@/lib/courses";
 
-const MODULE_LABELS: Record<string, string> = {
-  module1: "מודול 1",
-  module2: "מודול 2",
-  module3: "מודול 3",
-  module4: "מודול 4",
-  module5: "מודול 5",
-};
 
 interface Props {
   modules: Module[];
@@ -33,7 +26,7 @@ export function CourseModuleList({ modules, courseSlug, purchased }: Props) {
       {modules.map((mod) => (
         <AccordionItem key={mod.slug} value={mod.slug}>
           <AccordionTrigger className="text-base font-semibold">
-            {MODULE_LABELS[mod.slug] ?? mod.slug}
+            {mod.title ?? mod.slug}
           </AccordionTrigger>
           <AccordionContent>
             <ul className="space-y-1 pb-2">
@@ -47,7 +40,7 @@ export function CourseModuleList({ modules, courseSlug, purchased }: Props) {
                         className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm text-foreground/80 hover:bg-muted hover:text-foreground transition-colors"
                       >
                         <span className={watched ? "text-green-500" : "text-muted-foreground"}>
-                          {watched ? "✓" : "▶"}
+                          {watched ? "✓" : "◀"}
                         </span>
                         <span className="flex-1">{lesson.title}</span>
                         {lesson.duration && (

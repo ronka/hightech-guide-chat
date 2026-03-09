@@ -6,14 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { useWatchedLessons } from "@/hooks/useWatchedLessons";
 import type { Module } from "@/lib/courses";
 
-const MODULE_LABELS: Record<string, string> = {
-  module1: "מודול 1",
-  module2: "מודול 2",
-  module3: "מודול 3",
-  module4: "מודול 4",
-  module5: "מודול 5",
-};
-
 interface Props {
   modules: Module[];
   courseSlug: string;
@@ -54,7 +46,7 @@ export function CourseSidebar({
             <div key={mod.slug}>
               {i > 0 && <Separator className="my-3" />}
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-2">
-                {MODULE_LABELS[mod.slug] ?? mod.slug}
+                {mod.title ?? mod.slug}
               </p>
               <ul className="space-y-0.5">
                 {mod.lessons.map((lesson) => {
@@ -67,20 +59,18 @@ export function CourseSidebar({
                     <li key={lesson.slug}>
                       <Link
                         href={`/courses/${courseSlug}/${mod.slug}/${lesson.slug}`}
-                        className={`flex items-start gap-2 px-2 py-2 rounded-lg text-sm transition-colors ${
-                          isActive
-                            ? "bg-foreground text-background font-medium"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        }`}
+                        className={`flex items-start gap-2 px-2 py-2 rounded-lg text-sm transition-colors ${isActive
+                          ? "bg-foreground text-background font-medium"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          }`}
                       >
                         <span
-                          className={`mt-0.5 text-xs shrink-0 ${
-                            isActive
-                              ? "text-background"
-                              : watched
+                          className={`mt-0.5 text-xs shrink-0 ${isActive
+                            ? "text-background"
+                            : watched
                               ? "text-green-500"
                               : "text-muted-foreground/50"
-                          }`}
+                            }`}
                         >
                           {isActive ? "◀" : watched ? "✓" : "○"}
                         </span>

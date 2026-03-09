@@ -27,6 +27,7 @@ export interface LessonMeta {
 
 export interface Module {
   slug: string;
+  title?: string;
   lessons: LessonMeta[];
 }
 
@@ -76,7 +77,7 @@ function getModules(courseDir: string): Module[] {
     const moduleDir = path.join(courseDir, moduleSlug);
     const lessonFiles = fs
       .readdirSync(moduleDir)
-      .filter((f) => f.endsWith(".md"))
+      .filter((f) => f.endsWith(".md") && f !== "index.md")
       .sort((a, b) => {
         const numA = parseInt(a.split("-")[0], 10) || 0;
         const numB = parseInt(b.split("-")[0], 10) || 0;
@@ -87,7 +88,14 @@ function getModules(courseDir: string): Module[] {
       parseLessonFile(path.join(moduleDir, filename))
     );
 
-    return { slug: moduleSlug, lessons };
+    const moduleIndexPath = path.join(moduleDir, "index.md");
+    let title: string | undefined;
+    if (fs.existsSync(moduleIndexPath)) {
+      const { data } = matter(fs.readFileSync(moduleIndexPath, "utf-8"));
+      title = data.title;
+    }
+
+    return { slug: moduleSlug, title, lessons };
   });
 }
 

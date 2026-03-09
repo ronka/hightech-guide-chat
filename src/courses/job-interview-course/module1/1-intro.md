@@ -1,13 +1,8 @@
 ---
-title: "מבוא לקורס"
-duration: "5:20"
-youtube: "dQw4w9WgXcQ"
-description: "סקירה של מה שנלמד בקורס ואיך להפיק ממנו את המקסימום."
-attachments:
-  - name: "מצגת השיעור (PDF)"
-    file: "intro-slides.pdf"
-  - name: "צ'קליסט הכנה לראיון"
-    file: "checklist.txt"
+title: "שלום וברוכים הבאים"
+duration: "01:01"
+youtube: "w86FMn_9eZY"
+description: "פתיחת הקורס וסקירה של מה שנלמד יחד."
 ---
 
 ברוכים הבאים לקורס!

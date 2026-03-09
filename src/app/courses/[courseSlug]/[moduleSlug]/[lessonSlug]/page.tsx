@@ -56,11 +56,11 @@ export default async function LessonPage({ params }: Props) {
 
   const purchased = email
     ? await db
-        .select()
-        .from(coursePurchase)
-        .where(and(eq(coursePurchase.email, email), eq(coursePurchase.courseSlug, courseSlug)))
-        .limit(1)
-        .then((rows) => rows.length > 0)
+      .select()
+      .from(coursePurchase)
+      .where(and(eq(coursePurchase.email, email), eq(coursePurchase.courseSlug, courseSlug)))
+      .limit(1)
+      .then((rows) => rows.length > 0)
     : false;
 
   if (!purchased) {
@@ -123,8 +123,10 @@ export default async function LessonPage({ params }: Props) {
                 className="absolute inset-0 w-full h-full rounded-xl"
                 src={`https://www.youtube-nocookie.com/embed/${lesson.youtube}`}
                 title={lesson.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                frameBorder="0"
                 allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           )}
@@ -163,19 +165,6 @@ export default async function LessonPage({ params }: Props) {
           {/* Prev / Next navigation */}
           {(prev || next) && (
             <div className="flex justify-between mt-12 pt-6 border-t border-border">
-              <div>
-                {next && (
-                  <Link
-                    href={`/courses/${courseSlug}/${next.moduleSlug}/${next.slug}`}
-                    className="flex flex-col text-sm"
-                  >
-                    <span className="text-muted-foreground text-xs mb-1">השיעור הבא</span>
-                    <span className="text-foreground font-medium hover:text-primary transition-colors">
-                      {next.title} ←
-                    </span>
-                  </Link>
-                )}
-              </div>
               <div className="text-left">
                 {prev && (
                   <Link
@@ -189,6 +178,20 @@ export default async function LessonPage({ params }: Props) {
                   </Link>
                 )}
               </div>
+              <div>
+                {next && (
+                  <Link
+                    href={`/courses/${courseSlug}/${next.moduleSlug}/${next.slug}`}
+                    className="flex flex-col text-sm"
+                  >
+                    <span className="text-muted-foreground text-xs mb-1">השיעור הבא</span>
+                    <span className="text-foreground font-medium hover:text-primary transition-colors">
+                      {next.title} ←
+                    </span>
+                  </Link>
+                )}
+              </div>
+
             </div>
           )}
         </main>
