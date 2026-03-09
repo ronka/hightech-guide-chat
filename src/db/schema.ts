@@ -45,3 +45,11 @@ export const verification = pgTable("verification", {
   createdAt: timestamp("createdAt"),
   updatedAt: timestamp("updatedAt"),
 });
+
+export const coursePurchase = pgTable("coursePurchase", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull(),
+  courseSlug: text("courseSlug").notNull(),
+  transactionCode: text("transactionCode").unique(),
+  purchasedAt: timestamp("purchasedAt").notNull(),
+});

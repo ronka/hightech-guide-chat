@@ -1,9 +1,17 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { getAllCourses, getCourseBySlug, getLessonBySlug } from "@/lib/courses";
+import { auth } from "@/lib/auth";
+import { db } from "@/db/index";
+import { coursePurchase } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { CourseSidebar } from "./CourseSidebar";
 import { WatchButton } from "./WatchButton";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{
@@ -42,6 +50,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LessonPage({ params }: Props) {
   const { courseSlug, moduleSlug, lessonSlug } = await params;
+
+  const session = await auth.api.getSession({ headers: await headers() });
+  const email = session?.user?.email?.toLowerCase().trim();
+
+  const purchased = email
+    ? await db
+        .select()
+        .from(coursePurchase)
+        .where(and(eq(coursePurchase.email, email), eq(coursePurchase.courseSlug, courseSlug)))
+        .limit(1)
+        .then((rows) => rows.length > 0)
+    : false;
+
+  if (!purchased) {
+    redirect(`/courses/${courseSlug}`);
+  }
+
   const lesson = getLessonBySlug(courseSlug, moduleSlug, lessonSlug);
   const course = getCourseBySlug(courseSlug);
 

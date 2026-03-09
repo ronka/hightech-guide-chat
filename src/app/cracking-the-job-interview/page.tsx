@@ -20,6 +20,9 @@ import {
 } from "@/components/ui/accordion";
 import { track } from "@/services/analytics";
 import { useEffect } from "react";
+import { authClient } from "@/lib/auth-client";
+import { useQuery } from "@tanstack/react-query";
+import { COURSE_PAYLINKS, type CourseSlug } from "@/lib/paylinks";
 
 // Import feedback images
 import feedback1 from "./feedbacks/feedback1.jpg";
@@ -27,6 +30,51 @@ import feedback2 from "./feedbacks/feedback2.jpg";
 import feedback3 from "./feedbacks/feedback3.jpg";
 import feedback4 from "./feedbacks/feedback4.png";
 import feedback5 from "./feedbacks/feedback5.png";
+
+const COURSE_SLUG = "job-interview-course" satisfies CourseSlug;
+
+function CourseCta({
+  isPurchased,
+  isLoggedIn,
+  onBuyClick,
+  children,
+  size,
+  subtext,
+}: {
+  isPurchased: boolean;
+  isLoggedIn: boolean;
+  onBuyClick: () => void;
+  children: React.ReactNode;
+  size?: "default" | "xl";
+  subtext?: React.ReactNode;
+}) {
+  if (isPurchased) {
+    return (
+      <Link
+        href={`/courses/${COURSE_SLUG}`}
+        className={`inline-flex items-center justify-center rounded-md bg-gradient-to-r from-green-500 to-green-700 text-base font-medium text-white shadow-lg transition-all duration-500 hover:from-green-600 hover:via-green-600 hover:to-green-600 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent ${size === "xl" ? "px-8 py-4 text-lg" : "px-6 py-3 text-base"}`}
+      >
+        כניסה לקורס ←
+      </Link>
+    );
+  }
+  return (
+    <>
+      <div onClick={onBuyClick}>
+        <BuyButton size={size} href={COURSE_PAYLINKS[COURSE_SLUG]}>{children}</BuyButton>
+      </div>
+      {subtext}
+      {!isLoggedIn && (
+        <Link
+          href={`/login?redirect=/courses/${COURSE_SLUG}`}
+          className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+        >
+          כבר רכשת? התחבר כאן
+        </Link>
+      )}
+    </>
+  );
+}
 
 export default function CrackingTheJobInterviewPage() {
   // Track page view when component mounts
@@ -40,6 +88,17 @@ export default function CrackingTheJobInterviewPage() {
       value: 99,
     });
   }, []);
+
+  const { data: session } = authClient.useSession();
+
+  const { data: purchaseData } = useQuery({
+    queryKey: ["purchase-check", COURSE_SLUG],
+    queryFn: () =>
+      fetch(`/api/purchases/check?courseSlug=${COURSE_SLUG}`).then((r) => r.json()),
+    enabled: !!session?.user,
+  });
+
+  const isPurchased = purchaseData?.purchased ?? false;
 
   // Track video interactions
   const handleVideoPlay = () => {
@@ -83,6 +142,7 @@ export default function CrackingTheJobInterviewPage() {
       button_location: location,
     });
   };
+
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -118,11 +178,14 @@ export default function CrackingTheJobInterviewPage() {
             </p>
 
             <div className="flex flex-col items-center w-full gap-3 pt-4">
-              <div onClick={() => handleBuyButtonClick("hero")}>
-                <BuyButton size="xl">
-                  🔥 אני רוצה להצליח בראיון – רק ב־99 ₪
-                </BuyButton>
-              </div>
+              <CourseCta
+                isPurchased={isPurchased}
+                isLoggedIn={!!session?.user}
+                onBuyClick={() => handleBuyButtonClick("hero")}
+                size="xl"
+              >
+                🔥 אני רוצה להצליח בראיון – רק ב־99 ₪
+              </CourseCta>
               <AnimatedStudentsCounter />
             </div>
 
@@ -378,17 +441,21 @@ export default function CrackingTheJobInterviewPage() {
           </div>
           <div className="flex justify-center">
             <div className="flex flex-col items-center gap-2">
-              <div onClick={() => handleBuyButtonClick("comparison")}>
-                <BuyButton>
-                  <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
-                  <ArrowLeft className="ml-2 h-4 w-4" />
-                </BuyButton>
-              </div>
-              <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
-                <span>🔥</span>
-                <span>קנה עכשיו ב-99 ₪ בלבד! </span>
-                <span className="line-through text-red-400">299 ₪</span>
-              </div>
+              <CourseCta
+                isPurchased={isPurchased}
+                isLoggedIn={!!session?.user}
+                onBuyClick={() => handleBuyButtonClick("comparison")}
+                subtext={
+                  <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
+                    <span>🔥</span>
+                    <span>קנה עכשיו ב-99 ₪ בלבד! </span>
+                    <span className="line-through text-red-400">299 ₪</span>
+                  </div>
+                }
+              >
+                <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
+                <ArrowLeft className="ml-2 h-4 w-4" />
+              </CourseCta>
             </div>
           </div>
         </div>
@@ -911,15 +978,19 @@ export default function CrackingTheJobInterviewPage() {
         </div>
         <div className="flex justify-center">
           <div className="flex flex-col items-center gap-2">
-            <div onClick={() => handleBuyButtonClick("curriculum")}>
-              <BuyButton>
-                <span>אני רוצה ללמוד ולהצליח!</span>
-                <ArrowLeft className="ml-2 h-4 w-4" />
-              </BuyButton>
-            </div>
-            <span className="text-amber-500 font-medium text-sm">
-              ⏰ 40% הנחה - הצעה מוגבלת
-            </span>
+            <CourseCta
+              isPurchased={isPurchased}
+              isLoggedIn={!!session?.user}
+              onBuyClick={() => handleBuyButtonClick("curriculum")}
+              subtext={
+                <span className="text-amber-500 font-medium text-sm">
+                  ⏰ 40% הנחה - הצעה מוגבלת
+                </span>
+              }
+            >
+              <span>אני רוצה ללמוד ולהצליח!</span>
+              <ArrowLeft className="ml-2 h-4 w-4" />
+            </CourseCta>
           </div>
         </div>
       </section>
@@ -1002,12 +1073,14 @@ export default function CrackingTheJobInterviewPage() {
         </div>
         <div className="flex justify-center mt-10">
           <div className="flex flex-col items-center gap-2">
-            <div onClick={() => handleBuyButtonClick("features")}>
-              <BuyButton>
-                <span>התחל עכשיו ב-99 ₪ בלבד!</span>
-                <ArrowLeft className="ml-2 h-4 w-4" />
-              </BuyButton>
-            </div>
+            <CourseCta
+              isPurchased={isPurchased}
+              isLoggedIn={!!session?.user}
+              onBuyClick={() => handleBuyButtonClick("features")}
+            >
+              <span>התחל עכשיו ב-99 ₪ בלבד!</span>
+              <ArrowLeft className="ml-2 h-4 w-4" />
+            </CourseCta>
           </div>
         </div>
       </section>
