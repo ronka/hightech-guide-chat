@@ -10,6 +10,13 @@ const Footer = () => {
       <div className="container mx-auto flex items-center justify-between">
         <p>&copy; המדריך להייטקיסט המתחיל</p>
         <nav className="flex items-center gap-4">
+          <Link
+            href="/ebook/download"
+            className="hover:underline"
+            prefetch={false}
+          >
+            הורדת הספר הדיגיטלי
+          </Link>
           <span
             onClick={() => {
               track("contact", { source: "i want book" });
