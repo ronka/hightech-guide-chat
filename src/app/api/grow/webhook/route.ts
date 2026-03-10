@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
-import { coursePurchase, ebookPurchase, webhookLog } from "@/db/schema";
-import { COURSE_ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
+import { bookPurchase, coursePurchase, ebookPurchase, webhookLog } from "@/db/schema";
+import { BOOK_ASMACHTA_ID, COURSE_ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
 
 type GrowProductData = {
   product_id: string;
@@ -106,6 +106,17 @@ export async function POST(req: NextRequest) {
         purchasedAt: new Date(),
       })
       .onConflictDoNothing({ target: coursePurchase.transactionCode });
+
+  } else if (paymentLinkProcessId === BOOK_ASMACHTA_ID) {
+    await db
+      .insert(bookPurchase)
+      .values({
+        id: crypto.randomUUID(),
+        email: payerEmail.toLowerCase().trim(),
+        transactionCode: transactionCode ?? null,
+        purchasedAt: new Date(),
+      })
+      .onConflictDoNothing({ target: bookPurchase.transactionCode });
 
   } else {
     return NextResponse.json({ error: "Invalid payment link process id" }, { status: 400 });

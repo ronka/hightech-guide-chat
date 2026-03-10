@@ -61,6 +61,13 @@ export const ebookPurchase = pgTable("ebookPurchase", {
   purchasedAt: timestamp("purchasedAt").notNull(),
 });
 
+export const bookPurchase = pgTable("bookPurchase", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull(),
+  transactionCode: text("transactionCode").unique(),
+  purchasedAt: timestamp("purchasedAt").notNull(),
+});
+
 export const webhookLog = pgTable("webhookLog", {
   id: text("id").primaryKey(),
   receivedAt: timestamp("receivedAt").notNull(),

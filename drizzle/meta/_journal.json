@@ -15,6 +15,13 @@
       "when": 1773162414438,
       "tag": "0001_clammy_tattoo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773163885580,
+      "tag": "0002_peaceful_rhodey",
+      "breakpoints": true
     }
   ]
 }
