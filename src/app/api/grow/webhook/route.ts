@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
-import { coursePurchase, webhookLog } from "@/db/schema";
-import { ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
+import { coursePurchase, ebookPurchase, webhookLog } from "@/db/schema";
+import { ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
 
 type GrowProductData = {
   product_id: string;
@@ -79,25 +79,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  if (paymentLinkProcessId !== ASMACHTA_ID) {
+  if (paymentLinkProcessId === EBOOK_ASMACHTA_ID) {
+    await db
+      .insert(ebookPurchase)
+      .values({
+        id: crypto.randomUUID(),
+        email: payerEmail.toLowerCase().trim(),
+        transactionCode: transactionCode ?? null,
+        purchasedAt: new Date(),
+      })
+      .onConflictDoNothing({ target: ebookPurchase.transactionCode });
+
+  } else if (paymentLinkProcessId === ASMACHTA_ID) {
+    const courseSlug = PRODUCT_COURSE_MAP[productId];
+    if (!courseSlug) {
+      return NextResponse.json({ error: "Unknown product" }, { status: 400 });
+    }
+
+    await db
+      .insert(coursePurchase)
+      .values({
+        id: crypto.randomUUID(),
+        email: payerEmail.toLowerCase().trim(),
+        courseSlug,
+        transactionCode: transactionCode ?? null,
+        purchasedAt: new Date(),
+      })
+      .onConflictDoNothing({ target: coursePurchase.transactionCode });
+
+  } else {
     return NextResponse.json({ error: "Invalid payment link process id" }, { status: 400 });
   }
-
-  const courseSlug = PRODUCT_COURSE_MAP[productId];
-  if (!courseSlug) {
-    return NextResponse.json({ error: "Unknown product" }, { status: 400 });
-  }
-
-  await db
-    .insert(coursePurchase)
-    .values({
-      id: crypto.randomUUID(),
-      email: payerEmail.toLowerCase().trim(),
-      courseSlug,
-      transactionCode: transactionCode ?? null,
-      purchasedAt: new Date(),
-    })
-    .onConflictDoNothing({ target: coursePurchase.transactionCode });
 
   return NextResponse.json({ ok: true });
 }

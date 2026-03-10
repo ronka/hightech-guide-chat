@@ -1,6 +1,7 @@
 "use client";
 
 import { BOOK_PROMO } from "@/constants/links";
+import { EBOOK_PAYLINK } from "@/lib/paylinks";
 import { track } from "@/services/analytics";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -41,8 +42,8 @@ const RonkaDigitalBookButton = () => {
   return (
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <Link
-        onClick={() => track("book_click", { source: "RonkaDigital", product_id: RONKA_BOOK_DIGITAL_ID, product_type: "digital_book" })}
-        href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_DIGITAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=digital_book&utm_content=digital_book_button`}
+        onClick={() => track("book_click", { source: "RonkaDigitalEbook", product_type: "digital_book" })}
+        href={EBOOK_PAYLINK}
       >
         אני רוצה כזה! עותק דיגיטלי 📱
       </Link>
