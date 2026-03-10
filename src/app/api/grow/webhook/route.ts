@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
-import { coursePurchase } from "@/db/schema";
+import { coursePurchase, webhookLog } from "@/db/schema";
 import { ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
 
 type GrowProductData = {
@@ -27,14 +27,20 @@ type GrowWebhookBody = {
 };
 
 export async function POST(req: NextRequest) {
-  let body: GrowWebhookBody;
-
   const contentType = req.headers.get("content-type") ?? "";
+  const rawBody = await req.text();
+
+  await db.insert(webhookLog).values({
+    id: crypto.randomUUID(),
+    receivedAt: new Date(),
+    rawBody,
+  });
+
+  let body: GrowWebhookBody;
   if (contentType.includes("application/x-www-form-urlencoded")) {
-    const text = await req.text();
-    body = Object.fromEntries(new URLSearchParams(text)) as unknown as GrowWebhookBody;
+    body = Object.fromEntries(new URLSearchParams(rawBody)) as unknown as GrowWebhookBody;
   } else {
-    body = await req.json() as unknown as GrowWebhookBody;
+    body = JSON.parse(rawBody) as GrowWebhookBody;
   }
 
   const { data } = body;

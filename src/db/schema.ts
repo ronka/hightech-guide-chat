@@ -53,3 +53,9 @@ export const coursePurchase = pgTable("coursePurchase", {
   transactionCode: text("transactionCode").unique(),
   purchasedAt: timestamp("purchasedAt").notNull(),
 });
+
+export const webhookLog = pgTable("webhookLog", {
+  id: text("id").primaryKey(),
+  receivedAt: timestamp("receivedAt").notNull(),
+  rawBody: text("rawBody"),
+});
