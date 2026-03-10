@@ -1,32 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
 import { coursePurchase } from "@/db/schema";
-import { PAYLINK_COURSE_MAP } from "@/lib/paylinks";
+import { ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
+
+type GrowProductData = {
+  product_id: string;
+  name: string;
+  catalog_number: string;
+  vat: string;
+  quantity: string;
+  price: string;
+  price_mark: string;
+};
+
+type GrowWebhookData = {
+  payerEmail: string;
+  transactionId: string;
+  asmachta: string;
+  productData: GrowProductData[];
+};
+
+type GrowWebhookBody = {
+  err: string;
+  status: string;
+  data: GrowWebhookData;
+};
 
 export async function POST(req: NextRequest) {
-  let body: Record<string, string>;
+  let body: GrowWebhookBody;
 
   const contentType = req.headers.get("content-type") ?? "";
   if (contentType.includes("application/x-www-form-urlencoded")) {
     const text = await req.text();
-    body = Object.fromEntries(new URLSearchParams(text));
+    body = Object.fromEntries(new URLSearchParams(text)) as unknown as GrowWebhookBody;
   } else {
-    body = await req.json();
+    body = await req.json() as unknown as GrowWebhookBody;
   }
 
-  const { webhookKey, payerEmail, transactionCode, paymentLinkProcessToken } = body;
+  const { data } = body;
 
-  if (webhookKey !== process.env.GROW_WEBHOOK_KEY) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+  const payerEmail = data?.payerEmail;
+  const asmachta = data?.asmachta;
+  const transactionCode = data?.transactionId;
+  const productId = data?.productData?.[0]?.product_id;
 
-  if (!payerEmail || !paymentLinkProcessToken) {
+  if (!payerEmail || !productId) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  const courseSlug = PAYLINK_COURSE_MAP[paymentLinkProcessToken];
+  if (asmachta !== ASMACHTA_ID) {
+    return NextResponse.json({ error: "Invalid asmachta" }, { status: 400 });
+  }
+
+  const courseSlug = PRODUCT_COURSE_MAP[productId];
   if (!courseSlug) {
-    return NextResponse.json({ error: "Unknown paylink" }, { status: 400 });
+    return NextResponse.json({ error: "Unknown product" }, { status: 400 });
   }
 
   await db
