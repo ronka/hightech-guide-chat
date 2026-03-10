@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
 import { coursePurchase, ebookPurchase, webhookLog } from "@/db/schema";
-import { ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
+import { COURSE_ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
 
 type GrowProductData = {
   product_id: string;
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
       })
       .onConflictDoNothing({ target: ebookPurchase.transactionCode });
 
-  } else if (paymentLinkProcessId === ASMACHTA_ID) {
+  } else if (paymentLinkProcessId === COURSE_ASMACHTA_ID) {
     const courseSlug = PRODUCT_COURSE_MAP[productId];
     if (!courseSlug) {
       return NextResponse.json({ error: "Unknown product" }, { status: 400 });

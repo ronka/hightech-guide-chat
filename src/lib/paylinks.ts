@@ -10,13 +10,13 @@ export const COURSE_PAYLINKS: Record<CourseSlug, string> = {
 export const EBOOK_PAYLINK = "https://pay.grow.link/fe2b8a81af29f47b363ab42d4f7c9f0e-MzE2NzIzOA";
 
 // TODO: Replace with the real Drive/Dropbox shareable link for the ebook file
-export const EBOOK_DOWNLOAD_URL = "TODO: https://drive.google.com/...";
+export const EBOOK_DOWNLOAD_URL = "https://drive.google.com/drive/folders/1IXc_t7qe8gqeaEqeKlxuCeIvcieOFJbl?usp=sharing";
 
 // Maps Grow product ID → courseSlug
 export const PRODUCT_COURSE_MAP: Record<string, CourseSlug> = {
   "342942": "job-interview-course",
 };
 
-export const ASMACHTA_ID = "3158204";
+export const COURSE_ASMACHTA_ID = "3158204";
 export const EBOOK_ASMACHTA_ID = "3167145";
 
