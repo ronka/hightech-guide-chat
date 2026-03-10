@@ -53,14 +53,13 @@ function parseNestedFormData(rawBody: string): GrowWebhookBody {
 }
 
 export async function POST(req: NextRequest) {
-  const contentType = req.headers.get("content-type") ?? "";
   const rawBody = await req.text();
 
   let body: GrowWebhookBody;
-  if (contentType.includes("application/x-www-form-urlencoded")) {
-    body = parseNestedFormData(rawBody);
-  } else {
+  try {
     body = JSON.parse(rawBody) as GrowWebhookBody;
+  } catch {
+    body = parseNestedFormData(rawBody);
   }
 
   await db.insert(webhookLog).values({
