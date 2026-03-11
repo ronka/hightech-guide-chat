@@ -3,7 +3,7 @@ import { db } from "@/db/index";
 import { bookPurchase, coursePurchase, ebookPurchase, webhookLog } from "@/db/schema";
 import { BOOK_ASMACHTA_ID, COURSE_ASMACHTA_ID, EBOOK_ASMACHTA_ID, PRODUCT_COURSE_MAP } from "@/lib/paylinks";
 
-type GrowProductData = {
+export type GrowProductData = {
   product_id: string;
   name: string;
   catalog_number: string;
@@ -13,7 +13,7 @@ type GrowProductData = {
   price_mark: string;
 };
 
-type GrowWebhookData = {
+export type GrowWebhookData = {
   payerEmail: string;
   transactionId: string;
   asmachta: string;
@@ -21,13 +21,13 @@ type GrowWebhookData = {
   productData: GrowProductData[];
 };
 
-type GrowWebhookBody = {
+export type GrowWebhookBody = {
   err: string;
   status: string;
   data: GrowWebhookData;
 };
 
-function parseNestedFormData(rawBody: string): GrowWebhookBody {
+export function parseNestedFormData(rawBody: string): GrowWebhookBody {
   const params = new URLSearchParams(rawBody);
   const result: Record<string, unknown> = {};
 
@@ -50,6 +50,69 @@ function parseNestedFormData(rawBody: string): GrowWebhookBody {
   }
 
   return result as unknown as GrowWebhookBody;
+}
+
+type DbClient = typeof db;
+
+export async function handleEbookPurchase(
+  dbClient: DbClient,
+  email: string,
+  transactionCode: string | null | undefined,
+): Promise<NextResponse> {
+  await dbClient
+    .insert(ebookPurchase)
+    .values({
+      id: crypto.randomUUID(),
+      email: email.toLowerCase().trim(),
+      transactionCode: transactionCode ?? null,
+      purchasedAt: new Date(),
+    })
+    .onConflictDoNothing({ target: ebookPurchase.transactionCode });
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function handleCoursePurchase(
+  dbClient: DbClient,
+  email: string,
+  transactionCode: string | null | undefined,
+  productId: string,
+): Promise<NextResponse> {
+  const courseSlug = PRODUCT_COURSE_MAP[productId];
+  if (!courseSlug) {
+    return NextResponse.json({ error: "Unknown product" }, { status: 400 });
+  }
+
+  await dbClient
+    .insert(coursePurchase)
+    .values({
+      id: crypto.randomUUID(),
+      email: email.toLowerCase().trim(),
+      courseSlug,
+      transactionCode: transactionCode ?? null,
+      purchasedAt: new Date(),
+    })
+    .onConflictDoNothing({ target: coursePurchase.transactionCode });
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function handleBookPurchase(
+  dbClient: DbClient,
+  email: string,
+  transactionCode: string | null | undefined,
+): Promise<NextResponse> {
+  await dbClient
+    .insert(bookPurchase)
+    .values({
+      id: crypto.randomUUID(),
+      email: email.toLowerCase().trim(),
+      transactionCode: transactionCode ?? null,
+      purchasedAt: new Date(),
+    })
+    .onConflictDoNothing({ target: bookPurchase.transactionCode });
+
+  return NextResponse.json({ ok: true });
 }
 
 export async function POST(req: NextRequest) {
@@ -79,48 +142,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  if (paymentLinkProcessId === EBOOK_ASMACHTA_ID) {
-    await db
-      .insert(ebookPurchase)
-      .values({
-        id: crypto.randomUUID(),
-        email: payerEmail.toLowerCase().trim(),
-        transactionCode: transactionCode ?? null,
-        purchasedAt: new Date(),
-      })
-      .onConflictDoNothing({ target: ebookPurchase.transactionCode });
+  switch (paymentLinkProcessId) {
+    case EBOOK_ASMACHTA_ID:
+      return handleEbookPurchase(db, payerEmail, transactionCode);
 
-  } else if (paymentLinkProcessId === COURSE_ASMACHTA_ID) {
-    const courseSlug = PRODUCT_COURSE_MAP[productId];
-    if (!courseSlug) {
-      return NextResponse.json({ error: "Unknown product" }, { status: 400 });
-    }
+    case COURSE_ASMACHTA_ID:
+      return handleCoursePurchase(db, payerEmail, transactionCode, productId);
 
-    await db
-      .insert(coursePurchase)
-      .values({
-        id: crypto.randomUUID(),
-        email: payerEmail.toLowerCase().trim(),
-        courseSlug,
-        transactionCode: transactionCode ?? null,
-        purchasedAt: new Date(),
-      })
-      .onConflictDoNothing({ target: coursePurchase.transactionCode });
+    case BOOK_ASMACHTA_ID:
+      return handleBookPurchase(db, payerEmail, transactionCode);
 
-  } else if (paymentLinkProcessId === BOOK_ASMACHTA_ID) {
-    await db
-      .insert(bookPurchase)
-      .values({
-        id: crypto.randomUUID(),
-        email: payerEmail.toLowerCase().trim(),
-        transactionCode: transactionCode ?? null,
-        purchasedAt: new Date(),
-      })
-      .onConflictDoNothing({ target: bookPurchase.transactionCode });
-
-  } else {
-    return NextResponse.json({ error: "Invalid payment link process id" }, { status: 400 });
+    default:
+      return NextResponse.json({ error: "Invalid payment link process id" }, { status: 400 });
   }
-
-  return NextResponse.json({ ok: true });
 }

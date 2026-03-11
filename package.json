@@ -73,10 +73,17 @@
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
+		"@babel/runtime": "^7.28.6",
 		"@biomejs/biome": "1.8.3",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@types/jest": "^30.0.0",
 		"@types/lodash": "4.17.6",
 		"@types/pdf-parse": "1.1.1",
+		"babel-jest": "^30.3.0",
 		"drizzle-kit": "^0.31.9",
+		"jest": "^30.3.0",
+		"jest-environment-jsdom": "^30.3.0",
+		"jest-environment-node": "^30.3.0",
 		"tsx": "^3.12.7"
 	}
 }
