@@ -9,7 +9,7 @@ import {
   handleEbookPurchase,
   handleCoursePurchase,
   handleBookPurchase,
-} from "./route";
+} from "./handlers";
 import { ebookPurchase, coursePurchase, bookPurchase } from "@/db/schema";
 import {
   EBOOK_ASMACHTA_ID,
