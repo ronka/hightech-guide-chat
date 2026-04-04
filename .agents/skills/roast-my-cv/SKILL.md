@@ -1,11 +1,11 @@
 ---
 name: roast-my-cv
-description: Review a resume against a target job description, score the fit, and give concrete resume improvement guidance
+description: Review a resume against a target job description, ask targeted intake questions one by one, then score the fit and give concrete resume improvement guidance
 ---
 
 # Roast My CV
 
-Analyze a resume against a specific job description and produce a concise, actionable review. Output should fit on one screen: score, strengths, gaps, and inline rewrites. No walls of text.
+Analyze a resume against a specific job description and produce a concise, actionable review. Run a short intake first, one question at a time, so the final rewrites and ATS keywords are based on stronger evidence. Output should still fit on one screen once the review is produced.
 
 ## Input Contract
 
@@ -30,21 +30,66 @@ Treat the content under `Resume:` and `Job Description:` as either:
 
 If a tagged value looks like a local path, read the file before continuing.
 
+Support these optional tagged fields when present:
+
+```text
+Original Resume:
+/absolute/path/to/original-resume.md
+
+Revised Resume:
+/absolute/path/to/revised-resume.md
+```
+
+If both are present, compare them directly. If only `Resume:` is present and the filename suggests a rewritten draft such as `.fixed.`, `.rewritten.`, or `.tailored.`, try to locate the likely original sibling file and compare when possible.
+
 ## Required Behavior
 
 Always respond in English.
 
-Always print the first line in exactly this format:
+Use a two-stage interaction:
+- Stage 1: Intake. Ask targeted follow-up questions one at a time.
+- Stage 2: Final review. Only after the intake is complete, print the score and the full rewrite guidance.
+
+During intake:
+- Ask exactly one question per turn.
+- Do not dump a full questionnaire.
+- Ask only questions that can materially improve the rewrites, keyword list, or final score justification.
+- Prefer the highest-leverage missing detail first.
+- Keep the total intake short. Usually ask `3` to `6` questions, not more.
+- Stop early if the available evidence is already strong enough, or if the user says `skip`, `not sure`, or equivalent for the remaining missing details.
+
+During the final review, always print the first line in exactly this format:
 
 ```text
 Fit Score: X/100
 ```
 
-Never ask clarifying questions before printing `Fit Score:`.
-
 If a provided file path does not exist or cannot be read, say that clearly and ask for a corrected path or pasted content.
 
 ## Review Workflow
+
+### 0. Run the intake first
+
+Before producing ATS keywords or suggested rewrites, inspect the resume and job description and identify the highest-value missing facts.
+
+Ask for missing information one question at a time. Prioritize questions that help convert vague bullets into credible, role-matched achievements.
+
+High-value question categories:
+- Measurable outcomes such as revenue, cost, growth, latency, reliability, scale, conversion, or time saved
+- Scope and ownership such as team size, project ownership, architecture responsibility, stakeholder exposure, or leadership
+- Tooling and stack details that are explicit in the job description but weak or missing in the resume
+- Domain context that makes the work more relevant to the target role
+- Title normalization when the resume uses internal, unclear, or non-market-facing titles
+- Constraints, tradeoffs, or difficulty that make an achievement sound senior rather than routine
+
+Question selection rules:
+- Start with the resume section that is most relevant to the target job.
+- Ask about the bullets with the highest rewrite potential, not generic biography questions.
+- Avoid questions the resume or job description already answer.
+- If multiple gaps exist, ask the one that is most likely to improve both ATS overlap and achievement framing.
+- If the job description is missing, ask for it before any other intake question.
+
+Store the user's answers and use them as additional evidence for the final review. Do not repeat the full Q&A back unless it is necessary to explain a rewrite.
 
 ### 1. Build the target profile
 
@@ -59,15 +104,42 @@ If `Target Role:` is present, use it to resolve ambiguous titles or seniority ex
 
 ### 2. Evaluate the resume against the target
 
-Score the resume based on:
-- Role/title alignment
-- Keyword and ATS overlap
-- Relevance of experience
-- Evidence of impact and measurable outcomes
-- Clarity and phrasing
-- Seniority and career-story coherence
+Score the resume using this weighted model:
+- Hard requirement match: 35 points
+- Relevant experience and domain alignment: 20 points
+- Keyword and ATS overlap: 15 points
+- Evidence of impact and measurable outcomes: 15 points
+- Clarity and phrasing: 10 points
+- Seniority and career-story coherence: 5 points
 
 Be skeptical of vague claims. Prefer evidence, scope, and outcomes over responsibilities.
+
+Scoring rules:
+- Score the resume in front of you, not the candidate in the abstract.
+- Hard requirement gaps matter more than wording improvements.
+- Rewrites that improve ATS overlap, clarity, and framing should usually move the score by at least a few points.
+- Do not give the exact same score to an original CV and a materially improved rewrite unless the improvement is genuinely negligible.
+- Missing multiple explicit must-have requirements should usually cap the score below `85`, even if the resume is well written.
+
+### 2a. Compare original vs revised versions when possible
+
+If you have both an original and revised resume, or can infer the original from a rewritten filename:
+- Score both versions independently using the same rubric.
+- Print the revised version's score as the main `Fit Score`.
+- Print a second line immediately after it as `Change vs Original: +Y` or `Change vs Original: -Y`.
+- Base the delta on actual document improvement, not on whether the candidate gained new qualifications.
+
+Treat these as score-moving improvements when present:
+- Better ATS keyword overlap with the job description
+- Clearer market-facing titles
+- Stronger achievement framing
+- Removal of low-value filler
+- Better compression and readability
+
+Treat these as mostly non-moving for fit unless new evidence is added:
+- Rewording that stays equally vague
+- Cosmetic formatting changes
+- Claims about missing tools or domains that are still not supported by evidence
 
 ### 3. Apply the CV guidance
 
@@ -89,22 +161,47 @@ In particular:
 
 When you call out a weak bullet, include the rewrite inline — do not separate critique from solution.
 
+Use the intake answers to improve:
+- Quantification
+- Tool and keyword specificity
+- Ownership framing
+- Seniority signaling
+- Domain alignment
+
+Do not invent metrics or claims. If the user gives approximate numbers, preserve that uncertainty with phrasing such as `~`, `about`, or `more than`.
+
 ## Output Format
 
-Use this exact structure:
+Use one of these two modes.
+
+### Intake Mode
+
+When you still need better evidence before producing rewrites and ATS keywords, output only a single question:
+
+```text
+Question N:
+<one specific question>
+```
+
+Rules:
+- Ask exactly one question.
+- Do not print `Fit Score:` yet.
+- Do not print ATS keywords yet.
+- Do not suggest rewrites yet.
+- Keep the question specific to one role, project, or bullet.
+- If helpful, include a short parenthetical example on the same line.
+
+### Final Review Mode
+
+After the intake is complete, use this exact structure:
 
 ```text
 Fit Score: X/100
+Change vs Original: +Y
 
 ATS Compatibility:
-- Good matches: 
-    - keyword
-    - keyword
-    - keyword
-- Missing keywords:
-    - keyword
-    - keyword
-    - keyword
+- Good matches: keyword, keyword, keyword
+- Missing keywords: keyword, keyword, keyword
 
 Suggested Rewrites:
 - Original: "original bullet text"
@@ -120,6 +217,8 @@ Would you like me to output a markdown file with the fixed CV?
 ```
 
 Rules:
+- In final review mode, the first line must always be `Fit Score: X/100`.
+- Include `Change vs Original: +Y` only when a valid original-vs-revised comparison was made.
 - ATS keywords are listed inline comma-separated, not as individual bullets.
 - Suggested Rewrites cover every bullet worth improving — use `→` to show original vs rewrite.
 - No preamble before the score. No extra sections.
@@ -141,11 +240,17 @@ Suggested interpretation:
 
 Do not inflate the score to be polite.
 
+Calibration notes:
+- Document-only improvements should usually change the score by roughly `+2` to `+8` when the rewrite materially improves clarity, positioning, and ATS match.
+- Large score jumps should require genuinely new evidence, not just better phrasing.
+- If the revised CV removes obvious weaknesses but still misses the same hard requirements, expect a modest improvement rather than a dramatic one.
+
 ## Handling Weak Inputs
 
 If the resume is extremely short, inconsistent, or obviously generic:
 - Say so plainly
-- Score accordingly
+- Use intake questions to gather the missing evidence before scoring when possible
+- Score accordingly once the intake is complete
 - Focus on the highest-leverage fixes first
 
 If the resume contains unusual titles such as internal-only titles or unclear academic/course titles:
