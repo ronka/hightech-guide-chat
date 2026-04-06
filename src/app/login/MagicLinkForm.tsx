@@ -38,6 +38,9 @@ export function MagicLinkForm({ callbackUrl }: { callbackUrl?: string }) {
           שלחנו לך קישור כניסה לכתובת <strong>{email}</strong>.
           לחץ על הקישור כדי להיכנס.
         </p>
+        <p className="text-muted-foreground">
+          יתכן והמייל יגיע לתיבת הספאם שלך, בדוק שם גם 🙏
+        </p>
       </div>
     );
   }
