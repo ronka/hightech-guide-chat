@@ -1,3 +1,4 @@
+import { checkBotId } from "botid/server";
 import { env } from "@/services/config";
 import {
   findRelevantContent,
@@ -13,6 +14,11 @@ import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: NextRequest) {
+  const verification = await checkBotId();
+  if (verification.isBot) {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+  }
+
   const body = await req.json();
 
   const sessionId = body.sessionId;
