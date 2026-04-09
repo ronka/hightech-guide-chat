@@ -98,7 +98,7 @@ const ConsultingButton = ({ source = "landing-page" }: { source?: string }) => {
         onClick={() => {
           track("consulting_click", { source });
         }}
-        href={"https://ronka.dev/consulting-session-form"}
+        href={"/#contact"}
       >
         רוצים ייעוץ אישי בהייטק? השאירו פרטים ואחזור אליכם! 💡
       </Link>
