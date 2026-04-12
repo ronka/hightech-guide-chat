@@ -1,9 +1,10 @@
-export type CourseSlug = "job-interview-course";
+export type CourseSlug = "job-interview-course" | "ai-course";
 
 // Maps courseSlug → Grow payment link URL
 export const COURSE_PAYLINKS: Record<CourseSlug, string> = {
   "job-interview-course":
     "https://pay.grow.link/7aaae25282e5dc280af4655291d0f907-MzE1ODI5Nw",
+  "ai-course": "https://pay.grow.link/TODO_ADD_AI_COURSE_PAYLINK",
 };
 
 export const EBOOK_PAYLINK = "https://pay.grow.link/fe2b8a81af29f47b363ab42d4f7c9f0e-MzE2NzIzOA";

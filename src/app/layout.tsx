@@ -9,6 +9,7 @@ import { FacebookPixel } from "@/components/facebook-pixel";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { QueryProvider } from "@/providers/query";
+import { DirectionProvider } from "@/components/ui/direction";
 
 // If loading a variable font, you don't need to specify the font weight
 const googleFont = Assistant({
@@ -55,17 +56,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <FacebookPixel />
       </head>
       <body>
-        <ThemeProvider>
-          <PHProvider>
-            <QueryProvider>
-              <Header />
-              {children}
-              <Footer />
-            </QueryProvider>
-          </PHProvider>
-          <Analytics />
-          <GoogleAnalytics gaId="G-07PEBMF7K9" />
-        </ThemeProvider>
+        <DirectionProvider dir="rtl">
+          <ThemeProvider>
+            <PHProvider>
+              <QueryProvider>
+                <Header />
+                {children}
+                <Footer />
+              </QueryProvider>
+            </PHProvider>
+            <Analytics />
+            <GoogleAnalytics gaId="G-07PEBMF7K9" />
+          </ThemeProvider>
+        </DirectionProvider>
       </body>
     </html>
   );
