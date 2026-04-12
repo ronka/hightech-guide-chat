@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check, ArrowLeft, Clock } from "lucide-react";
 import { About } from "@/components/landing-page/about";
-import { BuyButton } from "@/components/buy-button";
 import { AnimatedStudentsCounter } from "@/components/animated-students-counter";
 import {
   Accordion,
@@ -16,24 +15,20 @@ import { track } from "@/services/analytics";
 import { useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
-import { COURSE_PAYLINKS, type CourseSlug } from "@/lib/paylinks";
+import { type CourseSlug } from "@/lib/paylinks";
 
 const COURSE_SLUG = "ai-course" satisfies CourseSlug;
 
 function CourseCta({
   isPurchased,
-  isLoggedIn,
   onBuyClick,
   children,
   size,
-  subtext,
 }: {
   isPurchased: boolean;
-  isLoggedIn: boolean;
   onBuyClick: () => void;
   children: React.ReactNode;
   size?: "default" | "xl";
-  subtext?: React.ReactNode;
 }) {
   if (isPurchased) {
     return (
@@ -46,20 +41,15 @@ function CourseCta({
     );
   }
   return (
-    <>
-      <div onClick={onBuyClick}>
-        <BuyButton size={size} href={COURSE_PAYLINKS[COURSE_SLUG]}>{children}</BuyButton>
-      </div>
-      {subtext}
-      {!isLoggedIn && (
-        <Link
-          href={`/login?redirect=/courses/${COURSE_SLUG}`}
-          className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
-        >
-          כבר רכשת? התחבר כאן
-        </Link>
-      )}
-    </>
+    <a
+      href="https://forms.gle/jMms7fX11cHxzUSV8"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onBuyClick}
+      className={`inline-flex items-center justify-center rounded-md bg-gradient-to-r from-blue-600 to-blue-800 font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl ${size === "xl" ? "px-8 py-4 text-lg" : "px-6 py-3 text-base"}`}
+    >
+      {children}
+    </a>
   );
 }
 
@@ -142,13 +132,12 @@ export default function StartWorkingWithAIPage() {
             <div className="flex flex-col items-center w-full gap-3 pt-4">
               <CourseCta
                 isPurchased={isPurchased}
-                isLoggedIn={!!session?.user}
                 onBuyClick={() => handleBuyButtonClick("hero")}
                 size="xl"
               >
-                🚀 אני רוצה לפתח עם AI – רק ב־199 ₪
+                🚀 אני רוצה לפתח עם AI
               </CourseCta>
-              <AnimatedStudentsCounter />
+              {/* <AnimatedStudentsCounter /> */}
             </div>
 
             {/* Coming Soon Video Placeholder */}
@@ -266,14 +255,7 @@ export default function StartWorkingWithAIPage() {
             <div className="flex flex-col items-center gap-2">
               <CourseCta
                 isPurchased={isPurchased}
-                isLoggedIn={!!session?.user}
                 onBuyClick={() => handleBuyButtonClick("comparison")}
-                subtext={
-                  <div className="text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
-                    <span>🔥</span>
-                    <span>מחיר השקה – 199 ₪ בלבד!</span>
-                  </div>
-                }
               >
                 <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
                 <ArrowLeft className="ml-2 h-4 w-4" />
@@ -725,13 +707,7 @@ export default function StartWorkingWithAIPage() {
           <div className="flex flex-col items-center gap-2">
             <CourseCta
               isPurchased={isPurchased}
-              isLoggedIn={!!session?.user}
               onBuyClick={() => handleBuyButtonClick("curriculum")}
-              subtext={
-                <span className="text-amber-500 font-medium text-sm">
-                  ⏰ מחיר השקה – הצעה מוגבלת
-                </span>
-              }
             >
               <span>אני רוצה ללמוד ולהצליח!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
@@ -818,10 +794,9 @@ export default function StartWorkingWithAIPage() {
           <div className="flex flex-col items-center gap-2">
             <CourseCta
               isPurchased={isPurchased}
-              isLoggedIn={!!session?.user}
               onBuyClick={() => handleBuyButtonClick("features")}
             >
-              <span>התחל עכשיו ב-199 ₪ בלבד!</span>
+              <span>התחל עכשיו!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
             </CourseCta>
           </div>
