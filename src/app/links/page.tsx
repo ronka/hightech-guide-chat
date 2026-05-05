@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   Award,
   Twitter,
   Linkedin,
@@ -15,8 +14,8 @@ import {
   InstagramIcon,
   Calendar,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import { TrackedLinkButton } from "./_components/tracked-link-button";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ronka.dev"),
@@ -143,25 +142,14 @@ export default function LinksPage() {
           </div>
 
           {links.map((link) => (
-            <Button
+            <TrackedLinkButton
               key={link.text}
-              asChild
-              variant="secondary"
-              className="w-full shadow-md transition-transform hover:scale-105 duration-200 ease-in-out group h-auto"
-            >
-              <Link
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center w-full"
-              >
-                <link.icon className="ml-3 h-6 w-6 text-blue-500 flex-shrink-0" />
-                <span className="flex-grow text-right font-medium">
-                  {link.text}
-                </span>
-                <ArrowUpRight className="mr-2 h-5 w-5 text-gray-500 group-hover:text-blue-500 transition-colors flex-shrink-0" />
-              </Link>
-            </Button>
+              href={link.href}
+              text={link.text}
+              icon={link.icon}
+              eventName="links_link_click"
+              source="links_page"
+            />
           ))}
         </main>
       </div>

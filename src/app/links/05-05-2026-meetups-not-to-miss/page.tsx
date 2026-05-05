@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import { TrackedLinkButton } from "../_components/tracked-link-button";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ronka.dev"),
@@ -66,25 +67,14 @@ export default function MeetupsNotToMissPage() {
 
         <main className="space-y-4 mt-6 container">
           {meetups.map((meetup) => (
-            <Button
+            <TrackedLinkButton
               key={meetup.text}
-              asChild
-              variant="secondary"
-              className="w-full shadow-md transition-transform hover:scale-105 duration-200 ease-in-out group h-auto"
-            >
-              <Link
-                href={meetup.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center w-full"
-              >
-                <meetup.icon className="ml-3 h-6 w-6 text-blue-500 flex-shrink-0" />
-                <span className="flex-grow text-right font-medium">
-                  {meetup.text}
-                </span>
-                <ArrowUpRight className="mr-2 h-5 w-5 text-gray-500 group-hover:text-blue-500 transition-colors flex-shrink-0" />
-              </Link>
-            </Button>
+              href={meetup.href}
+              text={meetup.text}
+              icon={meetup.icon}
+              eventName="meetup_link_click"
+              source="meetups_not_to_miss_05_05_2026"
+            />
           ))}
 
           <Button

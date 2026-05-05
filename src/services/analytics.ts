@@ -25,7 +25,9 @@ export type EventName =
   | "question_viewed"
   | "questions_filtered"
   | "book_click"
-  | "consulting_click";
+  | "consulting_click"
+  | "links_link_click"
+  | "meetup_link_click";
 
 // Map PostHog events to Facebook standard events
 const fbEventMap: Record<EventName, string> = {
@@ -53,6 +55,8 @@ const fbEventMap: Record<EventName, string> = {
   questions_filtered: "ViewContent",
   book_click: "AddToCart",
   consulting_click: "Lead",
+  links_link_click: "ViewContent",
+  meetup_link_click: "ViewContent",
 };
 
 export function initAnaylitcs() {
