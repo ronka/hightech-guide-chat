@@ -141,16 +141,21 @@ export default function LinksPage() {
             ))}
           </div>
 
-          {links.map((link) => (
-            <TrackedLinkButton
-              key={link.text}
-              href={link.href}
-              text={link.text}
-              icon={link.icon}
-              eventName="links_link_click"
-              source="links_page"
-            />
-          ))}
+          {links.map((link) => {
+            const Icon = link.icon;
+            return (
+              <TrackedLinkButton
+                key={link.text}
+                href={link.href}
+                text={link.text}
+                icon={
+                  <Icon className="ml-3 h-6 w-6 text-blue-500 flex-shrink-0" />
+                }
+                eventName="links_link_click"
+                source="links_page"
+              />
+            );
+          })}
         </main>
       </div>
     </div>

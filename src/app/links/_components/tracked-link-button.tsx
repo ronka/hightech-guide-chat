@@ -1,14 +1,15 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowUpRight, type LucideIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { track, type EventName } from "@/services/analytics";
 
 type TrackedLinkButtonProps = {
   href: string;
   text: string;
-  icon: LucideIcon;
+  icon: ReactNode;
   eventName: EventName;
   source: string;
 };
@@ -16,7 +17,7 @@ type TrackedLinkButtonProps = {
 export function TrackedLinkButton({
   href,
   text,
-  icon: Icon,
+  icon,
   eventName,
   source,
 }: TrackedLinkButtonProps) {
@@ -35,7 +36,7 @@ export function TrackedLinkButton({
         className="flex items-center w-full"
         onClick={() => track(eventName, { href, text, source })}
       >
-        <Icon className="ml-3 h-6 w-6 text-blue-500 flex-shrink-0" />
+        {icon}
         <span className="flex-grow text-right font-medium">{text}</span>
         <ArrowUpRight className="mr-2 h-5 w-5 text-gray-500 group-hover:text-blue-500 transition-colors flex-shrink-0" />
       </Link>

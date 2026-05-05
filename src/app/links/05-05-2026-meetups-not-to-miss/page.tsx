@@ -66,16 +66,21 @@ export default function MeetupsNotToMissPage() {
         </header>
 
         <main className="space-y-4 mt-6 container">
-          {meetups.map((meetup) => (
-            <TrackedLinkButton
-              key={meetup.text}
-              href={meetup.href}
-              text={meetup.text}
-              icon={meetup.icon}
-              eventName="meetup_link_click"
-              source="meetups_not_to_miss_05_05_2026"
-            />
-          ))}
+          {meetups.map((meetup) => {
+            const Icon = meetup.icon;
+            return (
+              <TrackedLinkButton
+                key={meetup.text}
+                href={meetup.href}
+                text={meetup.text}
+                icon={
+                  <Icon className="ml-3 h-6 w-6 text-blue-500 flex-shrink-0" />
+                }
+                eventName="meetup_link_click"
+                source="meetups_not_to_miss_05_05_2026"
+              />
+            );
+          })}
 
           <Button
             asChild
