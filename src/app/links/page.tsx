@@ -13,6 +13,7 @@ import {
   FileArchive,
   YoutubeIcon,
   InstagramIcon,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
@@ -38,6 +39,11 @@ export const metadata: Metadata = {
 };
 
 const links = [
+  {
+    href: "/links/05-05-2026-meetups-not-to-miss",
+    text: "מיטאפים לא לפספס - 05-05-2026",
+    icon: Calendar,
+  },
   {
     href: "/cracking-the-job-interview?utm_source=ron_kantor_links&utm_medium=button&utm_campaign=interview_guide&utm_content=interview_guide_button",
     text: "לעבור את ראיון העבודה הבא שלך בהצלחה",
