@@ -52,7 +52,12 @@ export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
               <Upload className="w-6 h-6 text-primary" />
             </div>
             <p className="font-medium">{file.name}</p>
-            <Button variant="ghost" size="sm" onClick={handleReplaceFile}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleReplaceFile}
+            >
               החלף קובץ
             </Button>
           </div>

@@ -18,7 +18,12 @@ export function CVAnalysisResults({
 }: CVAnalysisResultsProps) {
   return (
     <Card className={cn("p-6", className)}>
-      <h2 className="text-2xl font-semibold mb-6">תוצאות ניתוח</h2>
+      <h2 className="text-2xl font-semibold mb-2">תוצאות ניתוח</h2>
+      {results.job_title && (
+        <p className="text-muted-foreground mb-6">
+          זוהה כ: <span className="font-medium">{results.job_title}</span>
+        </p>
+      )}
 
       <div className="space-y-6">
         <div className="space-y-2">

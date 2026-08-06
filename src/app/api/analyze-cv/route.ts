@@ -4,13 +4,14 @@ import { CVAnalysisSchema } from "@/types/cv-analysis";
 import { env } from "@/services/config";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import logger from "@/services/logger";
 
 const redis = new Redis({
   url: env.UPSTASH_REDIS_REST_URL,
   token: env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-// Create a new ratelimiter, that allows 5 requests per 1 day
+// Allow 20 requests per day per client IP
 const ratelimit = new Ratelimit({
   redis: redis,
   limiter: Ratelimit.fixedWindow(20, "1 d"),
@@ -46,24 +47,26 @@ export async function POST(request: NextRequest) {
     const jobDescription = formData.get("jobDescription")?.toString() || "";
 
     if (!(cvFile instanceof File)) {
-      return NextResponse.json({ error: "CV must be a file" }, { status: 400 });
+      return NextResponse.json(
+        { message: "לא התקבל קובץ קורות חיים. נא להעלות קובץ PDF." },
+        { status: 400 }
+      );
     }
 
     const cvData = Buffer.from(await cvFile.arrayBuffer());
 
     const result = await generateText({
       model: "google/gemini-2.5-flash",
-      // output: Output.object({ schema: CVAnalysisSchema }),
       output: Output.object({
         schema: CVAnalysisSchema
       }),
       system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
 
-- Job Title Identification: Determine the most accurate job title based on the CV's content. set it as <job_title>
+- Job Title Identification: Determine the most accurate market-facing job title based on the CV's content, and return it in the job_title field.
 - Match Percentage (0-100%): Evaluate the CV's overall job fit based on its content, clarity, and industry alignment.
 - Key Strengths: Identify the candidate's primary strengths, including technical skills, soft skills, and industry experience.
 - Areas for Improvement: Highlight any weaknesses or areas that could be improved for better job prospects.
-- Extracted Keywords: List the most relevant to the <job_title> keywords found in the CV, including skills, technologies, and industry terms. see example for keywords in <keywords_examples>
+- Extracted Keywords: List the keywords found in the CV that are most relevant to the job_title you identified, including skills, technologies, and industry terms. see example for keywords in <keywords_examples>
 - Missing Important Keywords: List keywords that appear in the job description but are not found in the CV.
     - the missing keywords MUST be in the job description!
 	- If a resume contains keywords similar to those in the job description, don't list them as missing keywords. for example: if the job description mentions "accessible technologies" and i have "Led accessibility improvements, achieving WCAG 2.0 AA across all main products." dont mention "accessible technologies" in the missing keywords list. if "Front-end" is mentioned in the job description, dont mention "Frontend" in the missing keywords list.
@@ -121,9 +124,12 @@ You MUST respond in Hebrew.
     const output = await result.output;
     return NextResponse.json({ object: output });
   } catch (error) {
-    console.error("CV Analysis error:", error);
+    logger.error({ err: error }, "CV Analysis failed");
     return NextResponse.json(
-      { error: "Internal server error" },
+      {
+        message:
+          "הניתוח נכשל. ייתכן שהקובץ פגום או בפורמט שאינו נתמך. נסו קובץ PDF אחר.",
+      },
       { status: 500 }
     );
   }

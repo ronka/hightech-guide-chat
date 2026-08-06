@@ -10,7 +10,6 @@ import { CVAnalysisResults } from "./cv-analysis-results";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Spinner } from "@/components/ui/spinner";
 import { FileUpload } from "./file-upload";
-import { SeoContent } from "./seo-content";
 import { track } from "@/services/analytics";
 
 interface AnalysisState {
@@ -89,8 +88,10 @@ export function CVAnalysisClient() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "ניתוח קורות החיים נכשל");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message ?? errorData.error ?? "ניתוח קורות החיים נכשל"
+        );
       }
 
       const data = await response.json();

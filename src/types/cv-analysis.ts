@@ -1,6 +1,11 @@
 import { z } from "zod";
 
 export const CVAnalysisSchema = z.object({
+  job_title: z
+    .string()
+    .describe(
+      "The most accurate market-facing job title for this CV, in Hebrew."
+    ),
   match_percentage: z
     .number()
     .min(0)
