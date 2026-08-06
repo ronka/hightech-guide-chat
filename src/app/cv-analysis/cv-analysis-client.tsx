@@ -1,33 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
-import { Upload } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { CVAnalysisResults } from "./cv-analysis-results";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Spinner } from "@/components/ui/spinner";
-import { FileUpload } from "./file-upload";
+import { Textarea } from "@/components/ui/textarea";
 import { track } from "@/services/analytics";
+import type { CVAnalysisResults as CVAnalysisResultsType } from "@/types/cv-analysis";
+import { Upload } from "lucide-react";
+import type React from "react";
+import { useEffect, useState } from "react";
+import {
+  type StoredAnalysis,
+  clearAnalysis,
+  loadAnalysis,
+  saveAnalysis,
+} from "./analysis-storage";
+import { CVAnalysisResults } from "./cv-analysis-results";
+import { FileUpload } from "./file-upload";
 
 interface AnalysisState {
   file: File | null;
   jobDescription: string;
-  results: any | null;
+  results: CVAnalysisResultsType | null;
+  /**
+   * Whether the *displayed* analysis was run against a job description. Kept
+   * apart from `jobDescription` because a restored analysis has results without
+   * the pasted text, and the score breakdown depends on this flag.
+   */
+  hasJobDescription: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
+const emptyState: AnalysisState = {
+  file: null,
+  jobDescription: "",
+  results: null,
+  hasJobDescription: false,
+  isLoading: false,
+  error: null,
+};
+
 export function CVAnalysisClient() {
-  const [state, setState] = useState<AnalysisState>({
-    file: null,
-    jobDescription: "",
-    results: null,
-    isLoading: false,
-    error: null,
-  });
+  const [state, setState] = useState<AnalysisState>(emptyState);
+  /**
+   * Progress restored from a previous visit, handed to the results view as its
+   * initial state. Null until the storage read runs — reading localStorage
+   * during render would not match the server-rendered HTML.
+   */
+  const [restored, setRestored] = useState<StoredAnalysis | null>(null);
+
+  useEffect(() => {
+    const stored = loadAnalysis();
+    if (!stored) return;
+    setRestored(stored);
+    setState((prev) => ({
+      ...prev,
+      results: stored.results,
+      hasJobDescription: stored.hasJobDescription,
+    }));
+  }, []);
 
   const handleFileChange = (file: File | null) => {
     if (file) {
@@ -41,7 +75,7 @@ export function CVAnalysisClient() {
   };
 
   const handleJobDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setState((prev) => ({ ...prev, jobDescription: e.target.value }));
   };
@@ -55,13 +89,9 @@ export function CVAnalysisClient() {
       had_results: !!state.results,
       had_error: !!state.error,
     });
-    setState({
-      file: null,
-      jobDescription: "",
-      results: null,
-      isLoading: false,
-      error: null,
-    });
+    clearAnalysis();
+    setRestored(null);
+    setState(emptyState);
   };
 
   const analyzeCv = async (e: React.FormEvent) => {
@@ -90,12 +120,21 @@ export function CVAnalysisClient() {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message ?? errorData.error ?? "ניתוח קורות החיים נכשל"
+          errorData.message ?? errorData.error ?? "ניתוח קורות החיים נכשל",
         );
       }
 
       const data = await response.json();
-      setState((prev) => ({ ...prev, results: data.object, isLoading: false }));
+      const hasJobDescription = !!state.jobDescription;
+      // A fresh analysis replaces whatever was stored, progress included.
+      setRestored(null);
+      saveAnalysis({ results: data.object, hasJobDescription });
+      setState((prev) => ({
+        ...prev,
+        results: data.object,
+        hasJobDescription,
+        isLoading: false,
+      }));
       track("cv_analyzed", {
         has_job_description: !!state.jobDescription,
       });
@@ -119,7 +158,9 @@ export function CVAnalysisClient() {
         <div className="space-y-6">
           <CVAnalysisResults
             results={state.results}
-            hasJobDescription={!!state.jobDescription}
+            hasJobDescription={state.hasJobDescription}
+            initialDone={restored?.done}
+            initialRating={restored?.rating ?? null}
           />
           <div className="flex justify-center">
             <Button onClick={resetAnalysis} variant="outline" className="mt-4">

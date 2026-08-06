@@ -19,6 +19,7 @@ export type EventName =
   | "cv_analyzed"
   | "cv_analysis_error"
   | "cv_analysis_reset"
+  | "cv_analysis_feedback"
   | "dictionary_searched"
   | "term_viewed"
   | "term_shared"
@@ -48,6 +49,7 @@ const fbEventMap: Record<EventName, string> = {
   cv_analyzed: "Lead",
   cv_analysis_error: "ViewContent",
   cv_analysis_reset: "ViewContent",
+  cv_analysis_feedback: "ViewContent",
   dictionary_searched: "Search",
   term_viewed: "ViewContent",
   term_shared: "ViewContent",
