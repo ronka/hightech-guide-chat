@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { CVAnalysisClient } from "./cv-analysis-client";
 import { SeoContent } from "./seo-content";
 
@@ -26,10 +26,12 @@ export const metadata: Metadata = {
 };
 
 export default function CVAnalysisPage() {
+  // Both children own their own container width — the hero needs to bleed
+  // wider than the content below it.
   return (
-    <div className="container max-w-4xl py-8">
+    <>
       <CVAnalysisClient />
       <SeoContent />
-    </div>
+    </>
   );
 }

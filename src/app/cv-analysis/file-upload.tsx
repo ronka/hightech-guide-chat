@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
-import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { FileCheck2, UploadCloud } from "lucide-react";
+import type React from "react";
+import { useRef, useState } from "react";
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 interface FileUploadProps {
   file: File | null;
@@ -12,9 +15,10 @@ interface FileUploadProps {
 
 export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
+  /** Single gate for both the click and the drag-and-drop path. */
+  const acceptFile = (selected: File | undefined) => {
     if (!selected) return;
 
     if (selected.type !== "application/pdf") {
@@ -22,13 +26,23 @@ export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
       return;
     }
 
-    if (selected.size > 10 * 1024 * 1024) {
+    if (selected.size > MAX_FILE_SIZE) {
       onError?.("הקובץ גדול מדי. הגודל המרבי הוא 10MB.");
       return;
     }
 
     onFileChange(selected);
     onError?.(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    acceptFile(e.target.files?.[0]);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(false);
+    acceptFile(e.dataTransfer.files?.[0]);
   };
 
   const handleReplaceFile = (e: React.MouseEvent) => {
@@ -41,10 +55,7 @@ export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
   };
 
   return (
-    <div className="space-y-2">
-      <Label htmlFor="cv" className="text-lg font-medium">
-        העלה קורות חיים (PDF)
-      </Label>
+    <>
       <Input
         id="cv"
         type="file"
@@ -55,34 +66,45 @@ export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
       />
       <Label
         htmlFor="cv"
-        className="block border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDraggingOver(true);
+        }}
+        onDragLeave={() => setIsDraggingOver(false)}
+        onDrop={handleDrop}
+        className={`group block cursor-pointer rounded-3xl border-2 border-dashed bg-white/[0.03] p-10 text-center transition hover:border-white/45 hover:bg-white/[0.05] sm:p-14 ${
+          isDraggingOver ? "border-white/60 bg-white/[0.07]" : "border-white/20"
+        }`}
       >
         {file ? (
-          <div className="flex flex-col items-center gap-2">
-            <div className="bg-primary/10 p-3 rounded-full">
-              <Upload className="w-6 h-6 text-primary" />
-            </div>
-            <p className="font-medium">{file.name}</p>
+          <>
+            <FileCheck2 className="mx-auto h-14 w-14 text-slate-200" />
+            <p className="mt-5 text-xl font-semibold break-all">{file.name}</p>
             <Button
               type="button"
               variant="ghost"
               size="sm"
+              className="mt-3"
               onClick={handleReplaceFile}
             >
               החלף קובץ
             </Button>
-          </div>
+          </>
         ) : (
-          <div className="flex flex-col items-center gap-2">
-            <div className="bg-muted p-3 rounded-full">
-              <Upload className="w-6 h-6 text-muted-foreground" />
-            </div>
-            <p className="text-muted-foreground">
-              גרור ושחרר את קורות החיים כאן, או לחץ לבחירה
+          <>
+            <UploadCloud className="mx-auto h-14 w-14 text-slate-300 transition group-hover:-translate-y-1" />
+            <p className="mt-5 text-xl font-semibold">
+              גררו לכאן את קורות החיים
             </p>
-          </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              קובץ PDF · עד 10MB
+            </p>
+            <span className="mt-6 inline-block rounded-full bg-blue-900 px-8 py-3 text-base font-semibold text-white shadow-lg shadow-black/40 transition group-hover:bg-blue-800">
+              בחירת קובץ
+            </span>
+          </>
         )}
       </Label>
-    </div>
+    </>
   );
 }

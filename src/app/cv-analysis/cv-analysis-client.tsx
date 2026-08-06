@@ -2,13 +2,11 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { track } from "@/services/analytics";
 import type { CVAnalysisResults as CVAnalysisResultsType } from "@/types/cv-analysis";
-import { Upload } from "lucide-react";
+import { CheckCircle2, Sparkles } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -152,78 +150,105 @@ export function CVAnalysisClient() {
     }
   };
 
-  return (
-    <div>
-      {state.results ? (
-        <div className="space-y-6">
-          <CVAnalysisResults
-            results={state.results}
-            hasJobDescription={state.hasJobDescription}
-            initialDone={restored?.done}
-            initialRating={restored?.rating ?? null}
-          />
-          <div className="flex justify-center">
-            <Button onClick={resetAnalysis} variant="outline" className="mt-4">
-              נתח קורות חיים נוספים
-            </Button>
-          </div>
+  if (state.results) {
+    return (
+      <div className="container max-w-4xl space-y-6 py-8">
+        <CVAnalysisResults
+          results={state.results}
+          hasJobDescription={state.hasJobDescription}
+          initialDone={restored?.done}
+          initialRating={restored?.rating ?? null}
+        />
+        <div className="flex justify-center">
+          <Button onClick={resetAnalysis} variant="outline" className="mt-4">
+            נתח קורות חיים נוספים
+          </Button>
         </div>
-      ) : (
-        <Card className="p-6 border-2 border-border shadow-lg rounded-xl bg-gradient-to-b from-background to-muted/30">
-          <form onSubmit={analyzeCv} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FileUpload
-                file={state.file}
-                onFileChange={handleFileChange}
-                onError={setError}
-              />
+      </div>
+    );
+  }
 
-              <div className="space-y-2">
-                <Label htmlFor="jobDescription" className="text-lg font-medium">
-                  תיאור המשרה{" "}
-                  <span className="text-sm font-normal text-muted-foreground">
-                    (אופציונלי)
-                  </span>
-                </Label>
-                <Textarea
-                  id="jobDescription"
-                  value={state.jobDescription}
-                  onChange={handleJobDescriptionChange}
-                  placeholder="הדבק את תיאור המשרה כאן לקבלת תוצאות מדויקות יותר..."
-                  className="min-h-[120px] resize-y"
-                />
-              </div>
-            </div>
+  return (
+    <section className="relative overflow-hidden">
+      {/* Brand-blue wash behind the hero, over a faint grid. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(60%_100%_at_50%_0%,theme(colors.blue.900/35%),transparent_70%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] opacity-[0.07] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent)]"
+      />
 
-            <div className="flex justify-center">
-              <Button
-                type="submit"
-                disabled={state.isLoading || !state.file}
-                className="w-full sm:w-auto"
-                size="lg"
-              >
-                {state.isLoading ? (
-                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                    <Spinner />
-                    <span>מנתח קורות חיים...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <Upload className="w-4 h-4 mr-2" />
-                    נתח קורות חיים
-                  </div>
-                )}
-              </Button>
-            </div>
+      <div className="relative container max-w-3xl px-4 pt-14 pb-10 text-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-slate-200">
+          <Sparkles className="h-3.5 w-3.5" />
+          ניתוח מבוסס AI · חינם
+        </span>
 
-            {state.error && (
-              <Alert variant="destructive">
-                <AlertDescription>{state.error}</AlertDescription>
-              </Alert>
+        <h1 className="mt-6 text-4xl font-bold leading-[1.15] tracking-tight sm:text-6xl">
+          ניתוח קורות חיים חכם
+          <br />
+          עברו את מערכות ה-ATS בהצלחה
+        </h1>
+
+        <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
+          רוב המעסיקים מסננים מועמדים דרך מערכת ATS לפני שאדם רואה את הקובץ.
+          העלו את קורות החיים וקבלו את הציון שלכם ב-30 שניות.
+        </p>
+
+        <form onSubmit={analyzeCv} className="mt-10">
+          <FileUpload
+            file={state.file}
+            onFileChange={handleFileChange}
+            onError={setError}
+          />
+
+          <details className="mx-auto mt-4 max-w-xl text-start">
+            <summary className="cursor-pointer list-none text-sm text-slate-300 hover:underline">
+              + הוסיפו תיאור משרה לתוצאות מדויקות יותר (אופציונלי)
+            </summary>
+            <Textarea
+              id="jobDescription"
+              value={state.jobDescription}
+              onChange={handleJobDescriptionChange}
+              placeholder="הדביקו כאן את תיאור המשרה..."
+              className="mt-3 min-h-[120px] resize-y"
+            />
+          </details>
+
+          <Button
+            type="submit"
+            disabled={state.isLoading || !state.file}
+            size="lg"
+            className="mt-6 w-full bg-blue-900 text-white hover:bg-blue-800 sm:w-auto"
+          >
+            {state.isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <Spinner />
+                מנתח קורות חיים...
+              </span>
+            ) : (
+              "נתח קורות חיים"
             )}
-          </form>
-        </Card>
-      )}
-    </div>
+          </Button>
+
+          {state.error && (
+            <Alert variant="destructive" className="mt-6 text-start">
+              <AlertDescription>{state.error}</AlertDescription>
+            </Alert>
+          )}
+        </form>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          {["ללא הרשמה", "תוצאה ב-30 שניות", "הקובץ לא נשמר"].map((label) => (
+            <span key={label} className="inline-flex items-center gap-1.5">
+              <CheckCircle2 className="h-4 w-4 text-slate-300" />
+              {label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
