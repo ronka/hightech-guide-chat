@@ -145,11 +145,13 @@ export const JD_DEPENDENT_POINTS = 50;
 
 ## Step 2 — Replace the prompt with the rubric
 
-**Current state.** `src/app/api/analyze-cv/route.ts` lines 54–119 pass **both** a `system:` parameter and a second system message inside `messages`. The second one (lines 88–100) is a stripped-down duplicate that omits every keyword rule. Two conflicting system prompts dilute the instruction.
+**Current state (line numbers refreshed against commit `0049ba2`, i.e. after plan 001 landed).** `src/app/api/analyze-cv/route.ts` passes **both** a `system:` parameter (starts line 63) and a second system message inside the `messages` array (`messages:` starts line 90; the duplicate system entry is at line 92, `role: "user"` at line 105, array closes line 121). The second system prompt is a stripped-down duplicate that omits every keyword rule. Two conflicting system prompts dilute the instruction.
 
 **The fix.** Delete the duplicate system message entirely, and rewrite the single `system` prompt around the rubric.
 
-2a. **Delete** the first entry of the `messages` array — the whole object from `{ role: "system",` through the `},` that precedes `{ role: "user",`. The `messages` array must start directly with the `user` entry.
+2a. **Delete** the first entry of the `messages` array — the whole object from `{ role: "system",` (line 91–92) through the `},` that precedes `{ role: "user",` (line 105). The `messages` array must start directly with the `user` entry.
+
+Verify the deletion with: `grep -c 'role: "system"' src/app/api/analyze-cv/route.ts` — must return `0`.
 
 2b. Replace the `system:` string with the following. Read `.agents/skills/roast-my-cv/references/review-rubric.md` first for context on each dimension — the text below is condensed from it.
 
@@ -222,7 +224,7 @@ You MUST respond in Hebrew. Keep every string concise and actionable.`,
 
 ## Step 3 — Make the UI honest about which score it shows
 
-**Current state.** `src/app/cv-analysis/cv-analysis-results.tsx` lines 24–32:
+**Current state.** `src/app/cv-analysis/cv-analysis-results.tsx` lines 29–37 (after plan 001 added the job-title header above it):
 
 ```tsx
         <div className="space-y-2">
