@@ -19,6 +19,11 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.fixedWindow(20, "1 d"),
 });
 
+// Local dev has no x-forwarded-for, so every request buckets to 127.0.0.1 and
+// a single afternoon of testing burns the whole daily quota — against the same
+// Upstash instance production uses. Skip the limit outside production.
+const isRateLimitEnabled = process.env.NODE_ENV === "production";
+
 export async function POST(request: NextRequest) {
   const verification = await checkBotId();
   if (verification.isBot) {
@@ -35,24 +40,27 @@ export async function POST(request: NextRequest) {
   const identifier = (
     request.headers.get("x-forwarded-for") ?? "127.0.0.1"
   ).split(",")[0];
-  const rateLimitResult = await ratelimit.limit(identifier);
 
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      {
-        message: `הגעת למגבלת השימוש היומית. נסה שוב בעוד ${Math.ceil(
-          (rateLimitResult.reset - Date.now()) / (1000 * 60 * 60)
-        )} שעות.`,
-      },
-      {
-        status: 429,
-        headers: {
-          "X-RateLimit-Limit": rateLimitResult.limit.toString(),
-          "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
-          "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+  if (isRateLimitEnabled) {
+    const rateLimitResult = await ratelimit.limit(identifier);
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          message: `הגעת למגבלת השימוש היומית. נסה שוב בעוד ${Math.ceil(
+            (rateLimitResult.reset - Date.now()) / (1000 * 60 * 60)
+          )} שעות.`,
         },
-      }
-    );
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+          },
+        }
+      );
+    }
   }
 
   try {
