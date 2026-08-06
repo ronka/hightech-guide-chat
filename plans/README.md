@@ -12,7 +12,9 @@ Do them in this order. 001 first — it is the shortest and its results are imme
 |---|---|---|---|---|---|
 | 001 | [Fix the three things that make it look broken](001-fix-visible-breakage.md) | 45–60 min | LOW | — | **DONE — awaiting merge** |
 | 002 | [Make the match score honest](002-honest-scoring.md) | 2–3 hr | MED | 001 | **DONE — merged `76736ac`** |
-| 003 | [Stop leaking names, harden the endpoint](003-privacy-and-endpoint-hardening.md) | 60–90 min | LOW–MED | — | IN PROGRESS |
+| 003 | [Stop leaking names, harden the endpoint](003-privacy-and-endpoint-hardening.md) | 60–90 min | LOW–MED | — | **DONE — merged `f499306`** |
+
+**All three plans are done and on `main`.** Approved deviation in 003: `validateCvUpload` lives in `src/app/api/analyze-cv/validation.ts` rather than being exported from `route.ts` — Next.js rejects non-route exports from a route file (TS2344), and the repo already follows this split in `src/app/api/grow/webhook/handlers.ts`. Verified with a full `next build`.
 
 **Dependency:** 002 depends on 001 only because both edit `src/types/cv-analysis.ts` and `src/app/api/analyze-cv/route.ts`. Doing 001 first avoids conflicting edits. 003 is independent and can be done at any point.
 
