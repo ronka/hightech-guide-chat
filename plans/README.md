@@ -11,8 +11,8 @@ Do them in this order. 001 first — it is the shortest and its results are imme
 | # | Plan | Time | Risk | Depends on | Status |
 |---|---|---|---|---|---|
 | 001 | [Fix the three things that make it look broken](001-fix-visible-breakage.md) | 45–60 min | LOW | — | **DONE — awaiting merge** |
-| 002 | [Make the match score honest](002-honest-scoring.md) | 2–3 hr | MED | 001 | TODO |
-| 003 | [Stop leaking names, harden the endpoint](003-privacy-and-endpoint-hardening.md) | 60–90 min | LOW–MED | — | TODO |
+| 002 | [Make the match score honest](002-honest-scoring.md) | 2–3 hr | MED | 001 | **DONE — merged `76736ac`** |
+| 003 | [Stop leaking names, harden the endpoint](003-privacy-and-endpoint-hardening.md) | 60–90 min | LOW–MED | — | IN PROGRESS |
 
 **Dependency:** 002 depends on 001 only because both edit `src/types/cv-analysis.ts` and `src/app/api/analyze-cv/route.ts`. Doing 001 first avoids conflicting edits. 003 is independent and can be done at any point.
 

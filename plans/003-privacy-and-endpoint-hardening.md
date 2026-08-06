@@ -50,7 +50,7 @@ Real users do not name their file `cv.pdf`. They name it `ישראל ישראל�
 
 ## Step 1 — Stop sending filenames to analytics
 
-**Current state.** `src/app/cv-analysis/cv-analysis-client.tsx` lines 33–42:
+**Current state.** `src/app/cv-analysis/cv-analysis-client.tsx` — `track("cv_file_selected", ...)` at line 34 with `file_name` at line 35; `track("cv_analyzed", ...)` at line 99 with `file_name` at line 101:
 
 ```tsx
   const handleFileChange = (file: File | null) => {
@@ -113,7 +113,7 @@ Then run the dev server, open the browser console, upload a file, and confirm ne
 
 ## Step 2 — Validate the upload server-side
 
-**Current state.** `src/app/api/analyze-cv/route.ts` lines 44–52:
+**Current state (line numbers refreshed against commit `76736ac`, i.e. after plans 001 and 002 landed).** `src/app/api/analyze-cv/route.ts` lines 45–56 — `formData` at 45, `cvFile` at 46, `jobDescription` at 47, the `instanceof File` guard at 49, `cvData` at 56. Note the guard already returns `{ message: ... }` in Hebrew (plan 001 changed this), so keep that shape:
 
 ```ts
     const formData = await request.formData();
