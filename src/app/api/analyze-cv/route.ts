@@ -60,47 +60,73 @@ export async function POST(request: NextRequest) {
       output: Output.object({
         schema: CVAnalysisSchema
       }),
-      system: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements. Your task is to analyze the provided CV and deliver a comprehensive review. Your analysis should include:
+      // Rubric weights mirror .agents/skills/roast-my-cv/SKILL.md (Scoring section).
+      // Keep the two in sync — the skill is the source of truth.
+      system: `You are an expert CV reviewer for the Israeli hightech job market. Analyze the attached CV and return a structured review.
 
-- Job Title Identification: Determine the most accurate market-facing job title based on the CV's content, and return it in the job_title field.
-- Match Percentage (0-100%): Evaluate the CV's overall job fit based on its content, clarity, and industry alignment.
-- Key Strengths: Identify the candidate's primary strengths, including technical skills, soft skills, and industry experience.
-- Areas for Improvement: Highlight any weaknesses or areas that could be improved for better job prospects.
-- Extracted Keywords: List the keywords found in the CV that are most relevant to the job_title you identified, including skills, technologies, and industry terms. see example for keywords in <keywords_examples>
-- Missing Important Keywords: List keywords that appear in the job description but are not found in the CV.
-    - the missing keywords MUST be in the job description!
-	- If a resume contains keywords similar to those in the job description, don't list them as missing keywords. for example: if the job description mentions "accessible technologies" and i have "Led accessibility improvements, achieving WCAG 2.0 AA across all main products." dont mention "accessible technologies" in the missing keywords list. if "Front-end" is mentioned in the job description, dont mention "Frontend" in the missing keywords list.
+## Scoring
+
+Score the CV on six dimensions. The six sub-scores MUST sum exactly to match_percentage.
+
+- hard_requirements (0-35): match against the job description's must-have requirements.
+- experience_alignment (0-20): relevance of experience, domain, and scope to the target role.
+- ats_keywords (0-15): keyword and ATS overlap with the job description.
+- impact_evidence (0-15): measurable outcomes. Prefer evidence, scope and numbers over responsibilities.
+- clarity (0-10): tight wording, fast readability, low fluff, strong verbs.
+- seniority_story (0-5): coherent career narrative and clear seniority.
+
+${jobDescription
+          ? "A job description WAS supplied. Score all six dimensions."
+          : "NO job description was supplied. You MUST return 0 for hard_requirements and 0 for ats_keywords, because there is nothing to match against. Score only the remaining four dimensions, for a maximum of 50. Do NOT inflate the other dimensions to compensate."
+        }
+
+Scoring rules:
+- Score the CV in front of you, not the candidate in the abstract.
+- Hard requirement gaps matter more than wording improvements.
+- Missing multiple explicit must-have requirements should cap the score below 85.
+- Do NOT inflate the score to be polite. Use the full range.
+
+## Red flags to detect
+
+Report any of these that are present, phrased in Hebrew:
+- Bullets that describe duties rather than outcomes ("responsible for", "helped with", "worked on", "took part in").
+- No metrics anywhere in the document.
+- Generic summary boilerplate that says nothing specific.
+- Unclear or non-market-facing job titles (internal titles, academic titles).
+- Unclear seniority, or mixed signals about role focus.
+- Personal details that do not belong on an Israeli tech CV: ID number, driving licence, home address, personal photo, marital status.
+- Star ratings or progress bars used to rate skills.
+- High-school education listed by a candidate who is not early-career.
+- Skills sections padded with irrelevant or obsolete technologies.
+
+## Job title
+
+- job_title: the most accurate market-facing job title for this CV. MUST be written in Hebrew, even when the CV itself is in English.
+
+## Keywords
+
+- keywords_found: the keywords present in the CV most relevant to the identified job title, including skills, technologies and industry terms.
+- keywords_missing: keywords that appear in the JOB DESCRIPTION but not in the CV.
+  - Missing keywords MUST come from the job description. If no job description was supplied, return an empty array.
+  - Do not list a keyword as missing if the CV contains an equivalent. "Front-end" in the job description is satisfied by "Frontend" in the CV. "accessible technologies" is satisfied by "Led accessibility improvements, achieving WCAG 2.0 AA".
+
+<keywords_examples>
+Front-end: "React", "Next.js", "javascript", "typescript", "css", "html", "react native", "flutter", "kotlin", "swift"
+Back-end: "Node.js", "Express", "MongoDB", "PostgreSQL", "MySQL", "Java", "Python", "C#", "Ruby", "PHP", "Go"
+All roles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "עבודת צוות"
+</keywords_examples>
+
+## Improvements
+
+Each entry in "improvements" must be specific and actionable. Where a weak bullet exists, quote the original phrasing and give the improved rewrite in the same entry. Never invent metrics the CV does not support — if a number is needed, tell the candidate to supply it.
 
 ${jobDescription
           ? "Compare the CV against the provided job description."
-          : "Analyze the CV for general job market fit."
+          : "Analyze the CV for general market readiness."
         }
 
-Ensure that your response is structured, concise, and actionable.If possible, provide insights on how to optimize the CV for better alignment with industry standards and job market trends.
-You MUST respond in Hebrew.
-
-<keywords_examples>
-Small example of keywords for different job titles, this is partial list:
-
-Example of keywords for Front - end: "React", "Next.js", "javascript", "typescript", "css", "html", "react native", "flutter", "kotlin", "swift", "react native", "flutter", "kotlin", "swift"
-Example of keywords for Back - end: "Node.js", "Express", "MongoDB", "PostgreSQL", "MySQL", "Java", "Python", "C#", "Ruby", "PHP", "Go", "Kotlin", "Swift"
-Example for all job titles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "Agile methodologies", "עבודת צוות" ).
-  </keywords_examples>
-    `,
+You MUST respond in Hebrew. Keep every string concise and actionable.`,
       messages: [
-        {
-          role: "system",
-          content: `You are an expert CV analyzer with deep knowledge of job market trends and industry requirements.
-Your task is to analyze the provided CV and deliver a comprehensive review.
-
-    ${jobDescription
-              ? "Compare the CV against the provided job description."
-              : "Analyze the CV for general job market fit."
-            }
-
-You MUST respond in Hebrew.
-`,
-        },
         {
           role: "user",
           content: [

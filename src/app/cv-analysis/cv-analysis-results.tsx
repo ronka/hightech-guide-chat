@@ -28,12 +28,29 @@ export function CVAnalysisResults({
       <div className="space-y-6">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">ציון התאמה</span>
             <span className="text-sm font-medium">
-              {results.match_percentage}%
+              {hasJobDescription ? "ציון התאמה למשרה" : "ציון איכות קורות חיים"}
+            </span>
+            <span className="text-sm font-medium">
+              {hasJobDescription
+                ? `${results.match_percentage}%`
+                : `${results.match_percentage}/50`}
             </span>
           </div>
-          <Progress value={results.match_percentage} className="h-2" />
+          <Progress
+            value={
+              hasJobDescription
+                ? results.match_percentage
+                : (results.match_percentage / 50) * 100
+            }
+            className="h-2"
+          />
+          {!hasJobDescription && (
+            <p className="text-xs text-muted-foreground">
+              ללא תיאור משרה ניתן להעריך רק את איכות המסמך. הוסיפו תיאור משרה
+              לקבלת ציון התאמה מלא.
+            </p>
+          )}
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -65,6 +82,22 @@ export function CVAnalysisResults({
             </ul>
           </div>
         </div>
+
+        {results.red_flags.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold flex items-center gap-2">
+              <XCircle className="w-5 h-5 text-red-500" />
+              דגלים אדומים
+            </h3>
+            <ul className="space-y-2">
+              {results.red_flags.map((flag) => (
+                <li key={flag} className="text-sm">
+                  • {flag}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
