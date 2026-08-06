@@ -32,8 +32,8 @@ export function CVAnalysisClient() {
   const handleFileChange = (file: File | null) => {
     if (file) {
       track("cv_file_selected", {
-        file_name: file.name,
         file_size_kb: Math.round(file.size / 1024),
+        file_extension: file.name.split(".").pop()?.toLowerCase() ?? "unknown",
         has_job_description: !!state.jobDescription,
       });
     }
@@ -98,7 +98,6 @@ export function CVAnalysisClient() {
       setState((prev) => ({ ...prev, results: data.object, isLoading: false }));
       track("cv_analyzed", {
         has_job_description: !!state.jobDescription,
-        file_name: state.file?.name,
       });
     } catch (err) {
       const error_message = err instanceof Error ? err.message : "אירעה שגיאה";

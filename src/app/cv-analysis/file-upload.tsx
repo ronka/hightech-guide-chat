@@ -14,10 +14,21 @@ export function FileUpload({ file, onFileChange, onError }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      onFileChange(e.target.files[0]);
-      onError?.(null);
+    const selected = e.target.files?.[0];
+    if (!selected) return;
+
+    if (selected.type !== "application/pdf") {
+      onError?.("נא להעלות קובץ PDF בלבד.");
+      return;
     }
+
+    if (selected.size > 10 * 1024 * 1024) {
+      onError?.("הקובץ גדול מדי. הגודל המרבי הוא 10MB.");
+      return;
+    }
+
+    onFileChange(selected);
+    onError?.(null);
   };
 
   const handleReplaceFile = (e: React.MouseEvent) => {

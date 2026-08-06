@@ -4,7 +4,9 @@ import { CVAnalysisSchema } from "@/types/cv-analysis";
 import { env } from "@/services/config";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { checkBotId } from "botid/server";
 import logger from "@/services/logger";
+import { validateCvUpload } from "./validation";
 
 const redis = new Redis({
   url: env.UPSTASH_REDIS_REST_URL,
@@ -18,6 +20,18 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(request: NextRequest) {
+  const verification = await checkBotId();
+  if (verification.isBot) {
+    return NextResponse.json(
+      { message: "הבקשה נחסמה. אם אתם משתמשים אמיתיים, נסו שוב מדפדפן אחר." },
+      { status: 403 }
+    );
+  }
+
+  // Vercel overwrites x-forwarded-for and refuses to forward external IPs, so
+  // the leftmost entry is trustworthy TODAY. If a proxy (e.g. Cloudflare) is
+  // ever put in front of Vercel, this becomes client-controlled and the daily
+  // quota is trivially bypassable. Switch to x-vercel-forwarded-for if that happens.
   const identifier = (
     request.headers.get("x-forwarded-for") ?? "127.0.0.1"
   ).split(",")[0];
@@ -50,6 +64,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { message: "לא התקבל קובץ קורות חיים. נא להעלות קובץ PDF." },
         { status: 400 }
+      );
+    }
+
+    const validation = validateCvUpload(cvFile, jobDescription);
+    if (!validation.ok) {
+      return NextResponse.json(
+        { message: validation.message },
+        { status: validation.status }
       );
     }
 
