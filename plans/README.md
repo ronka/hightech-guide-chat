@@ -13,8 +13,9 @@ Do them in this order. 001 first — it is the shortest and its results are imme
 | 001 | [Fix the three things that make it look broken](001-fix-visible-breakage.md) | 45–60 min | LOW | — | **DONE — awaiting merge** |
 | 002 | [Make the match score honest](002-honest-scoring.md) | 2–3 hr | MED | 001 | **DONE — merged `76736ac`** |
 | 003 | [Stop leaking names, harden the endpoint](003-privacy-and-endpoint-hardening.md) | 60–90 min | LOW–MED | — | **DONE — merged `f499306`** |
+| 004 | [Make the fix list say what to do](004-actionable-fix-list.md) | 45–60 min | LOW–MED | 002 | **DONE — uncommitted** |
 
-**All three plans are done and on `main`.** Approved deviation in 003: `validateCvUpload` lives in `src/app/api/analyze-cv/validation.ts` rather than being exported from `route.ts` — Next.js rejects non-route exports from a route file (TS2344), and the repo already follows this split in `src/app/api/grow/webhook/handlers.ts`. Verified with a full `next build`.
+**Plans 001–003 are done and on `main`.** 004 was added later, against `b9b2b3b`, and delivers "Product direction" item 1 below in its cheapest form. It is the only breaking schema change in the series: saved analyses from before it are dropped rather than migrated — see the plan for why. Approved deviation in 003: `validateCvUpload` lives in `src/app/api/analyze-cv/validation.ts` rather than being exported from `route.ts` — Next.js rejects non-route exports from a route file (TS2344), and the repo already follows this split in `src/app/api/grow/webhook/handlers.ts`. Verified with a full `next build`.
 
 **Dependency:** 002 depends on 001 only because both edit `src/types/cv-analysis.ts` and `src/app/api/analyze-cv/route.ts`. Doing 001 first avoids conflicting edits. 003 is independent and can be done at any point.
 
@@ -72,5 +73,5 @@ Real, verified, but not planned. Pick up if they start to matter:
 
 Two options grounded in what is already in the repo, for the maintainer to weigh:
 
-1. **Suggested rewrites.** The roast-my-cv skill's core output is `Original: "..." → Rewrite: "..."` for every weak bullet. The web tool returns only generic improvement strings. This is the highest-value addition available and is mostly schema plus prompt work.
+1. **Suggested rewrites.** ~~The roast-my-cv skill's core output is `Original: "..." → Rewrite: "..."` for every weak bullet. The web tool returns only generic improvement strings.~~ **Partly delivered by 004**, which splits every fix into `issue` + `action`. The action names what to write; it is not yet a verbatim rewrite of the original bullet. The remaining gap is per-bullet `Original → Rewrite` pairs anchored to specific lines in the document.
 2. **The Israeli-specific guidance in `references/how-to-write-good-resume.md` is entirely absent from the API prompt** — strip ID number, driving licence, home address, and photo; frame military service as professional experience; avoid star-rating skills; prefer an English CV for Israeli hightech. This is differentiated content from the site's own book and the most natural bridge to the consulting CTA already on the results screen. Plan 002 pulls in the red-flag subset; the rest is unbuilt.

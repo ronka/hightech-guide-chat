@@ -257,7 +257,10 @@ function ViewToggle({
 
 interface Fix {
   id: string;
-  text: string;
+  /** What to do. The primary line — this is what the reader acts on. */
+  action: string;
+  /** Why it matters. Absent on the synthesized keywords fix. */
+  issue?: string;
   /** Missing keywords are rendered inline under their own fix. */
   keywords?: string[];
 }
@@ -265,14 +268,14 @@ interface Fix {
 /** Red flags first — they are what a recruiter notices — then improvements. */
 function buildFixes(results: CVAnalysisResultsType): Fix[] {
   const fixes: Fix[] = [
-    ...results.red_flags.map((text, i) => ({ id: `flag-${i}`, text })),
-    ...results.improvements.map((text, i) => ({ id: `improve-${i}`, text })),
+    ...results.red_flags.map((fix, i) => ({ id: `flag-${i}`, ...fix })),
+    ...results.improvements.map((fix, i) => ({ id: `improve-${i}`, ...fix })),
   ];
 
   if (results.keywords_missing.length > 0) {
     fixes.push({
       id: "keywords",
-      text: `שלבו את מילות המפתח מתיאור המשרה שחסרות במסמך (${results.keywords_missing.length}).`,
+      action: `שלבו את מילות המפתח מתיאור המשרה שחסרות במסמך (${results.keywords_missing.length}).`,
       keywords: results.keywords_missing,
     });
   }
@@ -369,8 +372,18 @@ function FixListView({
             done[lead.id] && "text-muted-foreground line-through",
           )}
         >
-          {lead.text}
+          {lead.action}
         </p>
+        {lead.issue && (
+          <p
+            className={cn(
+              "mt-2 text-sm leading-relaxed text-muted-foreground",
+              done[lead.id] && "text-muted-foreground/50",
+            )}
+          >
+            {lead.issue}
+          </p>
+        )}
       </button>
 
       {rest.length > 0 && (
@@ -387,15 +400,25 @@ function FixListView({
                 <span className="w-6 shrink-0 pt-0.5 font-mono text-sm tabular-nums text-muted-foreground">
                   {String(i + 2).padStart(2, "0")}
                 </span>
-                <span className="flex-1 space-y-2">
+                <span className="flex-1 space-y-1.5">
                   <span
                     className={cn(
-                      "block text-sm leading-relaxed",
+                      "block text-sm font-medium leading-relaxed",
                       done[fix.id] && "text-muted-foreground line-through",
                     )}
                   >
-                    {fix.text}
+                    {fix.action}
                   </span>
+                  {fix.issue && (
+                    <span
+                      className={cn(
+                        "block text-xs leading-relaxed text-muted-foreground",
+                        done[fix.id] && "text-muted-foreground/50",
+                      )}
+                    >
+                      {fix.issue}
+                    </span>
+                  )}
                   {fix.keywords && (
                     <span className="flex flex-wrap gap-1.5">
                       {fix.keywords.map((keyword) => (

@@ -160,7 +160,13 @@ export function CVAnalysisClient() {
           initialRating={restored?.rating ?? null}
         />
         <div className="flex justify-center">
-          <Button onClick={resetAnalysis} variant="outline" className="mt-4">
+          {/* Same brand blue as the upload CTA: `--primary` resolves to
+              near-white under the app's forced dark theme. */}
+          <Button
+            onClick={resetAnalysis}
+            size="lg"
+            className="mt-4 w-full bg-blue-900 text-white hover:bg-blue-800 sm:w-auto"
+          >
             נתח קורות חיים נוספים
           </Button>
         </div>

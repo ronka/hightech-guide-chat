@@ -1,5 +1,28 @@
 import { z } from "zod";
 
+/**
+ * One entry in the fix list: what is wrong, and what to do about it.
+ *
+ * `issue` is declared first on purpose — structured output is generated in
+ * property order, so the model states the diagnosis before the prescription,
+ * which produces a better prescription. The results view renders them the
+ * other way round: the action is what the reader needs first.
+ */
+const FixItemSchema = z.object({
+  issue: z
+    .string()
+    .describe(
+      "What is wrong, in Hebrew. One concrete sentence, quoting the CV's own wording where possible.",
+    ),
+  action: z
+    .string()
+    .describe(
+      "What to do about it, in Hebrew. MUST start with an imperative verb in second-person plural (החליפו, הוסיפו, נסחו). Never a restatement of the issue.",
+    ),
+});
+
+export type CVFixItem = z.infer<typeof FixItemSchema>;
+
 export const CVAnalysisSchema = z.object({
   job_title: z
     .string()
@@ -58,9 +81,9 @@ export const CVAnalysisSchema = z.object({
       "Sub-scores by rubric dimension. These must sum to match_percentage.",
     ),
   red_flags: z
-    .array(z.string())
+    .array(FixItemSchema)
     .describe(
-      "Specific detected weaknesses, in Hebrew. Examples: responsibility-phrased bullets instead of achievements, no metrics anywhere, generic summary boilerplate, unclear seniority, personal details that should be removed.",
+      "Specific detected weaknesses, each paired with the fix. Examples of issues: responsibility-phrased bullets instead of achievements, no metrics anywhere, generic summary boilerplate, unclear seniority, personal details that should be removed.",
     ),
   strengths: z
     .array(z.string())
@@ -68,9 +91,9 @@ export const CVAnalysisSchema = z.object({
       "Identify the candidate’s primary strengths, including technical skills, soft skills, and industry experience.",
     ),
   improvements: z
-    .array(z.string())
+    .array(FixItemSchema)
     .describe(
-      "Highlight any weaknesses or areas that could be improved for better job prospects.",
+      "Weaknesses or areas that could be improved for better job prospects, each paired with the concrete rewrite.",
     ),
   keywords_found: z
     .array(z.string())

@@ -23,7 +23,12 @@ describe("CVAnalysisSchema", () => {
     },
     red_flags: [],
     strengths: ["ניסיון בריאקט"],
-    improvements: ["חסר ניסיון בענן"],
+    improvements: [
+      {
+        issue: "אין אזכור לניסיון בענן, שמופיע כדרישה במשרה.",
+        action: "הוסיפו שורה עם שירותי הענן שעבדתם איתם ובאיזה הקשר.",
+      },
+    ],
     keywords_found: ["React", "TypeScript"],
     keywords_missing: ["AWS"],
   };
@@ -93,5 +98,42 @@ describe("CVAnalysisSchema", () => {
       red_flags: [],
     });
     expect(result.success).toBe(true);
+  });
+
+  test("accepts red_flags entries carrying both an issue and an action", () => {
+    const result = CVAnalysisSchema.safeParse({
+      ...validObject,
+      red_flags: [
+        {
+          issue: "פסקת הסיכום פותחת ב-'Dedicated and efficient'.",
+          action: "החליפו את פסקת הסיכום בשתי שורות עם תחום, ותק והישג מדיד.",
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  test("rejects a bare string red flag, the pre-action-list shape", () => {
+    const result = CVAnalysisSchema.safeParse({
+      ...validObject,
+      red_flags: ["פסקת סיכום גנרית"],
+    });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects a fix item that names the problem but not the action", () => {
+    const result = CVAnalysisSchema.safeParse({
+      ...validObject,
+      red_flags: [{ issue: "פסקת סיכום גנרית" }],
+    });
+    expect(result.success).toBe(false);
+  });
+
+  test("rejects a fix item missing the issue", () => {
+    const result = CVAnalysisSchema.safeParse({
+      ...validObject,
+      improvements: [{ action: "הוסיפו מספרים לבולטים." }],
+    });
+    expect(result.success).toBe(false);
   });
 });

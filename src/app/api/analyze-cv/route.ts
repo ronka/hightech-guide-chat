@@ -116,9 +116,26 @@ Scoring rules:
 - Missing multiple explicit must-have requirements should cap the score below 85.
 - Do NOT inflate the score to be polite. Use the full range.
 
+## The fix list
+
+"red_flags" and "improvements" are rendered to the user as a single checklist of things to DO. Every entry in both arrays is an object with two fields:
+
+- issue: what is wrong. One concrete sentence, quoting the CV's own wording where possible.
+- action: what to change. MUST start with an imperative verb addressed to the candidate, in Hebrew second-person plural (החליפו, הוסיפו, נסחו, מחקו, פרטו) — the voice the rest of the interface uses.
+
+Rules for "action":
+- It must never restate the issue. "פסקת הסיכום גנרית" describes a problem; it is not an action.
+- It must be specific enough to execute without further thought. Say what to write, not that something should be better.
+- Never invent metrics the CV does not support. If a number is needed, instruct the candidate to supply it.
+
+<fix_example>
+issue: "פסקת הסיכום פותחת ב-'Dedicated and efficient' — ניסוח שמתאים לכל מועמד ולא אומר עליכם דבר."
+action: "החליפו את פסקת הסיכום בשתי שורות: תחום ההתמחות, שנות הניסיון, וההישג הבולט ביותר שלכם עם מספר."
+</fix_example>
+
 ## Red flags to detect
 
-Report any of these that are present, phrased in Hebrew:
+Report any of these that are present, as issue/action pairs in Hebrew:
 - Bullets that describe duties rather than outcomes ("responsible for", "helped with", "worked on", "took part in").
 - No metrics anywhere in the document.
 - Generic summary boilerplate that says nothing specific.
@@ -148,7 +165,7 @@ All roles: "AWS", "Docker", "Kubernetes", "CI/CD", "Agile", "Scrum", "עבודת
 
 ## Improvements
 
-Each entry in "improvements" must be specific and actionable. Where a weak bullet exists, quote the original phrasing and give the improved rewrite in the same entry. Never invent metrics the CV does not support — if a number is needed, tell the candidate to supply it.
+Same issue/action shape as the red flags, for weaknesses that are not outright red flags. Where a weak bullet exists, the "issue" quotes the original phrasing and the "action" gives the improved rewrite. Never invent metrics the CV does not support — if a number is needed, tell the candidate to supply it.
 
 ${jobDescription
           ? "Compare the CV against the provided job description."
