@@ -1,6 +1,8 @@
 "use client";
 
-import { CVConsultingButton } from "@/components/landing-page/buttons";
+import { RONKA_COURSE_ID } from "@/components/landing-page/buttons";
+import { Button } from "@/components/ui/button";
+import { COURSE_PAYLINKS } from "@/lib/paylinks";
 import { track } from "@/services/analytics";
 import { cn } from "@/services/utils";
 import {
@@ -8,6 +10,7 @@ import {
   visibleDimensions,
 } from "@/types/cv-analysis";
 import { Check, ThumbsDown, ThumbsUp } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { type AnalysisRating, patchAnalysis } from "./analysis-storage";
 
@@ -317,7 +320,7 @@ function FixListView({
           .
         </p>
         <Strengths items={results.strengths} />
-        <ConsultingCta />
+        <CourseCta />
       </section>
     );
   }
@@ -438,7 +441,7 @@ function FixListView({
         </ol>
       )}
 
-      <ConsultingCta />
+      <CourseCta />
       <Strengths items={results.strengths} />
     </div>
   );
@@ -600,7 +603,7 @@ function ScoreView({
       />
 
       <Strengths items={results.strengths} />
-      <ConsultingCta />
+      <CourseCta />
     </div>
   );
 }
@@ -643,15 +646,53 @@ function Keywords({ found, missing }: { found: string[]; missing: string[] }) {
   );
 }
 
-function ConsultingCta() {
+/**
+ * The primary post-analysis CTA. Course first — it is the fuller answer to
+ * "what do I do about all this" — with 1:1 consulting kept as an escape
+ * hatch for readers who want a person instead of a course.
+ */
+function CourseCta() {
   return (
-    <section className="space-y-3 rounded-xl border border-border bg-muted/30 p-6">
-      <h3 className="text-lg font-semibold">נעבור על זה יחד?</h3>
-      <p className="text-sm text-muted-foreground">
-        פגישת ייעוץ אישית שבה ננסח מחדש כל בולט שמופיע כאן ונהפוך אותו להישג
-        מדיד.
+    <section className="space-y-4 rounded-2xl border border-blue-500/30 bg-gradient-to-b from-blue-500/10 to-transparent p-6 text-center sm:p-8">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/15 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
+        הצעד הבא
+      </span>
+      <h3 className="text-2xl font-bold sm:text-3xl">
+        לא רק קורות חיים — כל התהליך
+      </h3>
+      <p className="mx-auto max-w-md text-sm text-muted-foreground">
+        קורס דיגיטלי מקיף: איך כותבים קורות חיים שבולטים, בונים פרופיל לינקדאין
+        מנצח, ומתכוננים לראיון הטכני והאישי. +25 שיעורים, כשעתיים וידאו.
       </p>
-      <CVConsultingButton />
+      <div className="flex justify-center">
+        <Button size="lg" className="bg-blue-500 px-8" asChild>
+          <Link
+            href={COURSE_PAYLINKS["job-interview-course"]}
+            onClick={() =>
+              track("book_click", {
+                source: "cv-analysis",
+                product_id: RONKA_COURSE_ID,
+                product_type: "course",
+              })
+            }
+          >
+            להתחיל את הקורס ב-99 ₪ 🚀
+          </Link>
+        </Button>
+      </div>
+      <p className="text-xs text-muted-foreground">
+        מעדיפים ליווי אישי?{" "}
+        <a
+          href="https://ronka.dev/consulting-session-form"
+          onClick={() =>
+            track("consulting_click", { source: "cv-analysis-course-cta" })
+          }
+          className="underline underline-offset-4"
+        >
+          קבעו פגישת ייעוץ
+        </a>{" "}
+        במקום.
+      </p>
     </section>
   );
 }

@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 
 const RONKA_BOOK_PYSHICAL_ID = "704";
 const RONKA_BOOK_DIGITAL_ID = "712";
-const RONKA_COURSE_ID = "819";
+export const RONKA_COURSE_ID = "819";
 
 
 const RonkaCourseButton = () => {
