@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://www.hightechguide.co.il";
+const SITE_URL = "https://hightechguide.co.il";
 
 const STATIC_ROUTES = [
   "",

@@ -7,19 +7,19 @@
     "version": "1.0.0",
     "contact": {
       "name": "Ron Kantor",
-      "url": "https://www.hightechguide.co.il"
+      "url": "https://hightechguide.co.il"
     },
     "license": {
       "name": "Proprietary",
-      "url": "https://www.hightechguide.co.il"
+      "url": "https://hightechguide.co.il"
     }
   },
   "servers": [
-    { "url": "https://www.hightechguide.co.il", "description": "Production" }
+    { "url": "https://hightechguide.co.il", "description": "Production" }
   ],
   "externalDocs": {
     "description": "Docs index for agents (llms.txt)",
-    "url": "https://www.hightechguide.co.il/llms.txt"
+    "url": "https://hightechguide.co.il/llms.txt"
   },
   "paths": {
     "/api/questions": {

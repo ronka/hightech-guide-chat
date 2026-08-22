@@ -5,7 +5,7 @@ const siteConfig = {
   name: "המדריך להייטיקיסט המתחיל",
   description:
     "כל מה שצריך לכניסה לעולם ההייטק: מהספר 'המדריך להייטיקיסט המתחיל', דרך קורסים מקצועיים ועד כלים כמו ניתוח קורות חיים. התחילו כאן את הקריירה שלכם.",
-  url: "https://www.hightechguide.co.il",
+  url: "https://hightechguide.co.il",
   ogImage: "/book-assets/book.png",
   authorName: "רון קנטור",
 };

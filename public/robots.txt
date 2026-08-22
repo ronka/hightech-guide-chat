@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.hightechguide.co.il/sitemap.xml
+Sitemap: https://hightechguide.co.il/sitemap.xml
