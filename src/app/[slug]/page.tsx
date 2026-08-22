@@ -1,10 +1,15 @@
 import { notFound, redirect } from "next/navigation";
+import { BOOK_PAYLINK, EBOOK_PAYLINK } from "@/lib/paylinks";
 
 export default async function Page({
   params,
 }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   switch (slug) {
+    case "book":
+      redirect(BOOK_PAYLINK);
+    case "ebook":
+      redirect(EBOOK_PAYLINK);
     case "car2car":
       redirect("https://apps.apple.com/il/app/car2car/id6752951383");
     case "car2car-linkedin":

@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { BOOK_PAYLINK, EBOOK_PAYLINK } from "@/lib/paylinks";
 import Page from "./page";
 
 // Mock the next/navigation redirect and notFound functions
@@ -11,6 +12,16 @@ describe("Page component", () => {
   beforeEach(() => {
     // Clear mock calls between tests
     jest.clearAllMocks();
+  });
+
+  test("redirects to the book checkout for book", async () => {
+    await Page({ params: Promise.resolve({ slug: "book" }) });
+    expect(redirect).toHaveBeenCalledWith(BOOK_PAYLINK);
+  });
+
+  test("redirects to the ebook checkout for ebook", async () => {
+    await Page({ params: Promise.resolve({ slug: "ebook" }) });
+    expect(redirect).toHaveBeenCalledWith(EBOOK_PAYLINK);
   });
 
   test("redirects to YouTube for iftach-bar-salary-talk", async () => {
