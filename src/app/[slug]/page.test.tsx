@@ -1,9 +1,10 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Page from "./page";
 
-// Mock the next/navigation redirect function
+// Mock the next/navigation redirect and notFound functions
 jest.mock("next/navigation", () => ({
   redirect: jest.fn(),
+  notFound: jest.fn(),
 }));
 
 describe("Page component", () => {
@@ -12,57 +13,64 @@ describe("Page component", () => {
     jest.clearAllMocks();
   });
 
-  test("redirects to YouTube for iftach-bar-salary-talk", () => {
-    Page({ params: { slug: "iftach-bar-salary-talk" } });
+  test("redirects to YouTube for iftach-bar-salary-talk", async () => {
+    await Page({ params: Promise.resolve({ slug: "iftach-bar-salary-talk" }) });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.youtube.com/watch?v=pzq37L4UBUU"
+      "https://www.youtube.com/watch?v=pzq37L4UBUU",
     );
   });
 
-  test("redirects to Facebook group for cs-facebook-group", () => {
-    Page({ params: { slug: "cs-facebook-group" } });
+  test("redirects to Facebook group for cs-facebook-group", async () => {
+    await Page({ params: Promise.resolve({ slug: "cs-facebook-group" }) });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.facebook.com/groups/154179721990088"
+      "https://www.facebook.com/groups/154179721990088",
     );
   });
 
-  test("redirects to Google Sheets for learning-porgram", () => {
-    Page({ params: { slug: "learning-porgram" } });
+  test("redirects to Google Sheets for learning-porgram", async () => {
+    await Page({ params: Promise.resolve({ slug: "learning-porgram" }) });
     expect(redirect).toHaveBeenCalledWith(
-      "https://docs.google.com/spreadsheets/d/1K0vX803HCqLOVxkcRnNqsMS2QEc_VHyRlD3y5QRuI3Q/edit?usp=sharing"
+      "https://docs.google.com/spreadsheets/d/1K0vX803HCqLOVxkcRnNqsMS2QEc_VHyRlD3y5QRuI3Q/edit?usp=sharing",
     );
   });
 
-  test("redirects to e-vrit for evrit-book-chat-promo", () => {
-    Page({ params: { slug: "evrit-book-chat-promo" } });
+  test("redirects to e-vrit for evrit-book-chat-promo", async () => {
+    await Page({ params: Promise.resolve({ slug: "evrit-book-chat-promo" }) });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.e-vrit.co.il/Product/33185/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7%D7%99%D7%A1%D7%98_%D7%94%D7%9E%D7%AA%D7%97%D7%99%D7%9C"
+      "https://www.e-vrit.co.il/Product/33185/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7%D7%99%D7%A1%D7%98_%D7%94%D7%9E%D7%AA%D7%97%D7%99%D7%9C",
     );
   });
 
-  test("redirects to e-vrit for evrit-book-chat-message", () => {
-    Page({ params: { slug: "evrit-book-chat-message" } });
+  test("redirects to e-vrit for evrit-book-chat-message", async () => {
+    await Page({
+      params: Promise.resolve({ slug: "evrit-book-chat-message" }),
+    });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.e-vrit.co.il/Product/33185/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7%D7%99%D7%A1%D7%98_%D7%94%D7%9E%D7%AA%D7%97%D7%99%D7%9C"
+      "https://www.e-vrit.co.il/Product/33185/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7%D7%99%D7%A1%D7%98_%D7%94%D7%9E%D7%AA%D7%97%D7%99%D7%9C",
     );
   });
 
-  test("redirects to steimatzky for steimatzky-book-chat-promo", () => {
-    Page({ params: { slug: "steimatzky-book-chat-promo" } });
+  test("redirects to steimatzky for steimatzky-book-chat-promo", async () => {
+    await Page({
+      params: Promise.resolve({ slug: "steimatzky-book-chat-promo" }),
+    });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.steimatzky.co.il/011360920"
+      "https://www.steimatzky.co.il/011360920",
     );
   });
 
-  test("redirects to steimatzky for steimatzky-book-chat-message", () => {
-    Page({ params: { slug: "steimatzky-book-chat-message" } });
+  test("redirects to steimatzky for steimatzky-book-chat-message", async () => {
+    await Page({
+      params: Promise.resolve({ slug: "steimatzky-book-chat-message" }),
+    });
     expect(redirect).toHaveBeenCalledWith(
-      "https://www.steimatzky.co.il/011360920"
+      "https://www.steimatzky.co.il/011360920",
     );
   });
 
-  test("redirects to home for unknown slug", () => {
-    Page({ params: { slug: "unknown-path" } });
-    expect(redirect).toHaveBeenCalledWith("/");
+  test("calls notFound (real 404) for unknown slug", async () => {
+    await Page({ params: Promise.resolve({ slug: "unknown-path" }) });
+    expect(notFound).toHaveBeenCalled();
+    expect(redirect).not.toHaveBeenCalled();
   });
 });

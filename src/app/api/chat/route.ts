@@ -1,4 +1,3 @@
-import { checkBotId } from "botid/server";
 import { env } from "@/services/config";
 import {
   findRelevantContent,
@@ -9,14 +8,22 @@ import {
 } from "@/services/embedding";
 import logger from "@/services/logger";
 import { SYSTEM_PROMPT } from "@/services/prompt-templates";
-import { streamText, tool, convertToModelMessages, stepCountIs } from "ai";
+import { convertToModelMessages, stepCountIs, streamText, tool } from "ai";
+import { checkBotId } from "botid/server";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: NextRequest) {
   const verification = await checkBotId();
   if (verification.isBot) {
-    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+    return NextResponse.json(
+      {
+        code: "bot_detected",
+        error: "Access denied",
+        hint: "Automated traffic is blocked on this endpoint; retry from a real browser session.",
+      },
+      { status: 403 },
+    );
   }
 
   const body = await req.json();

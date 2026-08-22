@@ -1,0 +1,299 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "המדריך להייטקיסט המתחיל API",
+    "summary": "Public API surface for hightechguide.co.il",
+    "description": "Machine-readable interview-question data and the AI-powered CV/ATS analysis tool behind the hightechguide.co.il site.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ron Kantor",
+      "url": "https://www.hightechguide.co.il"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://www.hightechguide.co.il"
+    }
+  },
+  "servers": [
+    { "url": "https://www.hightechguide.co.il", "description": "Production" }
+  ],
+  "externalDocs": {
+    "description": "Docs index for agents (llms.txt)",
+    "url": "https://www.hightechguide.co.il/llms.txt"
+  },
+  "paths": {
+    "/api/questions": {
+      "get": {
+        "operationId": "listQuestions",
+        "summary": "List interview practice questions",
+        "description": "Returns the full catalog of coding-interview practice questions shown at /questions.",
+        "tags": ["Questions"],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "The list of questions.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/QuestionListResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Server failed to read the question catalog.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze-cv": {
+      "post": {
+        "operationId": "analyzeCv",
+        "summary": "Analyze a CV against an optional job description",
+        "description": "Uploads a PDF resume and returns a structured ATS-style match score, strengths, red flags, and concrete fix suggestions in Hebrew. Rate-limited to 20 requests per day per client IP.",
+        "tags": ["CV Analysis"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["cv"],
+                "properties": {
+                  "cv": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The resume file. Must be application/pdf, non-empty, and at most 10 MB."
+                  },
+                  "jobDescription": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "description": "Optional free-text job description to score the CV against. When omitted, only the four dimensions that don't require it are scored, capping match_percentage at 50."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Structured CV analysis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object": { "$ref": "#/components/schemas/CVAnalysisResult" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or empty CV file.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "403": {
+            "description": "Blocked as automated traffic.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "413": {
+            "description": "CV file or job description exceeds the size limit.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "415": {
+            "description": "Uploaded file is not a PDF.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "429": {
+            "description": "Daily rate limit exceeded.",
+            "headers": {
+              "X-RateLimit-Limit": { "schema": { "type": "integer" } },
+              "X-RateLimit-Remaining": { "schema": { "type": "integer" } },
+              "X-RateLimit-Reset": {
+                "schema": { "type": "integer" },
+                "description": "Epoch milliseconds when the limit resets."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "500": {
+            "description": "Analysis failed (corrupt or unsupported PDF).",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/purchases/check": {
+      "get": {
+        "operationId": "checkCoursePurchase",
+        "summary": "Check whether the signed-in user purchased a course",
+        "description": "Returns whether the current session's user has purchased the given course. Always returns purchased: false for anonymous sessions or when courseSlug is omitted.",
+        "tags": ["Purchases"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          {
+            "name": "courseSlug",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Slug of the course to check, as used in /courses/{courseSlug}."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Purchase status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "purchased": { "type": "boolean" }
+                  },
+                  "required": ["purchased"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "better-auth.session_token",
+        "description": "Session cookie set after signing in via /login."
+      }
+    },
+    "schemas": {
+      "ApiError": {
+        "type": "object",
+        "description": "Structured error envelope returned by this API. `code` is a stable machine-readable identifier; `message`/`error` is a human-readable (often Hebrew) description; `hint` is optional guidance on how to resolve the error.",
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "error": { "type": "string" },
+          "hint": { "type": "string" }
+        },
+        "required": ["code"]
+      },
+      "QuestionListResponse": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/QuestionListItem" }
+      },
+      "QuestionListItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "titleHe": { "type": "string" },
+          "difficulty": {
+            "type": "string",
+            "enum": ["הכל", "קל", "בינוני", "קשה"]
+          },
+          "difficultyEn": {
+            "type": "string",
+            "enum": ["", "Easy", "Medium", "Hard"]
+          },
+          "category": { "type": "string" },
+          "categoryEn": { "type": "string" },
+          "solved": { "type": "boolean" },
+          "acceptance": { "type": "string" },
+          "slug": { "type": "string" },
+          "source": { "type": "string" },
+          "companies": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "id",
+          "title",
+          "titleHe",
+          "difficulty",
+          "difficultyEn",
+          "category",
+          "categoryEn",
+          "solved",
+          "acceptance",
+          "slug"
+        ]
+      },
+      "CVFixItem": {
+        "type": "object",
+        "properties": {
+          "issue": { "type": "string" },
+          "action": { "type": "string" }
+        },
+        "required": ["issue", "action"]
+      },
+      "CVAnalysisResult": {
+        "type": "object",
+        "properties": {
+          "job_title": { "type": "string" },
+          "match_percentage": { "type": "number", "minimum": 0, "maximum": 100 },
+          "scores": {
+            "type": "object",
+            "properties": {
+              "hard_requirements": { "type": "number", "minimum": 0, "maximum": 35 },
+              "experience_alignment": { "type": "number", "minimum": 0, "maximum": 20 },
+              "ats_keywords": { "type": "number", "minimum": 0, "maximum": 15 },
+              "impact_evidence": { "type": "number", "minimum": 0, "maximum": 15 },
+              "clarity": { "type": "number", "minimum": 0, "maximum": 10 },
+              "seniority_story": { "type": "number", "minimum": 0, "maximum": 5 }
+            }
+          },
+          "red_flags": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CVFixItem" }
+          },
+          "strengths": { "type": "array", "items": { "type": "string" } },
+          "improvements": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CVFixItem" }
+          },
+          "keywords_found": { "type": "array", "items": { "type": "string" } },
+          "keywords_missing": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "job_title",
+          "match_percentage",
+          "scores",
+          "red_flags",
+          "strengths",
+          "improvements",
+          "keywords_found",
+          "keywords_missing"
+        ]
+      }
+    }
+  }
+}

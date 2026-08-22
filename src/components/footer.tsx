@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { Linkedin, Twitter } from "lucide-react";
 import { track } from "@/services/analytics";
+import { Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -16,6 +16,9 @@ const Footer = () => {
             prefetch={false}
           >
             הורדת הספר הדיגיטלי
+          </Link>
+          <Link href="/developers" className="hover:underline" prefetch={false}>
+            מפתחים
           </Link>
           <span
             onClick={() => {

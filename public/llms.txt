@@ -11,6 +11,12 @@
 - [ניתוח קורות חיים חכם (ATS)](https://hightechguide.co.il/cv-analysis.html.md): כלי AI לניתוח קורות חיים, חלק חשוב בהכנה לריאיון עבודה. קבלו בדיקת התאמה למערכות סינון (ATS), ניתוח מקיף וטיפים לשיפור.
 - [אודות רון קנטור](https://hightechguide.co.il/index.html.md#about): פרטים על מחבר הספר והקורסים, ניסיונו המקצועי, והרקע שהוביל ליצירת המדריך. (מוטמע בעמוד הראשי)
 
+## למפתחים ולסוכני AI
+
+- [מפתחים וסוכני AI](https://hightechguide.co.il/developers): עמוד המשאבים למפתחים, כולל מפרט ה-API ותיאור נקודות הקצה.
+- [מפרט OpenAPI](https://hightechguide.co.il/openapi.json): מפרט מלא (OpenAPI 3.1) של ה-API הציבורי, כולל `/api/questions` ו-`/api/analyze-cv`.
+- [מפת האתר](https://hightechguide.co.il/sitemap.xml): רשימת כל העמודים באתר, כולל השאלות והמושגים במילון.
+
 ## מידע נוסף
 
 - [יצירת קשר](https://hightechguide.co.il/index.html.md#contact): פרטים ליצירת קשר בנושאי ייעוץ, שאלות על הספר או הקורסים.
