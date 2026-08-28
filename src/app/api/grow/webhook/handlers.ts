@@ -1,4 +1,4 @@
-import { NextResponse, after } from "next/server";
+import { NextResponse } from "next/server";
 import { bookPurchase, coursePurchase, ebookPurchase } from "@/db/schema";
 import type { CourseSlug } from "@/lib/paylinks";
 import type { db } from "@/db/index";
@@ -62,17 +62,21 @@ export type MetaPurchaseDetails = {
   eventSourceUrl: string;
 };
 
-function reportMetaPurchaseInBackground(params: {
+// Awaited (not fire-and-forget) because background work scheduled via
+// next/server's after() is only guaranteed to run on Vercel projects with
+// Fluid Compute enabled; this project predates that default, so after()
+// callbacks were silently dropped once the response was sent.
+async function reportMetaPurchase(params: {
   email: string;
   transactionCode: string | null | undefined;
   contentIds: string[];
   contentType: string;
   meta: MetaPurchaseDetails;
-}) {
+}): Promise<void> {
   const value = Number.parseFloat(params.meta.price) * Number.parseInt(params.meta.quantity || "1", 10);
 
-  after(() =>
-    sendMetaPurchase({
+  try {
+    await sendMetaPurchase({
       email: params.email,
       transactionCode: params.transactionCode ?? null,
       value: Number.isFinite(value) ? value : 0,
@@ -82,10 +86,10 @@ function reportMetaPurchaseInBackground(params: {
       contentName: params.meta.name,
       eventSourceUrl: params.meta.eventSourceUrl,
       eventTime: new Date(),
-    }).catch((err) => {
-      console.error("sendMetaPurchase failed", err);
-    }),
-  );
+    });
+  } catch (err) {
+    console.error("sendMetaPurchase failed", err);
+  }
 }
 
 export async function handleEbookPurchase(
@@ -106,7 +110,7 @@ export async function handleEbookPurchase(
     .returning({ id: ebookPurchase.id });
 
   if (inserted.length > 0) {
-    reportMetaPurchaseInBackground({
+    await reportMetaPurchase({
       email,
       transactionCode,
       contentIds: ["ebook"],
@@ -142,7 +146,7 @@ export async function handleCoursePurchase(
     .returning({ id: coursePurchase.id });
 
   if (inserted.length > 0) {
-    reportMetaPurchaseInBackground({
+    await reportMetaPurchase({
       email,
       transactionCode,
       contentIds: [courseSlug],
@@ -172,7 +176,7 @@ export async function handleBookPurchase(
     .returning({ id: bookPurchase.id });
 
   if (inserted.length > 0) {
-    reportMetaPurchaseInBackground({
+    await reportMetaPurchase({
       email,
       transactionCode,
       contentIds: ["book"],

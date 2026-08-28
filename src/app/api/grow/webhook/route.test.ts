@@ -4,11 +4,6 @@
 
 jest.mock("@/db/index", () => ({ db: {} }));
 
-jest.mock("next/server", () => {
-  const actual = jest.requireActual("next/server");
-  return { ...actual, after: (cb: () => unknown) => cb() };
-});
-
 jest.mock("@/services/meta-purchases", () => ({
   sendMetaPurchase: jest.fn().mockResolvedValue(undefined),
 }));
