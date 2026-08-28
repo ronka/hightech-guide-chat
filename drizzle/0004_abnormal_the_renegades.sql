@@ -1,1 +1,0 @@
-ALTER TABLE "metaPurchaseOutbox" ADD COLUMN "destination" jsonb;

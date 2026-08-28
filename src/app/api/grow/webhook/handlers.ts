@@ -33,16 +33,12 @@ export function parseNestedFormData(rawBody: string): GrowWebhookBody {
 
   for (const [key, value] of params.entries()) {
     const keys = key.replace(/\]/g, "").split("[");
-    if (keys.some(part => ["__proto__", "constructor", "prototype"].includes(part))) {
-      throw new Error("Invalid form key");
-    }
     let current = result;
     for (let i = 0; i < keys.length - 1; i++) {
       const k = keys[i];
       if (!(k in current)) {
         current[k] = /^\d+$/.test(keys[i + 1]) ? [] : {};
       }
-      if (!current[k] || typeof current[k] !== "object") throw new Error("Invalid form structure");
       current = current[k] as Record<string, unknown>;
     }
     const lastKey = keys[keys.length - 1];
@@ -56,7 +52,7 @@ export function parseNestedFormData(rawBody: string): GrowWebhookBody {
   return result as unknown as GrowWebhookBody;
 }
 
-type DbClient = Pick<typeof db, "insert">;
+type DbClient = typeof db;
 
 export async function handleEbookPurchase(
   dbClient: DbClient,

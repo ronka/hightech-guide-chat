@@ -10,7 +10,6 @@ import { and, eq } from "drizzle-orm";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CourseModuleList } from "./CourseModuleList";
-import { CheckoutLink } from "@/components/checkout-link";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -104,25 +103,14 @@ export default async function CourseOverviewPage({ params }: Props) {
             )
           ) : (
             buyLink && (
-              courseSlug === "job-interview-course" ? (
-                <CheckoutLink
-                  product="job-interview-course"
-                  source="course-overview"
-                  target="_blank"
-                  className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
-                >
-                  רכוש את הקורס ←
-                </CheckoutLink>
-              ) : (
-                <a
-                  href={buyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
-                >
-                  רכוש את הקורס ←
-                </a>
-              )
+              <a
+                href={buyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
+              >
+                רכוש את הקורס ←
+              </a>
             )
           )}
         </div>

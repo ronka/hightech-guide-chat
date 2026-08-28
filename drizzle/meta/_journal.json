@@ -22,27 +22,6 @@
       "when": 1773163885580,
       "tag": "0002_peaceful_rhodey",
       "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1787891890222,
-      "tag": "0003_meta_purchase_outbox",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1787915134572,
-      "tag": "0004_abnormal_the_renegades",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1787915368545,
-      "tag": "0005_narrow_captain_midlands",
-      "breakpoints": true
     }
   ]
 }

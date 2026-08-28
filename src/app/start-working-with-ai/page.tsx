@@ -55,11 +55,13 @@ function CourseCta({
 
 export default function StartWorkingWithAIPage() {
   useEffect(() => {
-    track("course_page_view", {
+    track("view_content", {
       content_type: "course_page",
       content_id: "start-working-with-ai",
       course_name: "מתחילים לעבוד עם AI",
       page_title: "מתחילים לעבוד עם AI: הקורס המעשי לפיתוח עם בינה מלאכותית",
+      currency: "ILS",
+      value: 199,
     });
   }, []);
 
@@ -75,19 +77,21 @@ export default function StartWorkingWithAIPage() {
   const isPurchased = purchaseData?.purchased ?? false;
 
   const handleAccordionOpen = (section: string) => {
-    track("course_section_click", {
+    track("view_content", {
       content_type: "course_section",
       section_name: section,
       course_name: "מתחילים לעבוד עם AI",
-      interaction_type: "accordion_toggle_click",
+      interaction_type: "accordion_open",
     });
   };
 
   const handleBuyButtonClick = (location: string) => {
-    track("course_interest_click", {
+    track("add_to_cart", {
       content_type: "course",
       content_id: "start-working-with-ai",
       course_name: "מתחילים לעבוד עם AI",
+      currency: "ILS",
+      value: 199,
       button_location: location,
     });
   };

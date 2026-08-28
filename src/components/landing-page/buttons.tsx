@@ -1,17 +1,26 @@
 "use client";
 
 import { BOOK_PROMO } from "@/constants/links";
+import { BOOK_PAYLINK, COURSE_PAYLINKS, EBOOK_PAYLINK } from "@/lib/paylinks";
 import { track } from "@/services/analytics";
-import { CheckoutLink } from "@/components/checkout-link";
 import Link from "next/link";
 import { Button } from "../ui/button";
+
+const RONKA_BOOK_PYSHICAL_ID = "704";
+const RONKA_BOOK_DIGITAL_ID = "712";
+export const RONKA_COURSE_ID = "819";
+
 
 const RonkaCourseButton = () => {
   return (
     <Button className="w-full bg-blue-500" size={"lg"} asChild>
-      <CheckoutLink product="job-interview-course" source="RonkaCourse">
+      <Link
+        onClick={() => track("book_click", { source: "RonkaCourse", product_id: RONKA_COURSE_ID, product_type: "course" })}
+        href={COURSE_PAYLINKS["job-interview-course"]}
+      // href={`https://ronka.dev/cart/?custom-add-to-cart=${RONKA_COURSE_ID}&quantity=1&utm_source=htstarter&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
+      >
         התחל עכשיו ב-99 ₪ בלבד! 🚀
-      </CheckoutLink>
+      </Link>
     </Button>
   );
 };
@@ -20,9 +29,13 @@ const RonkaCourseButton = () => {
 const RonkaPhysicalBookButton = () => {
   return (
     <Button className="w-full bg-green-500" size={"lg"} asChild>
-      <CheckoutLink product="physical-book" source="RonkaPhysical">
+      <Link
+        onClick={() => track("book_click", { source: "RonkaPhysical", product_id: RONKA_BOOK_PYSHICAL_ID, product_type: "physical_book" })}
+        href={BOOK_PAYLINK}
+      // href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_PYSHICAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
+      >
         אני רוצה כזה! עותק פיזי 📚
-      </CheckoutLink>
+      </Link>
     </Button>
   );
 };
@@ -30,9 +43,12 @@ const RonkaPhysicalBookButton = () => {
 const RonkaDigitalBookButton = () => {
   return (
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
-      <CheckoutLink product="digital-book" source="RonkaDigitalEbook">
+      <Link
+        onClick={() => track("book_click", { source: "RonkaDigitalEbook", product_type: "digital_book" })}
+        href={EBOOK_PAYLINK}
+      >
         אני רוצה כזה! עותק דיגיטלי 📱
-      </CheckoutLink>
+      </Link>
     </Button>
   );
 };

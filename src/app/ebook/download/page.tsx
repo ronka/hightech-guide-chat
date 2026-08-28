@@ -1,12 +1,12 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { CheckoutLink } from "@/components/checkout-link";
+import Link from "next/link";
 import { Download } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { db } from "@/db/index";
 import { ebookPurchase } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { EBOOK_DOWNLOAD_URL } from "@/lib/paylinks";
+import { EBOOK_PAYLINK, EBOOK_DOWNLOAD_URL } from "@/lib/paylinks";
 import { MagicLinkForm } from "@/app/login/MagicLinkForm";
 
 export const dynamic = "force-dynamic";
@@ -41,13 +41,12 @@ export default async function EbookDownloadPage() {
           <div className="container mx-auto">
             <MagicLinkForm callbackUrl={"/ebook/download"} />
           </div>
-          <CheckoutLink
-            product="digital-book"
-            source="ebook-download"
+          <a
+            href={EBOOK_PAYLINK}
             className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
           >
             רכוש את הספר הדיגיטלי ←
-          </CheckoutLink>
+          </a>
         </div>
       </main>
     );

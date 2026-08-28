@@ -1,7 +1,8 @@
 "use client";
 
-import { CheckoutLink } from "@/components/checkout-link";
+import { RONKA_COURSE_ID } from "@/components/landing-page/buttons";
 import { Button } from "@/components/ui/button";
+import { COURSE_PAYLINKS } from "@/lib/paylinks";
 import { track } from "@/services/analytics";
 import { cn } from "@/services/utils";
 import {
@@ -9,6 +10,7 @@ import {
   visibleDimensions,
 } from "@/types/cv-analysis";
 import { Check, ThumbsDown, ThumbsUp } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { type AnalysisRating, patchAnalysis } from "./analysis-storage";
 
@@ -664,9 +666,18 @@ function CourseCta() {
       </p>
       <div className="flex justify-center">
         <Button size="lg" className="bg-blue-500 px-8" asChild>
-          <CheckoutLink product="job-interview-course" source="cv-analysis">
+          <Link
+            href={COURSE_PAYLINKS["job-interview-course"]}
+            onClick={() =>
+              track("book_click", {
+                source: "cv-analysis",
+                product_id: RONKA_COURSE_ID,
+                product_type: "course",
+              })
+            }
+          >
             להתחיל את הקורס ב-99 ₪ 🚀
-          </CheckoutLink>
+          </Link>
         </Button>
       </div>
       <p className="text-xs text-muted-foreground">

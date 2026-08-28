@@ -1,33 +1,13 @@
 "use client";
 
 import Script from "next/script";
-import { useSyncExternalStore } from "react";
-import {
-  browserAnalyticsEnabled,
-  FB_PIXEL_ID,
-} from "@/services/analytics-config";
-import {
-  getTrackingConsent,
-  getServerTrackingConsent,
-  subscribeTrackingConsent,
-} from "@/services/analytics-consent";
-import { flushAnalyticsEvents } from "@/services/analytics";
+
+const FB_PIXEL_ID = "1152278206328522";
 
 export function FacebookPixel() {
-  const consent = useSyncExternalStore(
-    subscribeTrackingConsent,
-    getTrackingConsent,
-    getServerTrackingConsent,
-  );
-  if (!browserAnalyticsEnabled("facebook") || consent.marketing !== "granted")
-    return null;
   return (
     <>
-      <Script
-        id="fb-pixel"
-        strategy="afterInteractive"
-        onReady={() => queueMicrotask(flushAnalyticsEvents)}
-      >
+      <Script id="fb-pixel" strategy="afterInteractive">
         {`
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

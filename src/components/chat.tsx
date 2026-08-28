@@ -37,7 +37,7 @@ export function Chat({ sessionId, isUploading }: ChatProps) {
 
     track("chat_message_sent", {
       message_count: messages.slice(1).length,
-      chat_session_id: sessionId,
+      session_id: sessionId,
     });
 
     sendMessage({ text: input });

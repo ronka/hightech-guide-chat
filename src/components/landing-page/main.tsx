@@ -12,13 +12,10 @@ import {
 import TableOfContents from "./table-of-content";
 import { ContactForm } from "./contact-form";
 import { About } from "./about";
-import { ProductView } from "../product-view";
 
 const Main = () => {
   return (
     <main className="flex-1">
-      <ProductView product="physical-book" source="book-landing-page" />
-      <ProductView product="digital-book" source="book-landing-page" />
       <section className="w-full py-12 relative overflow-hidden">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 ">

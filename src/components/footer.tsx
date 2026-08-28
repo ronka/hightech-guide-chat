@@ -22,7 +22,7 @@ const Footer = () => {
           </Link>
           <span
             onClick={() => {
-              track("social_link_click", { source: "i want book" });
+              track("contact", { source: "i want book" });
             }}
           >
             <Link
@@ -36,7 +36,7 @@ const Footer = () => {
           </span>
           <span
             onClick={() => {
-              track("social_link_click", { source: "Linkedin" });
+              track("contact", { source: "Linkedin" });
             }}
           >
             <Link
@@ -50,7 +50,7 @@ const Footer = () => {
           </span>
           <span
             onClick={() => {
-              track("social_link_click", { source: "X" });
+              track("contact", { source: "X" });
             }}
           >
             <Link
