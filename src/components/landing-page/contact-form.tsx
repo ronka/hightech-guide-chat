@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { track } from "@/services/analytics";
 import { useForm, ValidationError } from "@formspree/react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +31,14 @@ function FormLabel({
 
 function ContactForm() {
   const [state, handleSubmit] = useForm("xjkbdzgv");
+  const leadReported = useRef(false);
+
+  useEffect(() => {
+    if (!state.succeeded || leadReported.current) return;
+    leadReported.current = true;
+    // Only confirmed submissions are leads; never send the form's personal data.
+    track("lead", { source: "contact-form", form_id: "contact" });
+  }, [state.succeeded]);
 
   return (
     <div className="container px-4 md:px-6">

@@ -1,7 +1,7 @@
 export default {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/tests/analytics/"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },

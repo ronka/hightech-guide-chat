@@ -19,7 +19,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { track } from "@/services/analytics";
-import { useEffect } from "react";
+import { trackCheckout } from "@/services/checkout-analytics";
+import { ProductView } from "@/components/product-view";
 import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
 import { COURSE_PAYLINKS, type CourseSlug } from "@/lib/paylinks";
@@ -60,8 +61,10 @@ function CourseCta({
   }
   return (
     <>
-      <div onClick={onBuyClick}>
-        <BuyButton size={size} href={COURSE_PAYLINKS[COURSE_SLUG]}>{children}</BuyButton>
+      <div>
+        <BuyButton size={size} href={COURSE_PAYLINKS[COURSE_SLUG]} onClick={onBuyClick}>
+          {children}
+        </BuyButton>
       </div>
       {subtext}
       {!isLoggedIn && (
@@ -77,18 +80,6 @@ function CourseCta({
 }
 
 export default function CrackingTheJobInterviewPage() {
-  // Track page view when component mounts
-  useEffect(() => {
-    track("view_content", {
-      content_type: "course_page",
-      content_id: "cracking-the-job-interview",
-      course_name: "מפצחים את קוד הראיון",
-      page_title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
-      currency: "ILS",
-      value: 99,
-    });
-  }, []);
-
   const { data: session } = authClient.useSession();
 
   const { data: purchaseData } = useQuery({
@@ -100,51 +91,37 @@ export default function CrackingTheJobInterviewPage() {
 
   const isPurchased = purchaseData?.purchased ?? false;
 
-  // Track video interactions
-  const handleVideoPlay = () => {
-    track("view_content", {
-      video_title: "הצצה - שלום וברוכים הבאים",
-      video_id: "w86FMn_9eZY",
-      course_name: "מפצחים את קוד הראיון",
-      content_type: "preview_video",
-      interaction_type: "video_play",
-    });
-  };
-
   // Track accordion interactions
   const handleAccordionOpen = (section: string) => {
-    track("view_content", {
+    track("course_section_click", {
       content_type: "course_section",
       section_name: section,
       course_name: "מפצחים את קוד הראיון",
-      interaction_type: "accordion_open",
+      interaction_type: "accordion_toggle_click",
     });
   };
 
   // Track testimonial interactions
   const handleTestimonialView = (testimonialId: string) => {
-    track("view_content", {
+    track("testimonial_interaction", {
       content_type: "testimonial",
       testimonial_id: testimonialId,
       course_name: "מפצחים את קוד הראיון",
-      interaction_type: "testimonial_hover",
+      interaction_type: testimonialId.endsWith("_click") ? "click" : "hover",
     });
   };
 
   // Track buy button clicks
   const handleBuyButtonClick = (location: string) => {
-    track("add_to_cart", {
-      content_type: "course",
-      content_id: "cracking-the-job-interview",
-      course_name: "מפצחים את קוד הראיון",
-      currency: "ILS",
-      value: 99,
+    trackCheckout(COURSE_SLUG, {
+      source: "cracking-the-job-interview",
       button_location: location,
     });
   };
 
   return (
     <main className="flex-1">
+      <ProductView product={COURSE_SLUG} source="cracking-the-job-interview" />
       {/* Hero Section */}
       <section className="w-full border-b text-gray-200 relative">
         <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -213,7 +190,7 @@ export default function CrackingTheJobInterviewPage() {
                       allowFullScreen
                       onLoad={() => {
                         // Track video load
-                        track("view_content", {
+                        track("video_loaded", {
                           content_type: "video_load",
                           video_title: "הצצה - שלום וברוכים הבאים",
                           video_id: "w86FMn_9eZY",

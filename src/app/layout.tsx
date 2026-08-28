@@ -4,7 +4,7 @@ import { PHProvider } from "@/providers/posthog";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Assistant } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTag } from "@/components/google-tag";
 import { FacebookPixel } from "@/components/facebook-pixel";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </QueryProvider>
             </PHProvider>
             <Analytics />
-            <GoogleAnalytics gaId="G-07PEBMF7K9" />
+            <GoogleTag />
           </ThemeProvider>
         </DirectionProvider>
       </body>

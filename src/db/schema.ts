@@ -1,4 +1,7 @@
-import { pgTable, text, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, boolean, timestamp, integer, jsonb, index } from "drizzle-orm/pg-core";
+import type { MetaPurchaseEvent, MetaPurchaseDestination } from "@/services/meta-purchases";
+import type { GooglePurchasePayload } from "@/services/google-purchases";
+import type { DeliveryMode } from "@/services/purchase-delivery";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -73,3 +76,39 @@ export const webhookLog = pgTable("webhookLog", {
   receivedAt: timestamp("receivedAt").notNull(),
   rawBody: text("rawBody"),
 });
+
+// Written in the same transaction as the entitlement. Keep the original payload
+// and event ID across retries; a duplicate webhook must not create a new event.
+export const metaPurchaseOutbox = pgTable("metaPurchaseOutbox", {
+  eventId: text("eventId").primaryKey(),
+  payload: jsonb("payload").$type<MetaPurchaseEvent>().notNull(),
+  testEventCode: text("testEventCode"),
+  // Null on pre-migration jobs: never guess their original destination/mode.
+  destination: jsonb("destination").$type<MetaPurchaseDestination>(),
+  createdAt: timestamp("createdAt").notNull(),
+  sentAt: timestamp("sentAt"),
+  failedAt: timestamp("failedAt"),
+  attempts: integer("attempts").notNull().default(0),
+  nextAttemptAt: timestamp("nextAttemptAt").notNull(),
+  lockedUntil: timestamp("lockedUntil"),
+  lockId: text("lockId"),
+  lastError: text("lastError"),
+}, (table) => [index("metaPurchaseOutbox_pending_idx").on(table.sentAt, table.failedAt, table.nextAttemptAt)]);
+
+// Separate state: a Meta receipt cannot mark a Google purchase as delivered.
+export const googlePurchaseOutbox = pgTable("googlePurchaseOutbox", {
+  transactionId: text("transactionId").primaryKey(),
+  payload: jsonb("payload").$type<GooglePurchasePayload>(),
+  measurementId: text("measurementId"),
+  mode: text("mode").$type<DeliveryMode>(),
+  sessionStartedAt: timestamp("sessionStartedAt"),
+  suppressedReason: text("suppressedReason"),
+  createdAt: timestamp("createdAt").notNull(),
+  sentAt: timestamp("sentAt"),
+  failedAt: timestamp("failedAt"),
+  attempts: integer("attempts").notNull().default(0),
+  nextAttemptAt: timestamp("nextAttemptAt").notNull(),
+  lockedUntil: timestamp("lockedUntil"),
+  lockId: text("lockId"),
+  lastError: text("lastError"),
+}, table => [index("googlePurchaseOutbox_pending_idx").on(table.sentAt, table.failedAt, table.nextAttemptAt)]);

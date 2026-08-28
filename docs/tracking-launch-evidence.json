@@ -1,0 +1,56 @@
+{
+  "googleActivation": {
+    "status": "BLOCKED",
+    "date": "2026-08-28",
+    "ownerDirection": "enable google reporting, i will remove it from grow",
+    "nextInput": "Public Google tag ID currently entered in Grow to identify the replacement destination",
+    "blockers": [
+      "Existing GA4 sender cannot get VerifiedGoogleContext from the static payment callback",
+      "GA4 server destination/secret and checked Google Ads credentials are not configured locally; deployed settings not inspected",
+      "Alternative email-based Google Ads import requires destination/account setup and a different supported integration"
+    ],
+    "activated": false,
+    "evidence": ["docs/tracking-launch-checklist.md"]
+  },
+  "matchingDecision": {
+    "status": "ACCEPTED_LIMITATION",
+    "date": "2026-08-28",
+    "scope": "Meta purchase matching using hashed payer email from the authenticated Grow webhook; no browser-to-order correlation",
+    "ownerDirection": "lets accept limited matching, there is no way to have the checkout return a refernce",
+    "checkout": "Preserve existing static Grow links; no reference or API-created-session redesign",
+    "google": "App purchases remain suppressed without verified client/session context; Grow Google reporting must not be removed without a validated replacement",
+    "consent": "Owner selected no-prompt tracking for the intended Israel-only audience; no visitor acceptance is recorded or inferred from the webhook",
+    "evidence": ["docs/tracking-launch-checklist.md"]
+  },
+  "implementation": {
+    "status": "PARTIAL",
+    "date": "2026-08-28",
+    "checks": {
+      "unitTests": "PASS: 19 suites, 205 tests",
+      "databaseTests": "PASS: 9 tests against ephemeral PGlite and all migrations",
+      "browserContract": "PASS: automatic no-prompt startup with real Next Script components, page/product/checkout/custom events, explicit permission overrides, revocation and repeat visits; external delivery blocked",
+      "productionBuild": "PASS: npm run build:analytics:test with dummy credentials",
+      "typecheck": "PASS",
+      "scopedLint": "PASS: original 17 core files; no-prompt change's 4 source/test files have no errors and one pre-existing non-null assertion warning in browser-fixture.tsx",
+      "whitespace": "PASS: git diff --check",
+      "launchGate": "Expected FAIL: unresolved implementation/provider/cutover gates prevent a launch-ready result"
+    },
+    "remaining": [
+      "Finish checkout navigation reliability without introducing a browser-to-purchase reference",
+      "App Google replacement deferred: no VerifiedGoogleContext can be supplied by current static callbacks; amount/tax/shipping contract is also unverified",
+      "Configure Google retry scheduling and production alert thresholds/destination",
+      "Verify full route SPA auto-pageview behavior and external lead integrations if needed"
+    ],
+    "evidence": ["tests/analytics/README.md", "docs/tracking-launch-checklist.md"]
+  },
+  "providerValidation": {
+    "status": "PENDING",
+    "owner": "User handles Grow; Google/Meta account validation not performed",
+    "evidence": []
+  },
+  "cutover": {
+    "status": "PENDING",
+    "owner": "Requires explicit deployment and ownership-boundary approval",
+    "evidence": []
+  }
+}
