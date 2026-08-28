@@ -133,7 +133,7 @@ export default function CrackingTheJobInterviewPage() {
 
   // Track buy button clicks
   const handleBuyButtonClick = (location: string) => {
-    track("add_to_cart", {
+    track("initiate_checkout", {
       content_type: "course",
       content_id: "cracking-the-job-interview",
       course_name: "מפצחים את קוד הראיון",

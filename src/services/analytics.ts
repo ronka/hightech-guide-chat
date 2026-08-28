@@ -13,6 +13,7 @@ export type EventName =
   | "view_content"
   | "like_word"
   | "add_to_cart"
+  | "initiate_checkout"
   | "video_play"
   | "chat_message_sent"
   | "cv_file_selected"
@@ -43,6 +44,7 @@ const fbEventMap: Record<EventName, string> = {
   view_content: "ViewContent",
   like_word: "ViewContent",
   add_to_cart: "AddToCart",
+  initiate_checkout: "InitiateCheckout",
   video_play: "ViewContent",
   chat_message_sent: "ViewContent",
   cv_file_selected: "ViewContent",

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { track } from "@/services/analytics";
 
 interface BuyButtonProps {
   children: React.ReactNode;
@@ -32,22 +31,10 @@ function BuyButtonInner({
 
   const sizeClasses = size === "xl" ? "h-16 px-12 text-lg" : "h-12 px-8";
 
-  const handleClick = () => {
-    track("add_to_cart", {
-      value: 99,
-      currency: "ILS",
-      content_name: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
-      content_category: "כללי",
-      content_type: "product",
-      source: "high-tech-guide",
-    });
-  };
-
   return (
     <Link
       href={getFullUrl()}
       className={`${baseClasses} ${sizeClasses}`}
-      onClick={handleClick}
     >
       {children}
     </Link>

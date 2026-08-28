@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { bookPurchase, coursePurchase, ebookPurchase } from "@/db/schema";
-import { PRODUCT_COURSE_MAP } from "@/lib/paylinks";
-import { db } from "@/db/index";
+import type { CourseSlug } from "@/lib/paylinks";
+import type { db } from "@/db/index";
+import { sendMetaPurchase } from "@/services/meta-purchases";
 
 export type GrowProductData = {
   product_id: string;
@@ -54,12 +55,46 @@ export function parseNestedFormData(rawBody: string): GrowWebhookBody {
 
 type DbClient = typeof db;
 
+export type MetaPurchaseDetails = {
+  price: string;
+  quantity: string;
+  name: string;
+  eventSourceUrl: string;
+};
+
+function reportMetaPurchaseInBackground(params: {
+  email: string;
+  transactionCode: string | null | undefined;
+  contentIds: string[];
+  contentType: string;
+  meta: MetaPurchaseDetails;
+}) {
+  const value = Number.parseFloat(params.meta.price) * Number.parseInt(params.meta.quantity || "1", 10);
+
+  after(() =>
+    sendMetaPurchase({
+      email: params.email,
+      transactionCode: params.transactionCode ?? null,
+      value: Number.isFinite(value) ? value : 0,
+      currency: "ILS",
+      contentIds: params.contentIds,
+      contentType: params.contentType,
+      contentName: params.meta.name,
+      eventSourceUrl: params.meta.eventSourceUrl,
+      eventTime: new Date(),
+    }).catch((err) => {
+      console.error("sendMetaPurchase failed", err);
+    }),
+  );
+}
+
 export async function handleEbookPurchase(
   dbClient: DbClient,
   email: string,
   transactionCode: string | null | undefined,
+  meta: MetaPurchaseDetails,
 ): Promise<NextResponse> {
-  await dbClient
+  const inserted = await dbClient
     .insert(ebookPurchase)
     .values({
       id: crypto.randomUUID(),
@@ -67,7 +102,18 @@ export async function handleEbookPurchase(
       transactionCode: transactionCode ?? null,
       purchasedAt: new Date(),
     })
-    .onConflictDoNothing({ target: ebookPurchase.transactionCode });
+    .onConflictDoNothing({ target: ebookPurchase.transactionCode })
+    .returning({ id: ebookPurchase.id });
+
+  if (inserted.length > 0) {
+    reportMetaPurchaseInBackground({
+      email,
+      transactionCode,
+      contentIds: ["ebook"],
+      contentType: "ebook",
+      meta,
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -76,14 +122,14 @@ export async function handleCoursePurchase(
   dbClient: DbClient,
   email: string,
   transactionCode: string | null | undefined,
-  productId: string,
+  courseSlug: CourseSlug | undefined,
+  meta: MetaPurchaseDetails,
 ): Promise<NextResponse> {
-  const courseSlug = PRODUCT_COURSE_MAP[productId];
   if (!courseSlug) {
     return NextResponse.json({ error: "Unknown product" }, { status: 400 });
   }
 
-  await dbClient
+  const inserted = await dbClient
     .insert(coursePurchase)
     .values({
       id: crypto.randomUUID(),
@@ -92,7 +138,18 @@ export async function handleCoursePurchase(
       transactionCode: transactionCode ?? null,
       purchasedAt: new Date(),
     })
-    .onConflictDoNothing({ target: coursePurchase.transactionCode });
+    .onConflictDoNothing({ target: coursePurchase.transactionCode })
+    .returning({ id: coursePurchase.id });
+
+  if (inserted.length > 0) {
+    reportMetaPurchaseInBackground({
+      email,
+      transactionCode,
+      contentIds: [courseSlug],
+      contentType: "course",
+      meta,
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -101,8 +158,9 @@ export async function handleBookPurchase(
   dbClient: DbClient,
   email: string,
   transactionCode: string | null | undefined,
+  meta: MetaPurchaseDetails,
 ): Promise<NextResponse> {
-  await dbClient
+  const inserted = await dbClient
     .insert(bookPurchase)
     .values({
       id: crypto.randomUUID(),
@@ -110,7 +168,18 @@ export async function handleBookPurchase(
       transactionCode: transactionCode ?? null,
       purchasedAt: new Date(),
     })
-    .onConflictDoNothing({ target: bookPurchase.transactionCode });
+    .onConflictDoNothing({ target: bookPurchase.transactionCode })
+    .returning({ id: bookPurchase.id });
+
+  if (inserted.length > 0) {
+    reportMetaPurchaseInBackground({
+      email,
+      transactionCode,
+      contentIds: ["book"],
+      contentType: "book",
+      meta,
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }

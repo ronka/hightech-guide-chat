@@ -15,7 +15,7 @@ const RonkaCourseButton = () => {
   return (
     <Button className="w-full bg-blue-500" size={"lg"} asChild>
       <Link
-        onClick={() => track("book_click", { source: "RonkaCourse", product_id: RONKA_COURSE_ID, product_type: "course" })}
+        onClick={() => track("initiate_checkout", { source: "RonkaCourse", product_id: RONKA_COURSE_ID, product_type: "course" })}
         href={COURSE_PAYLINKS["job-interview-course"]}
       // href={`https://ronka.dev/cart/?custom-add-to-cart=${RONKA_COURSE_ID}&quantity=1&utm_source=htstarter&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
       >
@@ -30,7 +30,7 @@ const RonkaPhysicalBookButton = () => {
   return (
     <Button className="w-full bg-green-500" size={"lg"} asChild>
       <Link
-        onClick={() => track("book_click", { source: "RonkaPhysical", product_id: RONKA_BOOK_PYSHICAL_ID, product_type: "physical_book" })}
+        onClick={() => track("initiate_checkout", { source: "RonkaPhysical", product_id: RONKA_BOOK_PYSHICAL_ID, product_type: "physical_book" })}
         href={BOOK_PAYLINK}
       // href={`https://ronka.dev/checkout/?custom-add-to-cart=${RONKA_BOOK_PYSHICAL_ID}&quantity=1&utm_source=ronka_dev&utm_medium=button&utm_campaign=physical_book&utm_content=physical_book_button`}
       >
@@ -44,7 +44,7 @@ const RonkaDigitalBookButton = () => {
   return (
     <Button className="w-full bg-sky-500" size={"lg"} asChild>
       <Link
-        onClick={() => track("book_click", { source: "RonkaDigitalEbook", product_type: "digital_book" })}
+        onClick={() => track("initiate_checkout", { source: "RonkaDigitalEbook", product_type: "digital_book" })}
         href={EBOOK_PAYLINK}
       >
         אני רוצה כזה! עותק דיגיטלי 📱

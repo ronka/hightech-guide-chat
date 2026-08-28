@@ -4,11 +4,21 @@
 
 jest.mock("@/db/index", () => ({ db: {} }));
 
+jest.mock("next/server", () => {
+  const actual = jest.requireActual("next/server");
+  return { ...actual, after: (cb: () => unknown) => cb() };
+});
+
+jest.mock("@/services/meta-purchases", () => ({
+  sendMetaPurchase: jest.fn().mockResolvedValue(undefined),
+}));
+
 import {
   parseNestedFormData,
   handleEbookPurchase,
   handleCoursePurchase,
   handleBookPurchase,
+  type MetaPurchaseDetails,
 } from "./handlers";
 import { ebookPurchase, coursePurchase, bookPurchase } from "@/db/schema";
 import {
@@ -17,15 +27,27 @@ import {
   BOOK_ASMACHTA_ID,
   PRODUCT_COURSE_MAP,
 } from "@/lib/paylinks";
+import { sendMetaPurchase } from "@/services/meta-purchases";
+
+const mockSendMetaPurchase = sendMetaPurchase as jest.Mock;
+
+const testMeta: MetaPurchaseDetails = {
+  price: "99",
+  quantity: "1",
+  name: "Test Product",
+  eventSourceUrl: "https://pay.grow.link/test",
+};
 
 // Mock db
-const mockOnConflictDoNothing = jest.fn().mockResolvedValue(undefined);
+const mockReturning = jest.fn().mockResolvedValue([{ id: "row-1" }]);
+const mockOnConflictDoNothing = jest.fn().mockReturnValue({ returning: mockReturning });
 const mockInsertValues = jest.fn().mockReturnValue({ onConflictDoNothing: mockOnConflictDoNothing });
 const mockInsert = jest.fn().mockReturnValue({ values: mockInsertValues });
 const mockDb = { insert: mockInsert } as unknown as Parameters<typeof handleEbookPurchase>[0];
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockReturning.mockResolvedValue([{ id: "row-1" }]);
 });
 
 describe("asmachta IDs (Grow payment link process IDs)", () => {
@@ -69,8 +91,8 @@ describe("parseNestedFormData", () => {
 });
 
 describe("handleEbookPurchase", () => {
-  it("inserts ebook purchase and returns ok", async () => {
-    const response = await handleEbookPurchase(mockDb, "User@Example.COM", "TX-001");
+  it("inserts ebook purchase, reports Meta purchase, and returns ok", async () => {
+    const response = await handleEbookPurchase(mockDb, "User@Example.COM", "TX-001", testMeta);
 
     expect(mockInsert).toHaveBeenCalledWith(ebookPurchase);
     expect(mockInsertValues).toHaveBeenCalledWith(
@@ -81,29 +103,49 @@ describe("handleEbookPurchase", () => {
     );
     expect(mockOnConflictDoNothing).toHaveBeenCalledWith({ target: ebookPurchase.transactionCode });
 
+    expect(mockSendMetaPurchase).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "User@Example.COM",
+        transactionCode: "TX-001",
+        value: 99,
+        currency: "ILS",
+        contentIds: ["ebook"],
+        contentType: "ebook",
+        contentName: "Test Product",
+        eventSourceUrl: "https://pay.grow.link/test",
+      }),
+    );
+
     const json = await response.json();
     expect(json).toEqual({ ok: true });
   });
 
   it("handles null transactionCode", async () => {
-    await handleEbookPurchase(mockDb, "user@example.com", null);
+    await handleEbookPurchase(mockDb, "user@example.com", null, testMeta);
     expect(mockInsertValues).toHaveBeenCalledWith(
       expect.objectContaining({ transactionCode: null }),
     );
+  });
+
+  it("does not report a Meta purchase on a duplicate webhook delivery", async () => {
+    mockReturning.mockResolvedValueOnce([]);
+    await handleEbookPurchase(mockDb, "user@example.com", "TX-001", testMeta);
+    expect(mockSendMetaPurchase).not.toHaveBeenCalled();
   });
 });
 
 describe("handleCoursePurchase", () => {
   it("returns 400 for unknown product id", async () => {
-    const response = await handleCoursePurchase(mockDb, "user@example.com", "TX-002", "UNKNOWN");
+    const response = await handleCoursePurchase(mockDb, "user@example.com", "TX-002", undefined, testMeta);
     expect(response.status).toBe(400);
     const json = await response.json();
     expect(json).toEqual({ error: "Unknown product" });
     expect(mockInsert).not.toHaveBeenCalled();
+    expect(mockSendMetaPurchase).not.toHaveBeenCalled();
   });
 
-  it("inserts course purchase for known product id", async () => {
-    const response = await handleCoursePurchase(mockDb, "User@Example.COM", "TX-003", "342942");
+  it("inserts course purchase for known product id and reports Meta purchase", async () => {
+    const response = await handleCoursePurchase(mockDb, "User@Example.COM", "TX-003", "job-interview-course", testMeta);
 
     expect(mockInsert).toHaveBeenCalledWith(coursePurchase);
     expect(mockInsertValues).toHaveBeenCalledWith(
@@ -115,14 +157,27 @@ describe("handleCoursePurchase", () => {
     );
     expect(mockOnConflictDoNothing).toHaveBeenCalledWith({ target: coursePurchase.transactionCode });
 
+    expect(mockSendMetaPurchase).toHaveBeenCalledWith(
+      expect.objectContaining({
+        contentIds: ["job-interview-course"],
+        contentType: "course",
+      }),
+    );
+
     const json = await response.json();
     expect(json).toEqual({ ok: true });
+  });
+
+  it("does not report a Meta purchase on a duplicate webhook delivery", async () => {
+    mockReturning.mockResolvedValueOnce([]);
+    await handleCoursePurchase(mockDb, "user@example.com", "TX-003", "job-interview-course", testMeta);
+    expect(mockSendMetaPurchase).not.toHaveBeenCalled();
   });
 });
 
 describe("handleBookPurchase", () => {
-  it("inserts book purchase and returns ok", async () => {
-    const response = await handleBookPurchase(mockDb, "User@Example.COM", "TX-004");
+  it("inserts book purchase, reports Meta purchase, and returns ok", async () => {
+    const response = await handleBookPurchase(mockDb, "User@Example.COM", "TX-004", testMeta);
 
     expect(mockInsert).toHaveBeenCalledWith(bookPurchase);
     expect(mockInsertValues).toHaveBeenCalledWith(
@@ -133,14 +188,27 @@ describe("handleBookPurchase", () => {
     );
     expect(mockOnConflictDoNothing).toHaveBeenCalledWith({ target: bookPurchase.transactionCode });
 
+    expect(mockSendMetaPurchase).toHaveBeenCalledWith(
+      expect.objectContaining({
+        contentIds: ["book"],
+        contentType: "book",
+      }),
+    );
+
     const json = await response.json();
     expect(json).toEqual({ ok: true });
   });
 
   it("handles null transactionCode", async () => {
-    await handleBookPurchase(mockDb, "user@example.com", undefined);
+    await handleBookPurchase(mockDb, "user@example.com", undefined, testMeta);
     expect(mockInsertValues).toHaveBeenCalledWith(
       expect.objectContaining({ transactionCode: null }),
     );
+  });
+
+  it("does not report a Meta purchase on a duplicate webhook delivery", async () => {
+    mockReturning.mockResolvedValueOnce([]);
+    await handleBookPurchase(mockDb, "user@example.com", "TX-004", testMeta);
+    expect(mockSendMetaPurchase).not.toHaveBeenCalled();
   });
 });
