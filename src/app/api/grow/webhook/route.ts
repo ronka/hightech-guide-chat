@@ -52,9 +52,12 @@ export async function POST(req: NextRequest) {
   }
 
   const baseMeta = {
-    price: product?.price ?? "0",
-    quantity: product?.quantity ?? "1",
+    // data.sum is the actual amount charged (after coupons/discounts);
+    // productData[i].price is a line-item list price and can overstate value.
+    value: data?.sum ?? product?.price ?? "0",
     name: product?.name ?? "",
+    fullName: data?.fullName,
+    phone: data?.payerPhone,
   };
 
   switch (paymentLinkProcessId) {

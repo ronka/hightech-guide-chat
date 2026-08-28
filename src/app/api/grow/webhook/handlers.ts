@@ -16,6 +16,9 @@ export type GrowProductData = {
 
 export type GrowWebhookData = {
   payerEmail: string;
+  payerPhone: string;
+  fullName: string;
+  sum: string;
   transactionId: string;
   asmachta: string;
   paymentLinkProcessId: string;
@@ -56,9 +59,12 @@ export function parseNestedFormData(rawBody: string): GrowWebhookBody {
 type DbClient = typeof db;
 
 export type MetaPurchaseDetails = {
-  price: string;
-  quantity: string;
+  // The actual amount charged (data.sum) — not a line item's list price,
+  // which ignores coupons/discounts applied to the transaction.
+  value: string;
   name: string;
+  fullName?: string;
+  phone?: string;
   eventSourceUrl: string;
 };
 
@@ -73,11 +79,13 @@ async function reportMetaPurchase(params: {
   contentType: string;
   meta: MetaPurchaseDetails;
 }): Promise<void> {
-  const value = Number.parseFloat(params.meta.price) * Number.parseInt(params.meta.quantity || "1", 10);
+  const value = Number.parseFloat(params.meta.value);
 
   try {
     await sendMetaPurchase({
       email: params.email,
+      phone: params.meta.phone,
+      fullName: params.meta.fullName,
       transactionCode: params.transactionCode ?? null,
       value: Number.isFinite(value) ? value : 0,
       currency: "ILS",

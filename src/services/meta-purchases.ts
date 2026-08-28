@@ -4,8 +4,27 @@ export function hashEmail(email: string): string {
   return createHash("sha256").update(email.trim().toLowerCase()).digest("hex");
 }
 
+export function hashPhone(phone: string, defaultCountryCode = "972"): string {
+  const digits = phone.replace(/\D/g, "");
+  const normalized = digits.startsWith("0") ? `${defaultCountryCode}${digits.slice(1)}` : digits;
+  return createHash("sha256").update(normalized).digest("hex");
+}
+
+function splitName(fullName: string): { firstName: string; lastName: string } | null {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return null;
+  const [firstName, ...rest] = parts;
+  return { firstName, lastName: rest.join(" ") };
+}
+
+export function hashName(name: string): string {
+  return createHash("sha256").update(name.trim().toLowerCase()).digest("hex");
+}
+
 export type MetaPurchaseInput = {
   email: string;
+  phone?: string;
+  fullName?: string;
   transactionCode: string | null;
   value: number;
   currency: string;
@@ -25,6 +44,8 @@ export async function sendMetaPurchase(input: MetaPurchaseInput): Promise<void> 
     return;
   }
 
+  const name = input.fullName ? splitName(input.fullName) : null;
+
   const event = {
     event_name: "Purchase",
     event_id: `grow-purchase-${input.transactionCode ?? randomUUID()}`,
@@ -33,6 +54,9 @@ export async function sendMetaPurchase(input: MetaPurchaseInput): Promise<void> 
     event_source_url: input.eventSourceUrl,
     user_data: {
       em: [hashEmail(input.email)],
+      ...(input.phone ? { ph: [hashPhone(input.phone)] } : {}),
+      ...(name?.firstName ? { fn: [hashName(name.firstName)] } : {}),
+      ...(name?.lastName ? { ln: [hashName(name.lastName)] } : {}),
     },
     custom_data: {
       currency: input.currency,

@@ -27,9 +27,10 @@ import { sendMetaPurchase } from "@/services/meta-purchases";
 const mockSendMetaPurchase = sendMetaPurchase as jest.Mock;
 
 const testMeta: MetaPurchaseDetails = {
-  price: "99",
-  quantity: "1",
+  value: "99",
   name: "Test Product",
+  fullName: "Jane Doe",
+  phone: "0501234567",
   eventSourceUrl: "https://pay.grow.link/test",
 };
 
@@ -101,6 +102,8 @@ describe("handleEbookPurchase", () => {
     expect(mockSendMetaPurchase).toHaveBeenCalledWith(
       expect.objectContaining({
         email: "User@Example.COM",
+        phone: "0501234567",
+        fullName: "Jane Doe",
         transactionCode: "TX-001",
         value: 99,
         currency: "ILS",
