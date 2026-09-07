@@ -37,7 +37,7 @@ function BuyButtonInner({
   const sizeClasses =
     size === "xl"
       ? "h-16 whitespace-nowrap px-5 text-base sm:px-12 sm:text-lg"
-      : "h-12 px-8";
+      : "h-12 whitespace-nowrap px-3 text-sm min-[375px]:px-4 min-[375px]:text-base sm:px-8";
 
   return (
     <Link

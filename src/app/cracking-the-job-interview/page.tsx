@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowLeft, Clock } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MelioLogo from "@/components/logos/melio.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
@@ -74,7 +74,7 @@ function CourseCta({
         >
           {children}
         </BuyButton>
-        <div className="relative pt-3 sm:pt-0">
+        <div className="relative flex flex-col items-center gap-1.5 pt-3 sm:pt-0">
           <span className="absolute -top-1 left-1/2 z-10 -translate-x-1/2 rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-gray-950 shadow sm:-top-3">
             הכי משתלם
           </span>
@@ -84,8 +84,11 @@ function CourseCta({
             onClick={onBundleBuyClick}
             className="border-2 border-amber-300 shadow-[0_0_18px_rgba(252,211,77,0.45)] hover:border-amber-200 focus-visible:ring-amber-300"
           >
-            <span>קורס + ספר דיגיטלי ב־{COURSE_EBOOK_BUNDLE.price} ₪</span>
+            <span>הקורס + המדריך הדיגיטלי — {COURSE_EBOOK_BUNDLE.price} ₪</span>
           </BuyButton>
+          <p className="whitespace-nowrap text-[11px] text-muted-foreground sm:text-xs">
+            כולל את הספר „המדריך להייטקיסט המתחיל” במהדורה דיגיטלית
+          </p>
         </div>
       </div>
       {subtext}
@@ -219,7 +222,7 @@ export default function CrackingTheJobInterviewPage() {
                 }
                 size="xl"
               >
-                🔥 אני רוצה להצליח בראיון – רק ב־149 ₪
+                הקורס בלבד — 149 ₪
               </CourseCta>
               <AnimatedStudentsCounter />
             </div>
@@ -491,8 +494,7 @@ export default function CrackingTheJobInterviewPage() {
                   </div>
                 }
               >
-                <span>רוצה לחסוך חודשים של טעויות - קנה עכשיו</span>
-                <ArrowLeft className="ml-2 h-4 w-4" />
+                <span>הקורס בלבד — 149 ₪</span>
               </CourseCta>
             </div>
           </div>
@@ -1029,8 +1031,7 @@ export default function CrackingTheJobInterviewPage() {
                 </span>
               }
             >
-              <span>אני רוצה ללמוד ולהצליח!</span>
-              <ArrowLeft className="ml-2 h-4 w-4" />
+              <span>הקורס בלבד — 149 ₪</span>
             </CourseCta>
           </div>
         </div>
@@ -1122,8 +1123,7 @@ export default function CrackingTheJobInterviewPage() {
                 handleBuyButtonClick("features", "course-ebook-bundle")
               }
             >
-              <span>התחל עכשיו ב-149 ₪ בלבד!</span>
-              <ArrowLeft className="ml-2 h-4 w-4" />
+              <span>הקורס בלבד — 149 ₪</span>
             </CourseCta>
           </div>
         </div>
