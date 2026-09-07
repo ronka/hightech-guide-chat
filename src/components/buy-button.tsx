@@ -1,11 +1,13 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 interface BuyButtonProps {
   children: React.ReactNode;
+  className?: string;
   href?: string;
   onClick?: () => void;
   size?: "default" | "xl";
@@ -13,6 +15,7 @@ interface BuyButtonProps {
 
 function BuyButtonInner({
   children,
+  className,
   href = "https://ronka.dev/cart/?custom-add-to-cart=819&quantity=1",
   onClick,
   size = "default",
@@ -37,7 +40,7 @@ function BuyButtonInner({
     <Link
       href={getFullUrl()}
       onClick={onClick}
-      className={`${baseClasses} ${sizeClasses}`}
+      className={cn(baseClasses, sizeClasses, className)}
     >
       {children}
     </Link>

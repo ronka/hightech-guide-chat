@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowLeft, Clock, Star } from "lucide-react";
+import { Check, ArrowLeft, Clock } from "lucide-react";
 import GoogleLogo from "@/components/logos/google.svg";
 import MelioLogo from "@/components/logos/melio.svg";
 import MicrosoftLogo from "@/components/logos/microsoft.svg";
@@ -82,11 +82,8 @@ function CourseCta({
             size={size}
             href={COURSE_EBOOK_BUNDLE.paymentLink}
             onClick={onBundleBuyClick}
+            className="border-2 border-amber-300 shadow-[0_0_18px_rgba(252,211,77,0.45)] hover:border-amber-200 focus-visible:ring-amber-300"
           >
-            <Star
-              className="h-5 w-5 fill-amber-300 text-amber-300"
-              aria-hidden="true"
-            />
             <span>קורס + ספר דיגיטלי ב־{COURSE_EBOOK_BUNDLE.price} ₪</span>
           </BuyButton>
         </div>
