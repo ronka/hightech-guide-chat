@@ -7,11 +7,26 @@ export const COURSE_PAYLINKS: Record<CourseSlug, string> = {
   "ai-course": "https://pay.grow.link/TODO_ADD_AI_COURSE_PAYLINK",
 };
 
-export const EBOOK_PAYLINK = "https://pay.grow.link/fe2b8a81af29f47b363ab42d4f7c9f0e-MzE2NzIzOA";
+export const COURSE_EBOOK_BUNDLE = {
+  name: "קורס ראיונות עבודה + המדריך להייטקיסט המתחיל הדיגיטלי",
+  price: 179,
+  paymentLink:
+    "https://pay.grow.link/ODY2MzU~7650ea5cc3560968ccd2ce262e29f7bb-Mzk1OTY0OQ",
+  paymentLinkProcessId: "3959533",
+  productIds: {
+    course: "342942",
+    ebook: "344000",
+  },
+} as const;
 
-export const BOOK_PAYLINK = "https://pay.grow.link/263ad3cae2e1b3909273b29801cb157e-MzE2NzQwMQ";
+export const EBOOK_PAYLINK =
+  "https://pay.grow.link/fe2b8a81af29f47b363ab42d4f7c9f0e-MzE2NzIzOA";
 
-export const EBOOK_DOWNLOAD_URL = "https://drive.google.com/drive/folders/1IXc_t7qe8gqeaEqeKlxuCeIvcieOFJbl?usp=sharing";
+export const BOOK_PAYLINK =
+  "https://pay.grow.link/263ad3cae2e1b3909273b29801cb157e-MzE2NzQwMQ";
+
+export const EBOOK_DOWNLOAD_URL =
+  "https://drive.google.com/drive/folders/1IXc_t7qe8gqeaEqeKlxuCeIvcieOFJbl?usp=sharing";
 
 // Maps Grow product ID → courseSlug
 export const PRODUCT_COURSE_MAP: Record<string, CourseSlug> = {
@@ -21,4 +36,3 @@ export const PRODUCT_COURSE_MAP: Record<string, CourseSlug> = {
 export const COURSE_ASMACHTA_ID = "3158204";
 export const EBOOK_ASMACHTA_ID = "3167145";
 export const BOOK_ASMACHTA_ID = "3167308";
-

@@ -1,22 +1,25 @@
-import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/index";
 import { webhookLog } from "@/db/schema";
 import {
   BOOK_ASMACHTA_ID,
   BOOK_PAYLINK,
   COURSE_ASMACHTA_ID,
+  COURSE_EBOOK_BUNDLE,
   COURSE_PAYLINKS,
   EBOOK_ASMACHTA_ID,
   EBOOK_PAYLINK,
   PRODUCT_COURSE_MAP,
 } from "@/lib/paylinks";
+import { type NextRequest, NextResponse } from "next/server";
 import {
-  parseNestedFormData,
-  handleEbookPurchase,
-  handleCoursePurchase,
-  handleBookPurchase,
   type GrowWebhookBody,
   type MetaPurchaseDetails,
+  handleBookPurchase,
+  handleCourseEbookBundlePurchase,
+  handleCoursePurchase,
+  handleEbookPurchase,
+  hasAllProductIds,
+  parseNestedFormData,
 } from "./handlers";
 
 export async function POST(req: NextRequest) {
@@ -48,7 +51,10 @@ export async function POST(req: NextRequest) {
   const productId = product?.product_id;
 
   if (!payerEmail || !productId) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing required fields" },
+      { status: 400 },
+    );
   }
 
   const baseMeta = {
@@ -62,7 +68,10 @@ export async function POST(req: NextRequest) {
 
   switch (paymentLinkProcessId) {
     case EBOOK_ASMACHTA_ID: {
-      const meta: MetaPurchaseDetails = { ...baseMeta, eventSourceUrl: EBOOK_PAYLINK };
+      const meta: MetaPurchaseDetails = {
+        ...baseMeta,
+        eventSourceUrl: EBOOK_PAYLINK,
+      };
       return handleEbookPurchase(db, payerEmail, transactionCode, meta);
     }
 
@@ -72,15 +81,61 @@ export async function POST(req: NextRequest) {
         ...baseMeta,
         eventSourceUrl: courseSlug ? COURSE_PAYLINKS[courseSlug] : "",
       };
-      return handleCoursePurchase(db, payerEmail, transactionCode, courseSlug, meta);
+      return handleCoursePurchase(
+        db,
+        payerEmail,
+        transactionCode,
+        courseSlug,
+        meta,
+      );
     }
 
     case BOOK_ASMACHTA_ID: {
-      const meta: MetaPurchaseDetails = { ...baseMeta, eventSourceUrl: BOOK_PAYLINK };
+      const meta: MetaPurchaseDetails = {
+        ...baseMeta,
+        eventSourceUrl: BOOK_PAYLINK,
+      };
       return handleBookPurchase(db, payerEmail, transactionCode, meta);
     }
 
+    case COURSE_EBOOK_BUNDLE.paymentLinkProcessId: {
+      const hasExpectedProducts = hasAllProductIds(
+        data.productData.map((item) => item.product_id),
+        Object.values(COURSE_EBOOK_BUNDLE.productIds),
+      );
+
+      if (!hasExpectedProducts) {
+        return NextResponse.json(
+          { error: "Invalid bundle products" },
+          { status: 400 },
+        );
+      }
+
+      if (!transactionCode) {
+        return NextResponse.json(
+          { error: "Missing transaction identifier" },
+          { status: 400 },
+        );
+      }
+
+      const meta: MetaPurchaseDetails = {
+        ...baseMeta,
+        name: COURSE_EBOOK_BUNDLE.name,
+        eventSourceUrl: COURSE_EBOOK_BUNDLE.paymentLink,
+      };
+      return handleCourseEbookBundlePurchase(
+        db,
+        payerEmail,
+        transactionCode,
+        "job-interview-course",
+        meta,
+      );
+    }
+
     default:
-      return NextResponse.json({ error: "Invalid payment link process id" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid payment link process id" },
+        { status: 400 },
+      );
   }
 }

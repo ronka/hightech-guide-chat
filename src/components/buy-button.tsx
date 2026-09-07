@@ -7,12 +7,14 @@ import { Suspense } from "react";
 interface BuyButtonProps {
   children: React.ReactNode;
   href?: string;
+  onClick?: () => void;
   size?: "default" | "xl";
 }
 
 function BuyButtonInner({
   children,
   href = "https://ronka.dev/cart/?custom-add-to-cart=819&quantity=1",
+  onClick,
   size = "default",
 }: BuyButtonProps) {
   const searchParams = useSearchParams();
@@ -34,6 +36,7 @@ function BuyButtonInner({
   return (
     <Link
       href={getFullUrl()}
+      onClick={onClick}
       className={`${baseClasses} ${sizeClasses}`}
     >
       {children}

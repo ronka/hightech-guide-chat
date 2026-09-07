@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import type { db } from "@/db/index";
 import { bookPurchase, coursePurchase, ebookPurchase } from "@/db/schema";
 import type { CourseSlug } from "@/lib/paylinks";
-import type { db } from "@/db/index";
 import { sendMetaPurchase } from "@/services/meta-purchases";
+import { NextResponse } from "next/server";
 
 export type GrowProductData = {
   product_id: string;
@@ -31,6 +31,14 @@ export type GrowWebhookBody = {
   data: GrowWebhookData;
 };
 
+export function hasAllProductIds(
+  productIds: string[],
+  expectedProductIds: readonly string[],
+): boolean {
+  const receivedProductIds = new Set(productIds);
+  return expectedProductIds.every((id) => receivedProductIds.has(id));
+}
+
 export function parseNestedFormData(rawBody: string): GrowWebhookBody {
   const params = new URLSearchParams(rawBody);
   const result: Record<string, unknown> = {};
@@ -47,7 +55,7 @@ export function parseNestedFormData(rawBody: string): GrowWebhookBody {
     }
     const lastKey = keys[keys.length - 1];
     if (Array.isArray(current)) {
-      (current as unknown[])[parseInt(lastKey)] = value;
+      (current as unknown[])[Number.parseInt(lastKey)] = value;
     } else {
       current[lastKey] = value;
     }
@@ -159,6 +167,56 @@ export async function handleCoursePurchase(
       transactionCode,
       contentIds: [courseSlug],
       contentType: "course",
+      meta,
+    });
+  }
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function handleCourseEbookBundlePurchase(
+  dbClient: DbClient,
+  email: string,
+  transactionCode: string | null | undefined,
+  courseSlug: CourseSlug,
+  meta: MetaPurchaseDetails,
+): Promise<NextResponse> {
+  const normalizedEmail = email.toLowerCase().trim();
+  const purchasedAt = new Date();
+
+  const inserted = await dbClient.transaction(async (tx) => {
+    const courseRows = await tx
+      .insert(coursePurchase)
+      .values({
+        id: crypto.randomUUID(),
+        email: normalizedEmail,
+        courseSlug,
+        transactionCode: transactionCode ?? null,
+        purchasedAt,
+      })
+      .onConflictDoNothing({ target: coursePurchase.transactionCode })
+      .returning({ id: coursePurchase.id });
+
+    const ebookRows = await tx
+      .insert(ebookPurchase)
+      .values({
+        id: crypto.randomUUID(),
+        email: normalizedEmail,
+        transactionCode: transactionCode ?? null,
+        purchasedAt,
+      })
+      .onConflictDoNothing({ target: ebookPurchase.transactionCode })
+      .returning({ id: ebookPurchase.id });
+
+    return { courseRows, ebookRows };
+  });
+
+  if (inserted.courseRows.length > 0 && inserted.ebookRows.length > 0) {
+    await reportMetaPurchase({
+      email,
+      transactionCode,
+      contentIds: [courseSlug, "ebook"],
+      contentType: "product_group",
       meta,
     });
   }

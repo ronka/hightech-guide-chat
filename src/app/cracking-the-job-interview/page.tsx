@@ -22,7 +22,11 @@ import { track } from "@/services/analytics";
 import { useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
-import { COURSE_PAYLINKS, type CourseSlug } from "@/lib/paylinks";
+import {
+  COURSE_EBOOK_BUNDLE,
+  COURSE_PAYLINKS,
+  type CourseSlug,
+} from "@/lib/paylinks";
 
 // Import feedback images
 import feedback1 from "./feedbacks/feedback1.jpg";
@@ -37,6 +41,7 @@ function CourseCta({
   isPurchased,
   isLoggedIn,
   onBuyClick,
+  onBundleBuyClick,
   children,
   size,
   subtext,
@@ -44,6 +49,7 @@ function CourseCta({
   isPurchased: boolean;
   isLoggedIn: boolean;
   onBuyClick: () => void;
+  onBundleBuyClick: () => void;
   children: React.ReactNode;
   size?: "default" | "xl";
   subtext?: React.ReactNode;
@@ -60,8 +66,26 @@ function CourseCta({
   }
   return (
     <>
-      <div onClick={onBuyClick}>
-        <BuyButton size={size} href={COURSE_PAYLINKS[COURSE_SLUG]}>{children}</BuyButton>
+      <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <BuyButton
+          size={size}
+          href={COURSE_PAYLINKS[COURSE_SLUG]}
+          onClick={onBuyClick}
+        >
+          {children}
+        </BuyButton>
+        <div className="relative pt-3 sm:pt-0">
+          <span className="absolute -top-1 left-1/2 z-10 -translate-x-1/2 rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-gray-950 shadow sm:-top-3">
+            הכי משתלם
+          </span>
+          <BuyButton
+            size={size}
+            href={COURSE_EBOOK_BUNDLE.paymentLink}
+            onClick={onBundleBuyClick}
+          >
+            <span>קורס + ספר דיגיטלי ב־{COURSE_EBOOK_BUNDLE.price} ₪</span>
+          </BuyButton>
+        </div>
       </div>
       {subtext}
       {!isLoggedIn && (
@@ -85,7 +109,7 @@ export default function CrackingTheJobInterviewPage() {
       course_name: "מפצחים את קוד הראיון",
       page_title: "מפצחים את קוד הראיון: המדריך המלא להצלחה בראיונות טכניים",
       currency: "ILS",
-      value: 99,
+      value: 149,
     });
   }, []);
 
@@ -132,13 +156,20 @@ export default function CrackingTheJobInterviewPage() {
   };
 
   // Track buy button clicks
-  const handleBuyButtonClick = (location: string) => {
+  const handleBuyButtonClick = (
+    location: string,
+    offer: "course" | "course-ebook-bundle" = "course",
+  ) => {
+    const isBundle = offer === "course-ebook-bundle";
+
     track("initiate_checkout", {
-      content_type: "course",
-      content_id: "cracking-the-job-interview",
-      course_name: "מפצחים את קוד הראיון",
+      content_type: isBundle ? "product_group" : "course",
+      content_id: isBundle ? "course-ebook-bundle" : "cracking-the-job-interview",
+      content_ids: isBundle ? [COURSE_SLUG, "ebook"] : [COURSE_SLUG],
+      content_name: isBundle ? COURSE_EBOOK_BUNDLE.name : "מפצחים את קוד הראיון",
       currency: "ILS",
-      value: 99,
+      value: isBundle ? COURSE_EBOOK_BUNDLE.price : 149,
+      offer,
       button_location: location,
     });
   };
@@ -182,9 +213,12 @@ export default function CrackingTheJobInterviewPage() {
                 isPurchased={isPurchased}
                 isLoggedIn={!!session?.user}
                 onBuyClick={() => handleBuyButtonClick("hero")}
+                onBundleBuyClick={() =>
+                  handleBuyButtonClick("hero", "course-ebook-bundle")
+                }
                 size="xl"
               >
-                🔥 אני רוצה להצליח בראיון – רק ב־99 ₪
+                🔥 אני רוצה להצליח בראיון – רק ב־149 ₪
               </CourseCta>
               <AnimatedStudentsCounter />
             </div>
@@ -445,10 +479,13 @@ export default function CrackingTheJobInterviewPage() {
                 isPurchased={isPurchased}
                 isLoggedIn={!!session?.user}
                 onBuyClick={() => handleBuyButtonClick("comparison")}
+                onBundleBuyClick={() =>
+                  handleBuyButtonClick("comparison", "course-ebook-bundle")
+                }
                 subtext={
                   <div className=" text-amber-300 font-medium text-sm flex items-center gap-1 animate-pulse">
                     <span>🔥</span>
-                    <span>קנה עכשיו ב-99 ₪ בלבד! </span>
+                    <span>קנה עכשיו ב-149 ₪ בלבד! </span>
                     <span className="line-through text-red-400">299 ₪</span>
                   </div>
                 }
@@ -982,6 +1019,9 @@ export default function CrackingTheJobInterviewPage() {
               isPurchased={isPurchased}
               isLoggedIn={!!session?.user}
               onBuyClick={() => handleBuyButtonClick("curriculum")}
+              onBundleBuyClick={() =>
+                handleBuyButtonClick("curriculum", "course-ebook-bundle")
+              }
               subtext={
                 <span className="text-amber-500 font-medium text-sm">
                   ⏰ 40% הנחה - הצעה מוגבלת
@@ -1077,8 +1117,11 @@ export default function CrackingTheJobInterviewPage() {
               isPurchased={isPurchased}
               isLoggedIn={!!session?.user}
               onBuyClick={() => handleBuyButtonClick("features")}
+              onBundleBuyClick={() =>
+                handleBuyButtonClick("features", "course-ebook-bundle")
+              }
             >
-              <span>התחל עכשיו ב-99 ₪ בלבד!</span>
+              <span>התחל עכשיו ב-149 ₪ בלבד!</span>
               <ArrowLeft className="ml-2 h-4 w-4" />
             </CourseCta>
           </div>
